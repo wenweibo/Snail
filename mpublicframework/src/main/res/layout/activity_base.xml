@@ -21,7 +21,7 @@
         android:id="@+id/base_title_main_layout"
         android:layout_width="fill_parent"
         android:layout_height="@dimen/title_hight"
-        android:background="@color/black">
+        android:background="@color/white">
 
         <!--回退键-->
         <TextView
@@ -32,7 +32,7 @@
             android:gravity="center"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:textSize="@dimen/listview_title_size" />
         <!--<ImageView-->
         <!--android:id="@+id/base_back"-->
@@ -58,7 +58,7 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:singleLine="true"
-            android:textColor="@color/activity_title_text_color"
+            android:textColor="@color/black"
             android:textSize="@dimen/activity_title_size" />
 
 
@@ -83,7 +83,7 @@
                 android:gravity="center"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:textColor="@color/activity_title_text_color"
+                android:textColor="@color/black"
                 android:textSize="@dimen/listview_title_size" />
 
             <ImageView

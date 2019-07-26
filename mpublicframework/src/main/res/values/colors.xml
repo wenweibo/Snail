@@ -7,7 +7,7 @@
     <color name="editText_bg">#404040</color>
 
     <color name="layout_bg">#f8ffff</color><!--卡片背景颜色 -->
-    <color name="line_bg">#353535</color><!--线条颜色 -->
+    <color name="line_bg">#E3E3E3</color><!--线条颜色 -->
     <color name="hint_text_color">#9ea8a8</color><!--注释内容及未触发按钮颜色 -->
     <color name="item_text_color">#727d7c</color><!--所有表单标题 -->
     <color name="item_value_color">#9ea8a8</color>

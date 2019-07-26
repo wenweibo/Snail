@@ -7,9 +7,11 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -53,6 +55,7 @@ public class MainActivity extends ActivityGroup {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setBarStatus();
         requestPermissions(permissions);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -104,16 +107,16 @@ public class MainActivity extends ActivityGroup {
                 R.layout.action_item, null);
         ImageView icon2 = (ImageView) tab2.findViewById(R.id.icon);
         icon2.setImageResource(R.mipmap.guide_tfaccount_nm);
-        icon2.setTag(getString(R.string.message));
+        icon2.setTag(getString(R.string.buy_car));
         img_remind_msg = (ImageView) tab2.findViewById(R.id.img_remind);
         img_remind_msg.setVisibility(View.VISIBLE);
         tabRelativeLayouts.add(tab2);
-        // "通知"标签
+        // "买车"标签
         tab3 = (RelativeLayout) LayoutInflater.from(this).inflate(
                 R.layout.action_item, null);
         ImageView icon3 = (ImageView) tab3.findViewById(R.id.icon);
         icon3.setImageResource(R.mipmap.guide_discover_nm);
-        icon3.setTag(getString(R.string.notice));
+        icon3.setTag(getString(R.string.sell_car));
         img_remind = (ImageView) tab3.findViewById(R.id.img_remind);
         img_remind.setVisibility(View.GONE);
         tabRelativeLayouts.add(tab3);
@@ -148,15 +151,15 @@ public class MainActivity extends ActivityGroup {
         ts1.setContent(new Intent(this, FirstPagerActivity.class));
         tabHost.addTab(ts1);
 
-        TabHost.TabSpec ts2 = tabHost.newTabSpec(getString(R.string.message));
+        TabHost.TabSpec ts2 = tabHost.newTabSpec(getString(R.string.buy_car));
         ts2.setIndicator(tab2);
-        Intent intent = new Intent(this, InformationActivity.class);
+        Intent intent = new Intent(this, BuyCarActivity.class);
         ts2.setContent(intent);
         tabHost.addTab(ts2);
 
-        TabHost.TabSpec ts3 = tabHost.newTabSpec(getString(R.string.notice));
+        TabHost.TabSpec ts3 = tabHost.newTabSpec(getString(R.string.sell_car));
         ts3.setIndicator(tab3);
-        Intent intent3 = new Intent(this, NoticeActivity.class);
+        Intent intent3 = new Intent(this, SellCarActivity.class);
         intent3.putExtra("showReturn", 1);
         ts3.setContent(intent3);
         tabHost.addTab(ts3);
@@ -199,6 +202,7 @@ public class MainActivity extends ActivityGroup {
 
         @Override
         public void onTabChanged(String tabId) {
+            Log.e("TAG", tabId);
             for (int i = 0; i < tabRelativeLayouts.size(); i++) {
                 RelativeLayout relativeLayout = tabRelativeLayouts.get(i);
                 RelativeLayout linearLayout = (RelativeLayout) relativeLayout
@@ -226,6 +230,21 @@ public class MainActivity extends ActivityGroup {
                 String[] permissions2 = mPermissionList.toArray(new String[mPermissionList.size()]);//将List转为数组
                 ActivityCompat.requestPermissions(this, permissions2, 0000);
             }
+        }
+
+    }
+
+    /**
+     * 设置状态栏颜色
+     */
+    private void setBarStatus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            //获取窗口区域
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            //设置显示为白色背景，黑色字体
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+
         }
 
     }

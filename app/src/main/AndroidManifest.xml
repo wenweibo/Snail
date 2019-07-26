@@ -21,8 +21,8 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name=".system.activity.FirstPagerActivity"/>
-        <activity android:name=".system.activity.InformationActivity"/>
-        <activity android:name=".system.activity.NoticeActivity"/>
+        <activity android:name=".system.activity.BuyCarActivity"/>
+        <activity android:name=".system.activity.SellCarActivity"/>
         <activity android:name=".system.activity.MineActivity"/>
     </application>
 

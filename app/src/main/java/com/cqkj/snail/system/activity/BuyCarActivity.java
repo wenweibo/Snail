@@ -1,34 +1,20 @@
 package com.cqkj.snail.system.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.LinearLayout;
-
 
 import com.cqkj.snail.R;
-import com.fxkj.publicframework.activity.BaseActivityManager;
 import com.fxkj.publicframework.activity.BaseTitleActivity;
 import com.fxkj.publicframework.beans.CallBackObject;
-import com.fxkj.publicframework.tool.CommonUtil;
-import com.fxkj.publicframework.widget.WListView;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import butterknife.BindView;
 
 
 /**
- * 信息页
+ * 买车页
+ * @author 闻维波 2019/07/26
  */
-public class InformationActivity extends BaseTitleActivity {
-
-
+public class BuyCarActivity extends BaseTitleActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -42,13 +28,13 @@ public class InformationActivity extends BaseTitleActivity {
     @Override
     protected int getLayoutId() {
         setBack(false);
-        return R.layout.activity_information;
+        return R.layout.activity_buy_car;
     }
 
     @Override
     protected void initView() {
         super.initView();
-        title_text.setText(getString(R.string.message));
+        title_text.setText(getString(R.string.buy_car));
         tv_back.setVisibility(View.GONE);
         title_do.setVisibility(View.GONE);
     }

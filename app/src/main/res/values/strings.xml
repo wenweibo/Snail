@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Snail</string>
     <string name="first_pager">首页</string>
-    <string name="message">消息</string>
-    <string name="notice">通知</string>
+    <string name="buy_car">买车</string>
+    <string name="sell_car">卖车</string>
     <string name="sys_notice">系统消息</string>
-    <string name="mine">个人</string>
+    <string name="mine">我的</string>
 </resources>

@@ -7,14 +7,15 @@ import com.fxkj.publicframework.activity.BaseTitleActivity;
 
 
 /**
- * 通知页
+ * 卖车页
+ * @author 闻维波 2019/07/26
  */
-public class NoticeActivity extends BaseTitleActivity {
+public class SellCarActivity extends BaseTitleActivity {
 
 
     @Override
     protected int getLayoutId() {
-        return R.layout.activity_notice;
+        return R.layout.activity_sell_car;
     }
 
     @Override
