@@ -19,11 +19,13 @@ import java.util.TimerTask;
  */
 public class SplashActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         startMain();
+        //测试提交
     }
 
     private void startMain() {
