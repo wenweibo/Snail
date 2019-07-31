@@ -22,13 +22,13 @@
     <dimen name="editview_hint_size">14dp</dimen>
     <dimen name="content_size">14dp</dimen>
     <dimen name="common_space">5dp</dimen>
+    <dimen name="img_size">60dip</dimen>
+    <dimen name="tab_text_size2">12sp</dimen>
 
     <!-- view尺寸. -->
     <dimen name="grid_circle_btn">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_layout_height">48dp</dimen>
-
-
-    <dimen name="line">1px</dimen>
+    <dimen name="line">2px</dimen>
     <dimen name="title_hight">50dip</dimen>
 </resources>

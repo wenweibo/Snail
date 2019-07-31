@@ -30,7 +30,7 @@ public class MineActivity extends BaseTitleActivity {
     protected void initView() {
         super.initView();
         title_text.setText(getString(R.string.mine));
-        tv_back.setVisibility(View.GONE);
+        back.setVisibility(View.GONE);
         title_do.setVisibility(View.GONE);
     }
 

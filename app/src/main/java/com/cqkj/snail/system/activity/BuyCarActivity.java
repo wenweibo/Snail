@@ -27,7 +27,7 @@ public class BuyCarActivity extends BaseTitleActivity {
 
     @Override
     protected int getLayoutId() {
-        setBack(false);
+//        setBack(false);
         return R.layout.activity_buy_car;
     }
 
@@ -35,7 +35,7 @@ public class BuyCarActivity extends BaseTitleActivity {
     protected void initView() {
         super.initView();
         title_text.setText(getString(R.string.buy_car));
-        tv_back.setVisibility(View.GONE);
+        back.setVisibility(View.GONE);
         title_do.setVisibility(View.GONE);
     }
 

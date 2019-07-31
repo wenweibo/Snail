@@ -191,7 +191,11 @@ public class MainActivity extends ActivityGroup {
         }
 
         public void onClick(View v) {
-            tabHost.setCurrentTab(position);
+            if (position == 3) {
+                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+            } else {
+                tabHost.setCurrentTab(position);
+            }
         }
     }
 

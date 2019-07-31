@@ -1,17 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    android:orientation="vertical"
-    android:gravity="center"
-  >
+    android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="首页"/>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.youth.banner.Banner
+                android:id="@+id/af_banner"
+                android:layout_width="match_parent"
+                android:layout_height="150dip" />
+
+            <!--顶部按钮-->
+            <LinearLayout
+                style="@style/lin_base"
+                android:orientation="horizontal">
+
+                <LinearLayout android:id="@+id/lin_sell_car" style="@style/lin_base.btn_lin">
+
+                    <ImageView
+                        style="@style/btn_img"
+                        android:src="@mipmap/sell_car" />
+
+                    <TextView
+                        style="@style/text_base"
+                        android:layout_marginTop="@dimen/com_size_10"
+                        android:text="立即买车" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/lin_buy_car" style="@style/lin_base.btn_lin">
+
+                    <ImageView
+                        style="@style/btn_img"
+                        android:src="@mipmap/buy_car" />
+
+                    <TextView
+                        style="@style/text_base"
+                        android:layout_marginTop="@dimen/com_size_10"
+                        android:text="我要卖车" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/lin_recycle_car" style="@style/lin_base.btn_lin">
+
+                    <ImageView
+                        style="@style/btn_img"
+                        android:src="@mipmap/recycle_car" />
+
+                    <TextView
+                        style="@style/text_base"
+                        android:layout_marginTop="@dimen/com_size_10"
+                        android:text="蜗收车" />
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/lin_assess_car" style="@style/lin_base.btn_lin">
+
+                    <ImageView
+                        style="@style/btn_img"
+                        android:src="@mipmap/assess_car" />
+
+                    <TextView
+                        style="@style/text_base"
+                        android:layout_marginTop="@dimen/com_size_10"
+                        android:text="蜗估车" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--顶部按钮-->
+            <LinearLayout
+                style="@style/lin_base"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/com_size_15">
+                <com.fxkj.publicframework.widget.NoScrollGridView
+                    android:id="@+id/ngv_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

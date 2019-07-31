@@ -21,7 +21,7 @@ public class SellCarActivity extends BaseTitleActivity {
     @Override
     protected void initView() {
         super.initView();
-        tv_back.setVisibility(View.GONE);
+        back.setVisibility(View.GONE);
         title_do.setVisibility(View.GONE);
         title_text.setText(R.string.sys_notice);
     }

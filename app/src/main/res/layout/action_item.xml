@@ -20,7 +20,6 @@
              android:layout_height="@dimen/icon_size"
              android:gravity="center_vertical"
              android:src="@mipmap/guide_account_on" />
-
          <ImageView
              android:id="@+id/img_remind"
              android:layout_width="10dp"

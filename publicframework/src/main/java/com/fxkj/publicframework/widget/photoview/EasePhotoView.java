@@ -32,11 +32,11 @@ import android.content.Context;
 import android.graphics.RectF;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
-import android.widget.ImageView;
 
 
-public class EasePhotoView extends ImageView implements IPhotoView {
+public class EasePhotoView extends AppCompatImageView implements IPhotoView {
 
     private final PhotoViewAttacher mAttacher;
 

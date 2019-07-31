@@ -1,115 +1,67 @@
-package com.cqkj.snail.system.activity;
+package com.cqkj.snail.truck.activity;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.cqkj.snail.R;
-import com.fxkj.publicframework.activity.BaseTitleActivity;
-import com.fxkj.publicframework.beans.CallBackObject;
-import com.fxkj.publicframework.widget.NoScrollGridView;
+import com.xuexiang.xui.utils.StatusBarUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-
+import butterknife.ButterKnife;
 
 /**
- * 首页
- * @author 闻维波 2019/07/26
+ * 货车详情
+ * @author 闻维波 2019/07/30
  */
-public class FirstPagerActivity extends BaseTitleActivity implements OnBannerListener {
-    //轮播图
+public class TruckDetailActivity extends AppCompatActivity  implements OnBannerListener {
+    @BindView(R.id.appbar_layout)
+    AppBarLayout appbar_layout;
     @BindView(R.id.af_banner)
     Banner banner;
-    //买车按钮
-    @BindView(R.id.lin_buy_car)
-    LinearLayout lin_buy_car;
-    //卖车按钮
-    @BindView(R.id.lin_sell_car)
-    LinearLayout lin_sell_car;
-    //收车按钮
-    @BindView(R.id.lin_recycle_car)
-    LinearLayout lin_recycle_car;
-    //估车按钮
-    @BindView(R.id.lin_assess_car)
-    LinearLayout lin_assess_car;
-    //筛选菜单
-    @BindView(R.id.ngv_menu)
-    NoScrollGridView ngv_menu;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
 
     // banner图片地址集合
     private ArrayList<String> list_path;
     // banner标题集合
     private ArrayList<String> list_title;
-
     @Override
-    protected int getLayoutId() {
-//        setBack(false);
-        return R.layout.activity_first;
-    }
-
-    @Override
-    protected void initView() {
-        super.initView();
-        title_text.setText(getString(R.string.first_pager));
-        back.setVisibility(View.GONE);
-        title_do.setVisibility(View.GONE);
-        // 加载banner
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_truck_detail);
+        ButterKnife.bind(this);
+        StatusBarUtils.translucent(this, Color.TRANSPARENT);
+        StatusBarUtils.setStatusBarLightMode(this);
+        toolbar.setTitle("我们的故事");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.focus_color_3));
+//        toolbar.setTitleTextAppearance(this,R.style.ToolbarTheme);
         initBanner();
-    }
-
-    @Override
-    protected void initListener() {
-        super.initListener();
-        lin_buy_car.setOnClickListener(this);
-        lin_sell_car.setOnClickListener(this);
-        lin_recycle_car.setOnClickListener(this);
-        lin_assess_car.setOnClickListener(this);
-    }
-
-    @Override
-    protected void initData() {
-        super.initData();
-    }
-
-    @Override
-    public void onSuccess(int flag, CallBackObject obj) throws ParseException {}
-
-    @Override
-    public void onFailure(int flag, String message) {}
-
-    @Override
-    public void onClick(View view) {
-        super.onClick(view);
-        switch (view.getId()){
-            //买车监听
-            case R.id.lin_buy_car:
-                break;
-            //卖车监听
-            case R.id.lin_sell_car:
-                break;
-            //收车监听
-            case R.id.lin_recycle_car:
-                break;
-            //估车监听
-            case R.id.lin_assess_car:
-                break;
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+        appbar_layout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
+                    toolbar.setTitleTextColor(getResources().getColor(R.color.focus_color_3));
+//                    StatusBarUtils.setStatusBarDarkMode(TruckDetailActivity.this);
+                } else {
+                    toolbar.setTitleTextColor(getResources().getColor(R.color.focus_color_2));
+//                    StatusBarUtils.setStatusBarLightMode(TruckDetailActivity.this);
+                }
+            }
+        });
     }
 
     /**
@@ -136,7 +88,7 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         // 设置图片网址或地址的集合
         banner.setImages(list_path);
         // 设置轮播的动画效果
-        banner.setBannerAnimation(Transformer.CubeIn);
+        banner.setBannerAnimation(Transformer.Default);
         // 设置轮播图的标题集合
         banner.setBannerTitles(list_title);
         // 设置轮播间隔时间

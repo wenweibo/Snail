@@ -21,7 +21,7 @@
         android:id="@+id/base_title_main_layout"
         android:layout_width="fill_parent"
         android:layout_height="48dp"
-        android:background="@color/colorPrimaryDark">
+        android:background="@color/white">
 
         <!--回退键-->
         <ImageView
@@ -47,7 +47,7 @@
                 android:layout_height="fill_parent"
                 android:gravity="center"
                 android:singleLine="true"
-                android:textColor="@color/activity_title_text_color"
+                android:textColor="@color/layout_title_color"
                 android:textSize="@dimen/activity_title_size"
                 android:layout_centerInParent="true"
                 />
