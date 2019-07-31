@@ -2,13 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/bg_color"
     android:orientation="vertical"
-    android:gravity="center">
-    <TextView
-        android:layout_width="wrap_content"
+    android:padding="@dimen/com_size_15"
+    >
+    <GridView
+        android:id="@+id/gv_truck_type"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/sell_car"/>
-
+        android:numColumns="3"
+        android:horizontalSpacing="@dimen/com_size_15"
+        android:verticalSpacing="@dimen/com_size_15"/>
+    <Button
+        android:id="@+id/btn_next_step"
+       style="@style/btn_base.red"
+        android:text="@string/next_step"
+        android:layout_marginTop="@dimen/com_size_15"/>
 </LinearLayout>

@@ -10,9 +10,9 @@
     <dimen name="fenge_lien">8dp</dimen>
     <dimen name="fenge_lien2">1dp</dimen>
     <!-- 字体大小. -->
-    <dimen name="activity_title_size">18dp</dimen>
-    <dimen name="listview_title_size">16dp</dimen>
-    <dimen name="tab_text_size">14dp</dimen>
+    <dimen name="activity_title_size">18sp</dimen>
+    <dimen name="listview_title_size">16sp</dimen>
+    <dimen name="tab_text_size">14sp</dimen>
     <dimen name="item_title_size">14dp</dimen>
     <dimen name="layout_title_size">14dp</dimen>
     <dimen name="btn_text_size">18dp</dimen>
@@ -23,6 +23,7 @@
     <dimen name="content_size">14dp</dimen>
     <dimen name="common_space">5dp</dimen>
     <dimen name="img_size">60dip</dimen>
+    <dimen name="img_size2">40dip</dimen>
     <dimen name="tab_text_size2">12sp</dimen>
 
     <!-- view尺寸. -->

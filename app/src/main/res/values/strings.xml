@@ -105,4 +105,8 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <string name="next_step">下一步</string>
+    <string name="select_truck_type">选择车型</string>
+    <string name="no_truch_type">抱歉,没有类型可选</string>
+    <string name="no_selected_truck_type">抱歉,您还未选择车型</string>
 </resources>

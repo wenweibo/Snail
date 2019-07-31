@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.cqkj.snail.R;
 
@@ -98,25 +99,31 @@ public class MainActivity extends ActivityGroup {
         ImageView icon1 = (ImageView) tab1.findViewById(R.id.icon);
         icon1.setImageResource(R.mipmap.guide_home_on);
         icon1.setTag(getString(R.string.first_pager));
+        TextView tvTilte1 = tab1.findViewById(R.id.tv_title);
+        tvTilte1.setText(R.string.first_pager);
+        tvTilte1.setTextColor(getResources().getColor(R.color.main_red));
         ImageView img_remind = (ImageView) tab1.findViewById(R.id.img_remind);
         img_remind.setVisibility(View.GONE);
         tabRelativeLayouts.add(tab1);
 
-        // “信息”标签
+        // “买车”标签
         tab2 = (RelativeLayout) LayoutInflater.from(this).inflate(
                 R.layout.action_item, null);
         ImageView icon2 = (ImageView) tab2.findViewById(R.id.icon);
         icon2.setImageResource(R.mipmap.guide_tfaccount_nm);
         icon2.setTag(getString(R.string.buy_car));
+        TextView tvTilte2 = tab2.findViewById(R.id.tv_title);
+        tvTilte2.setText(R.string.buy_car);
         img_remind_msg = (ImageView) tab2.findViewById(R.id.img_remind);
         img_remind_msg.setVisibility(View.VISIBLE);
         tabRelativeLayouts.add(tab2);
-        // "买车"标签
+        // "卖车"标签
         tab3 = (RelativeLayout) LayoutInflater.from(this).inflate(
                 R.layout.action_item, null);
         ImageView icon3 = (ImageView) tab3.findViewById(R.id.icon);
         icon3.setImageResource(R.mipmap.guide_discover_nm);
         icon3.setTag(getString(R.string.sell_car));
+        ((TextView)tab3.findViewById(R.id.tv_title)).setText(getString(R.string.sell_car));
         img_remind = (ImageView) tab3.findViewById(R.id.img_remind);
         img_remind.setVisibility(View.GONE);
         tabRelativeLayouts.add(tab3);
@@ -127,6 +134,8 @@ public class MainActivity extends ActivityGroup {
         ImageView icon4 = (ImageView) tab4.findViewById(R.id.icon);
         icon4.setImageResource(R.mipmap.guide_account_nm);
         icon4.setTag(getString(R.string.mine));
+        TextView tvTilte4 = tab4.findViewById(R.id.tv_title);
+        tvTilte4.setText(R.string.mine);
         img_remind = (ImageView) tab4.findViewById(R.id.img_remind);
         img_remind.setVisibility(View.GONE);
         tabRelativeLayouts.add(tab4);
@@ -174,12 +183,6 @@ public class MainActivity extends ActivityGroup {
         tab2.setOnClickListener(new TabOnClick(1));
         tab3.setOnClickListener(new TabOnClick(2));
         tab4.setOnClickListener(new TabOnClick(3));
-        //调整发布按钮图标的大小
-        View childTabViewAt = tabHost.getTabWidget().getChildTabViewAt(2);
-        ImageView icon_add = (ImageView) childTabViewAt.findViewById(R.id.icon);
-        RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) icon_add.getLayoutParams();
-        params.height = getResources().getDimensionPixelSize(R.dimen.icon_size2);
-        icon_add.setLayoutParams(params);
     }
 
     class TabOnClick implements View.OnClickListener {
@@ -192,7 +195,7 @@ public class MainActivity extends ActivityGroup {
 
         public void onClick(View v) {
             if (position == 3) {
-                startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
             } else {
                 tabHost.setCurrentTab(position);
             }
@@ -212,10 +215,13 @@ public class MainActivity extends ActivityGroup {
                 RelativeLayout linearLayout = (RelativeLayout) relativeLayout
                         .getChildAt(0);
                 ImageView imageView = (ImageView) linearLayout.getChildAt(0);
+                TextView textView = (TextView) linearLayout.getChildAt(2);
                 if (imageView.getTag().toString().equals(tabId)) {
                     imageView.setImageResource(botResList.get(i).get(1));
+                    textView.setTextColor(getResources().getColor(R.color.main_red));
                 } else {
                     imageView.setImageResource(botResList.get(i).get(0));
+                    textView.setTextColor(getResources().getColor(R.color.hint_color));
                 }
             }
         }

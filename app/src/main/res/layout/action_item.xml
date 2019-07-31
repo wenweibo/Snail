@@ -16,8 +16,8 @@
 
          <ImageView
              android:id="@+id/icon"
-             android:layout_width="wrap_content"
-             android:layout_height="@dimen/icon_size"
+             android:layout_width="25dip"
+             android:layout_height="25dip"
              android:gravity="center_vertical"
              android:src="@mipmap/guide_account_on" />
          <ImageView
@@ -27,6 +27,11 @@
              android:layout_toRightOf="@id/icon"
              android:src="@drawable/shape_circle_text_bh"
              />
+         <TextView
+             android:id="@+id/tv_title"
+             style="@style/text_remark"
+             android:layout_below="@id/icon"
+             android:textColor="@color/hint_color"/>
      </RelativeLayout>
 
 </RelativeLayout> 

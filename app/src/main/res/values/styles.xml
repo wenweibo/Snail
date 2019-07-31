@@ -62,5 +62,13 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">@dimen/tab_text_size</item>
     </style>
-
+    <style name="btn_base">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/icon_size2</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/listview_title_size</item>
+    </style>
+    <style name="btn_base.red">
+        <item name="android:background">@drawable/btn_red_stroke_corners_5</item>
+    </style>
 </resources>

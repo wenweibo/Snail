@@ -8,6 +8,8 @@ import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.cqkj.snail.R;
+import com.cqkj.snail.truck.adapter.FirstMenuAdapter;
+import com.cqkj.snail.truck.entity.MenuEntity;
 import com.fxkj.publicframework.activity.BaseTitleActivity;
 import com.fxkj.publicframework.beans.CallBackObject;
 import com.fxkj.publicframework.widget.NoScrollGridView;
@@ -19,6 +21,7 @@ import com.youth.banner.loader.ImageLoader;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 
@@ -28,30 +31,42 @@ import butterknife.BindView;
  * @author 闻维波 2019/07/26
  */
 public class FirstPagerActivity extends BaseTitleActivity implements OnBannerListener {
-    //轮播图
+    // 轮播图
     @BindView(R.id.af_banner)
     Banner banner;
-    //买车按钮
+    // 买车按钮
     @BindView(R.id.lin_buy_car)
     LinearLayout lin_buy_car;
-    //卖车按钮
+    // 卖车按钮
     @BindView(R.id.lin_sell_car)
     LinearLayout lin_sell_car;
-    //收车按钮
+    // 收车按钮
     @BindView(R.id.lin_recycle_car)
     LinearLayout lin_recycle_car;
-    //估车按钮
+    // 估车按钮
     @BindView(R.id.lin_assess_car)
     LinearLayout lin_assess_car;
-    //筛选菜单
+    // 筛选菜单
     @BindView(R.id.ngv_menu)
     NoScrollGridView ngv_menu;
+    // 筛选菜单2
+    @BindView(R.id.ngv_menu2)
+    NoScrollGridView ngv_menu2;
 
     // banner图片地址集合
     private ArrayList<String> list_path;
     // banner标题集合
     private ArrayList<String> list_title;
 
+    private final String[] menuItemArr1 = new String[]{"牵引车", "载货车", "挂车", "自卸车",
+            "1-10万", "10-15万", "15-20万", "20-50万"};
+    private final String[] menuItemArr2 = new String[]{
+            "东风", "中国重汽", "福田欧曼", "陕汽"};
+
+    private final int[] menuItemImgArr1 = new int[]{-1, -1, -1, -1,
+            -1, -1, -1, -1};
+   private final int[] menuItemImgArr2 = new int[]{R.mipmap.logo_df, R.mipmap.logo_zq,
+           R.mipmap.logo_om, R.mipmap.logo_sq};
     @Override
     protected int getLayoutId() {
 //        setBack(false);
@@ -80,6 +95,9 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
     @Override
     protected void initData() {
         super.initData();
+        // 设置首页筛选菜单适配器
+        ngv_menu.setAdapter(new FirstMenuAdapter(this,getMenuList(menuItemArr1, menuItemImgArr1)));
+        ngv_menu2.setAdapter(new FirstMenuAdapter(this,getMenuList(menuItemArr2, menuItemImgArr2)));
     }
 
     @Override
@@ -170,6 +188,26 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         public void displayImage(Context context, Object path, ImageView imageView) {
             Glide.with(context).load((String) path).into(imageView);
         }
+    }
+
+    /**
+     * 生成菜单数据
+     * @return List<MenuEntity>
+     */
+    private List<MenuEntity> getMenuList(String[] menuItemArr, int[] menuItemImgArr){
+        List<MenuEntity> menuEntities = new ArrayList<>();
+        MenuEntity menuEntity = null;
+        for (int i = 0; i < menuItemArr.length; i++) {
+            String title = menuItemArr[i];
+            menuEntity = new MenuEntity();
+            menuEntity.setId(i+"");
+            menuEntity.setTitle(title);
+
+            menuEntity.setImgRes(menuItemImgArr[i]);
+            menuEntities.add(menuEntity);
+            menuEntity = null;
+        }
+        return menuEntities;
     }
 
 }

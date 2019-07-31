@@ -6,6 +6,9 @@
     <color name="black">#000000</color>
     <color name="main_color">#FFFFFF</color>
     <color name="bg_color">#F4F4F4</color>
+    <color name="hint_color">#888888</color>
+    <color name="main_red">#fd5b58</color>
+    <color name="click_red">#fe7775</color>
 
     <color name="color_bg_loading">#dc858585</color>
     <color name="color_bg_success">#dc82ce32</color>
