@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/lin_base"
+    android:layout_marginTop="@dimen/com_size_15"
+    android:orientation="vertical">
+
+    <include layout="@layout/block_bar" />
+
+    <View style="@style/hLine" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/com_size_15">
+        <!--车型-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:text="@string/truck_type" />
+
+            <EditText
+                style="@style/edit_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+        <!--车辆品牌-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:background="@drawable/btn_white_corners"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:text="@string/truck_brand" />
+
+            <TextView
+                style="@style/text_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:hint="@string/truck_brand_hint" />
+
+            <ImageView
+                android:layout_width="@dimen/btn_text_size"
+                android:layout_height="@dimen/btn_text_size"
+                android:layout_marginLeft="@dimen/com_size_5"
+                android:src="@mipmap/to" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+        <!--车辆价格-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:text="@string/truck_price" />
+
+            <EditText
+                style="@style/edit_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:hint="@string/truck_price_hint" />
+
+            <TextView
+                style="@style/text_base"
+                android:layout_marginLeft="@dimen/com_size_5"
+                android:text="@string/truck_price_unit" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+        <!--车辆年份-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:background="@drawable/btn_white_corners"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:layout_height="wrap_content"
+                android:text="@string/truck_particular" />
+
+            <TextView
+                style="@style/text_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:hint="@string/truck_particular_hint" />
+
+            <ImageView
+                android:layout_width="@dimen/btn_text_size"
+                android:layout_height="@dimen/btn_text_size"
+                android:layout_marginLeft="@dimen/com_size_5"
+                android:src="@mipmap/to" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+        <!--排放标准-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:background="@drawable/btn_white_corners"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:layout_height="wrap_content"
+                android:text="@string/emission_standard" />
+
+            <TextView
+                style="@style/text_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:hint="@string/emission_standard_hint" />
+
+            <ImageView
+                android:layout_width="@dimen/btn_text_size"
+                android:layout_height="@dimen/btn_text_size"
+                android:layout_marginLeft="@dimen/com_size_5"
+                android:src="@mipmap/to" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+        <!--表显里程-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:text="@string/mileage" />
+
+            <EditText
+                style="@style/edit_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:hint="@string/mileage_hint" />
+
+            <TextView
+                style="@style/text_base"
+                android:layout_marginLeft="@dimen/com_size_5"
+                android:text="@string/mileage_unit" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+        <!--驱动方式-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:background="@drawable/btn_white_corners"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:layout_height="wrap_content"
+                android:text="@string/drive_mode" />
+
+            <TextView
+                style="@style/text_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:hint="@string/drive_mode_hint" />
+
+            <ImageView
+                android:layout_width="@dimen/btn_text_size"
+                android:layout_height="@dimen/btn_text_size"
+                android:layout_marginLeft="@dimen/com_size_5"
+                android:src="@mipmap/to" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+        <!--发动机品牌-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:background="@drawable/btn_white_corners"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:layout_height="wrap_content"
+                android:text="@string/engine_brand" />
+
+            <TextView
+                style="@style/text_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:hint="@string/engine_brand_hint" />
+
+            <ImageView
+                android:layout_width="@dimen/btn_text_size"
+                android:layout_height="@dimen/btn_text_size"
+                android:layout_marginLeft="@dimen/com_size_5"
+                android:src="@mipmap/to" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+        <!--最大马力-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:text="@string/max_horsepower" />
+
+            <EditText
+                style="@style/edit_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:hint="@string/max_horsepower_hint" />
+            <TextView
+                style="@style/text_base"
+                android:text="@string/horsepower_unit"
+                android:layout_marginLeft="@dimen/com_size_5"/>
+        </LinearLayout>
+        <View style="@style/hLine" />
+        <!--箱体长度-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:text="@string/carriage_length" />
+
+            <EditText
+                style="@style/edit_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:hint="@string/carriage_length_hint" />
+            <TextView
+                style="@style/text_base"
+                android:text="@string/carriage_length_uint"
+                android:layout_marginLeft="@dimen/com_size_5"/>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

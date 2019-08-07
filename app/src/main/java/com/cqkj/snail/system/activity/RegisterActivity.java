@@ -43,7 +43,7 @@ public class RegisterActivity extends BaseTitleActivity {
         super.onClick(view);
         switch (view.getId()){
             case R.id.btn_register:
-                startActivity(new Intent(this,TruckDetailActivity.class));
+
                 break;
         }
     }

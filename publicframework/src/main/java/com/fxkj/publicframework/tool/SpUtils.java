@@ -52,7 +52,7 @@ public class SpUtils {
             sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
         }
         String s = sp.getString(paramName, defValue);
-        //String decodeString = new String(Base64.decode(s.getBytes(), Base64.DEFAULT));
+        //String decodeString = new_truck String(Base64.decode(s.getBytes(), Base64.DEFAULT));
         return s;
     }
 

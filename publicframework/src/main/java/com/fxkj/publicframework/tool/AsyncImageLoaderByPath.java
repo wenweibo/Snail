@@ -62,7 +62,7 @@ public class AsyncImageLoaderByPath {
     public void putBitmapToCache(String imagePath, String key, Bitmap bitmap) {
         try {
             if (bitmap != null) {
-                //imageCache.put(key, new SoftReference<Bitmap>(bitmap));
+                //imageCache.put(key, new_truck SoftReference<Bitmap>(bitmap));
                 ImageFunction.saveBitmapToPath(imagePath, bitmap, Bitmap.CompressFormat.JPEG, 80);
             }
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class AsyncImageLoaderByPath {
                         if (degree != 0) {
                             bitmap = rotateBitmap(degree, bitmap);
                         }
-                        // imageCache.put(key, new
+                        // imageCache.put(key, new_truck
                         // SoftReference<Bitmap>(bitmap));
                         putBitmapToCache(Constant.project_root_folder + key, key, bitmap);
                         Message message = handler.obtainMessage(0, bitmap);

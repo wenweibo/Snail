@@ -8,6 +8,7 @@
     <dimen name="com_size_10">10dip</dimen>
     <dimen name="com_size_15">15dip</dimen>
     <dimen name="com_size_20">20dip</dimen>
+    <dimen name="com_size_30">30dip</dimen>
 
 
 </resources>

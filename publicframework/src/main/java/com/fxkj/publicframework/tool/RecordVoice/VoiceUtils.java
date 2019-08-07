@@ -35,8 +35,8 @@ public class VoiceUtils {
     }
 //    public VoiceUtils(String path) {
 //        this.path = path;
-//        mPlayer = new MediaPlayer();
-//        mPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+//        mPlayer = new_truck MediaPlayer();
+//        mPlayer.setOnPreparedListener(new_truck MediaPlayer.OnPreparedListener() {
 //            @Override
 //            public void onPrepared(MediaPlayer mediaPlayer) {
 //                mediaPlayer.start();

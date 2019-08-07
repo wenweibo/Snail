@@ -34,7 +34,7 @@ public class FirstMenuAdapter extends CommonAdapter {
         MenuEntity menuEntity = (MenuEntity) getItem(position);
         //如果有图片数据，则显示图片控件
         if (menuEntity.getImgRes()>0){
-//            viewHolder.lin_item.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,600));
+//            viewHolder.lin_item.setLayoutParams(new_truck LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,600));
             viewHolder.iv_pic.setVisibility(View.VISIBLE);
             viewHolder.iv_pic.setImageResource(menuEntity.getImgRes());
         }else{

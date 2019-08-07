@@ -34,7 +34,7 @@ public class LoginActivity extends BaseTitleActivity {
     @Override
     protected void initView() {
         super.initView();
-        StatusBarUtils.setStatusBarLightMode(this);
+        StatusBarUtils.setStatusBarDarkMode(this);
         title_text.setText(getString(R.string.login));
         back.setVisibility(View.VISIBLE);
         title_do.setVisibility(View.GONE);

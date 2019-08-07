@@ -6,6 +6,7 @@ import android.widget.GridView;
 
 import com.cqkj.snail.R;
 import com.cqkj.snail.buytruck.adapter.TruckTypeAdapter;
+import com.cqkj.snail.sell.activity.SellBaseInputActivity;
 import com.cqkj.snail.truck.entity.MenuEntity;
 import com.fxkj.publicframework.activity.BaseTitleActivity;
 import com.fxkj.publicframework.tool.ToastUtil;
@@ -88,8 +89,7 @@ public class SellCarActivity extends BaseTitleActivity {
                     }
                     // 如果选择了车型，则进行下一步
                     if (selectedME != null){
-                        // 暂时将选中的id弹窗看看
-                        ToastUtil.showShort(this,selectedME.getId() + "");
+                       startActivity(SellBaseInputActivity.class);
                     }else{
                         // 如果没有选择车型，则弹出提示
                         ToastUtil.showShort(this, R.string.no_selected_truck_type);

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    android:padding="@dimen/com_size_10">
+
+    <RelativeLayout
+        android:layout_width="130dip"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_truck"
+            android:layout_width="130dip"
+            android:layout_height="100dip"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/img_beautiful_girl" />
+
+        <TextView
+            android:id="@+id/tv_cut_price"
+            style="@style/text_remark"
+            android:background="@color/colorPrimary"
+            android:padding="@dimen/com_size_5"
+            android:text="已将10000"
+            android:textSize="@dimen/small_text_size"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/tv_sell"
+            style="@style/text_base"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_white_stroke"
+            android:paddingLeft="@dimen/com_size_15"
+            android:paddingTop="@dimen/com_size_5"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_5"
+            android:text="已售"
+            android:textColor="@color/white"
+            android:textSize="@dimen/activity_title_size_25" />
+        <ImageView
+            android:id="@+id/iv_new"
+            android:layout_width="@dimen/img_size_25"
+            android:layout_height="@dimen/img_size_25"
+            android:src="@mipmap/new_truck"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginLeft="@dimen/com_size_10">
+        <TextView
+            android:id="@+id/tv_title"
+            style="@style/text_base"
+            android:text="福田欧曼ETX 载货车 290匹"
+            android:layout_weight="1"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_remark"
+            style="@style/text_remark"
+            android:text="福田欧曼ETX 载货车 290匹"
+            android:layout_weight="1"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_price"
+                style="@style/text_big"
+                android:text="25万"
+                android:layout_weight="1"
+                android:textColor="@color/colorPrimary"/>
+            <TextView
+                android:id="@+id/tv_bargaining"
+                android:background="@drawable/shape_green_stroke"
+                style="@style/text_remark_12"
+                android:paddingRight="@dimen/com_size_5"
+                android:paddingLeft="@dimen/com_size_5"
+                android:text="可议价"
+                android:textColor="@color/color_bg_success"
+                />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

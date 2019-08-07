@@ -19,6 +19,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.cqkj.snail.R;
+import com.xuexiang.xui.utils.StatusBarUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +57,7 @@ public class MainActivity extends ActivityGroup {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setBarStatus();
+        StatusBarUtils.setStatusBarDarkMode(this);
         requestPermissions(permissions);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -101,7 +102,7 @@ public class MainActivity extends ActivityGroup {
         icon1.setTag(getString(R.string.first_pager));
         TextView tvTilte1 = tab1.findViewById(R.id.tv_title);
         tvTilte1.setText(R.string.first_pager);
-        tvTilte1.setTextColor(getResources().getColor(R.color.main_red));
+        tvTilte1.setTextColor(getResources().getColor(R.color.colorPrimary));
         ImageView img_remind = (ImageView) tab1.findViewById(R.id.img_remind);
         img_remind.setVisibility(View.GONE);
         tabRelativeLayouts.add(tab1);
@@ -218,7 +219,7 @@ public class MainActivity extends ActivityGroup {
                 TextView textView = (TextView) linearLayout.getChildAt(2);
                 if (imageView.getTag().toString().equals(tabId)) {
                     imageView.setImageResource(botResList.get(i).get(1));
-                    textView.setTextColor(getResources().getColor(R.color.main_red));
+                    textView.setTextColor(getResources().getColor(R.color.colorPrimary));
                 } else {
                     imageView.setImageResource(botResList.get(i).get(0));
                     textView.setTextColor(getResources().getColor(R.color.hint_color));
@@ -247,17 +248,17 @@ public class MainActivity extends ActivityGroup {
     /**
      * 设置状态栏颜色
      */
-    private void setBarStatus() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            //获取窗口区域
-            Window window = getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            //设置显示为白色背景，黑色字体
-            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
-        }
-
-    }
+//    private void setBarStatus() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            //获取窗口区域
+//            Window window = getWindow();
+//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//            //设置显示为白色背景，黑色字体
+//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+//
+//        }
+//
+//    }
 
     @Override
     public void onDestroy() {

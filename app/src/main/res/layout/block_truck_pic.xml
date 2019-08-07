@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--买车基本信息：车辆照片版块-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+    <LinearLayout
+        style="@style/lin_base"
+        android:orientation="vertical">
+        <include layout="@layout/block_bar"/>
+
+        <View style="@style/hLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_add_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/com_size_15"
+                android:src="@mipmap/addimg_1x" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+                <TextView
+                    style="@style/text_base"
+                    android:text="0/21"
+                    android:textSize="@dimen/activity_title_size_25" />
+                <TextView
+                    style="@style/text_remark"
+                    android:text="@string/pic_explain" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

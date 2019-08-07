@@ -50,7 +50,7 @@ public class RequestManager {
         Iterator map1it = params.entrySet().iterator();
         while (map1it.hasNext()) {
             Map.Entry<String, String> entry = (Map.Entry<String, String>) map1it.next();
-            //String newStr = new String(entry.getValue().getBytes("UTF-8"), "ISO-8859-1").trim();
+            //String newStr = new_truck String(entry.getValue().getBytes("UTF-8"), "ISO-8859-1").trim();
             builder.addFormDataPart(entry.getKey(), entry.getValue());
         }
         RequestBody requestBody = builder.build();

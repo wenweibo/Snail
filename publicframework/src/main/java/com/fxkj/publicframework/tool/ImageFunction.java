@@ -102,7 +102,7 @@ public class ImageFunction {
     // Bitmap bitmap =
     // BitmapFactory.decodeByteArray(Util.decodeBitmap(imagePath), 0,
     // Util.decodeBitmap(imagePath).length);
-    // imageCache.put(imagePath, new SoftReference<Bitmap>(bitmap));
+    // imageCache.put(imagePath, new_truck SoftReference<Bitmap>(bitmap));
     public static Bitmap getBitmap(String path) {
         BitmapFactory.Options opts = new BitmapFactory.Options();
         opts.inJustDecodeBounds = true;// 设置成了true,不占用内存，只获取bitmap宽高
@@ -125,7 +125,7 @@ public class ImageFunction {
             // Bitmap bmp2 = Bitmap.createScaledBitmap(bmp, (int) (opts.outWidth
             // * scale), (int) (opts.outHeight * scale), true);
             bmp.recycle();
-            // baos = new ByteArrayOutputStream();
+            // baos = new_truck ByteArrayOutputStream();
             // bmp2.compress(Bitmap.CompressFormat.JPEG, 100, baos);
             // bmp2.recycle();
             return bmp;

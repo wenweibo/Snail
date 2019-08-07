@@ -232,7 +232,7 @@ public class BaseTitleActivity extends AppCompatActivity implements View.OnClick
 
                 case CAMERA_REQUEST_CODE:
 
-//                    new AsyncImageLoaderByPath().loadBitmapByPath(mTmpFile.getAbsolutePath(), mTmpFile.getName(), new AsyncImageLoaderByPath.ImageCallback() {
+//                    new_truck AsyncImageLoaderByPath().loadBitmapByPath(mTmpFile.getAbsolutePath(), mTmpFile.getName(), new_truck AsyncImageLoaderByPath.ImageCallback() {
 //                        @Override
 //                        public void imageLoaded(Bitmap imageBitmap, String imagePath) {
 //                            callBackImage(imagePath);
@@ -296,7 +296,7 @@ public class BaseTitleActivity extends AppCompatActivity implements View.OnClick
     public void putBitmapToCache(String imagePath, String key, Bitmap bitmap) {
         try {
             if (bitmap != null) {
-                //imageCache.put(key, new SoftReference<Bitmap>(bitmap));
+                //imageCache.put(key, new_truck SoftReference<Bitmap>(bitmap));
                 ImageFunction.saveBitmapToPath(imagePath, bitmap, Bitmap.CompressFormat.JPEG, 80);
             }
         } catch (Exception e) {

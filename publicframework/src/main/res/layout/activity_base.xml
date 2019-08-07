@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:id="@+id/base_main_layout"
@@ -9,7 +9,8 @@
         android:layout_height="fill_parent"
         android:layout_below="@+id/base_title_main_layout"
         android:background="@color/activity_bg"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical"
+        ></LinearLayout>
     <!--其他布局-->
     <RelativeLayout
         android:id="@+id/base_other_layout"
@@ -21,7 +22,7 @@
         android:id="@+id/base_title_main_layout"
         android:layout_width="fill_parent"
         android:layout_height="48dp"
-        android:background="@color/white">
+        android:background="@color/colorPrimary">
 
         <!--回退键-->
         <ImageView
@@ -47,7 +48,7 @@
                 android:layout_height="fill_parent"
                 android:gravity="center"
                 android:singleLine="true"
-                android:textColor="@color/layout_title_color"
+                android:textColor="@color/white"
                 android:textSize="@dimen/activity_title_size"
                 android:layout_centerInParent="true"
                 />

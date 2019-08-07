@@ -15,7 +15,7 @@
     <string name="chiquan_proxy">《池泉二手货车用户服务协议》</string>
     <string name="login_register">还没有账号？点我注册</string>
     <string name="register">注册</string>
-    <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
+    <!--<string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>-->
     <string name="large_text">
         "Material is the metaphor.\n\n"
 
@@ -109,4 +109,49 @@
     <string name="select_truck_type">选择车型</string>
     <string name="no_truch_type">抱歉,没有类型可选</string>
     <string name="no_selected_truck_type">抱歉,您还未选择车型</string>
+    <string name="truck_pic">车辆照片</string>
+    <string name="must_fill">(必填项)</string>
+    <string name="un_must_fill">(非必填)</string>
+    <string name="pic_explain">至少上传3张，多拍多曝光</string>
+    <string name="contact_msg">联系人信息</string>
+    <string name="contact">联系人</string>
+    <string name="contact_hint">请输入联系人姓名</string>
+    <string name="mobile_number">手机号</string>
+    <string name="mobile_number_hint">请输入手机号</string>
+    <string name="truck_brand">车辆品牌</string>
+    <string name="truck_brand_hint">请选择车辆品牌</string>
+    <string name="truck_price">车辆价格</string>
+    <string name="truck_price_hint">请输入卖价</string>
+    <string name="truck_price_unit">万元</string>
+    <string name="truck_type">车型</string>
+    <string name="truck_particular">车辆年份</string>
+    <string name="truck_particular_hint">请选择车辆年份</string>
+    <string name="emission_standard">排放标准</string>
+    <string name="emission_standard_hint">请选择排放标准</string>
+    <string name="mileage">表显里程</string>
+    <string name="mileage_hint">请输入里程数</string>
+    <string name="mileage_unit">万公里</string>
+    <string name="drive_mode">驱动方式</string>
+    <string name="drive_mode_hint">请选择驱动方式</string>
+    <string name="engine_brand">发动机品牌</string>
+    <string name="engine_brand_hint">请选择发动机品牌</string>
+    <string name="max_horsepower">最大马力</string>
+    <string name="max_horsepower_hint">请输入最大马力</string>
+    <string name="horsepower_unit">匹</string>
+    <string name="carriage_length">箱体长度</string>
+    <string name="carriage_length_hint">请输入箱体长度</string>
+    <string name="carriage_length_uint">米</string>
+    <string name="fuel_mode">燃料类型</string>
+    <string name="fuel_mode_hint">请选择燃料类型</string>
+    <string name="has_transfer">是否可过户</string>
+    <string name="has_transfer_hint">请选择是否可过户</string>
+    <string name="truck_color">车辆颜色</string>
+    <string name="truck_color_hint">请选择车辆颜色</string>
+    <string name="truck_trait">车辆特色</string>
+    <string name="truck_belong_to">车辆归属：</string>
+    <string name="personal">个人</string>
+    <string name="business">商家</string>
+    <string name="input_msg">填写信息</string>
+    <string name="upload_pic">上传照片</string>
+    <string name="sure_upload">确认上传</string>
 </resources>

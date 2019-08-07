@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/lin_base"
+    android:layout_marginTop="@dimen/com_size_15"
+    android:orientation="vertical">
+
+    <include layout="@layout/block_bar" />
+
+    <View style="@style/hLine" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/com_size_15">
+
+        <!--燃料类型-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:background="@drawable/btn_white_corners"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:text="@string/fuel_mode" />
+
+            <TextView
+                style="@style/text_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:hint="@string/fuel_mode_hint" />
+
+            <ImageView
+                android:layout_width="@dimen/btn_text_size"
+                android:layout_height="@dimen/btn_text_size"
+                android:layout_marginLeft="@dimen/com_size_5"
+                android:src="@mipmap/to" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+
+        <!--是否可过户-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:background="@drawable/btn_white_corners"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:layout_height="wrap_content"
+                android:text="@string/has_transfer" />
+
+            <TextView
+                style="@style/text_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:hint="@string/has_transfer_hint" />
+
+            <ImageView
+                android:layout_width="@dimen/btn_text_size"
+                android:layout_height="@dimen/btn_text_size"
+                android:layout_marginLeft="@dimen/com_size_5"
+                android:src="@mipmap/to" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+        <!--车辆颜色-->
+        <LinearLayout
+            style="@style/lin_base"
+            android:background="@drawable/btn_white_corners"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+
+            <TextView
+                style="@style/text_base"
+                android:layout_height="wrap_content"
+                android:text="@string/truck_color" />
+
+            <TextView
+                style="@style/text_base"
+                android:layout_marginLeft="@dimen/com_size_15"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:hint="@string/truck_color_hint" />
+
+            <ImageView
+                android:layout_width="@dimen/btn_text_size"
+                android:layout_height="@dimen/btn_text_size"
+                android:layout_marginLeft="@dimen/com_size_5"
+                android:src="@mipmap/to" />
+        </LinearLayout>
+
+        <View style="@style/hLine" />
+
+        <LinearLayout
+            style="@style/lin_base"
+            android:gravity="center_vertical"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    style="@style/text_base"
+                    android:layout_height="wrap_content"
+                    android:text="@string/truck_trait" />
+
+                <TextView
+                    style="@style/text_remark"
+                    android:text="最多可选一个"
+                    android:layout_marginLeft="@dimen/com_size_15"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/com_size_15">
+                <TextView android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="可议价"
+                    android:background="@drawable/shape_gray_stroke_corners"
+                    android:padding="@dimen/com_size_10"
+                    android:gravity="center"/>
+                <TextView android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/com_size_10"
+                    android:layout_weight="1"
+                    android:text="可议价"
+                    android:background="@mipmap/selected"
+                    android:padding="@dimen/com_size_10"
+                    android:gravity="center"/>
+            </LinearLayout>
+        </LinearLayout>
+        <View style="@style/hLine" />
+        <LinearLayout
+            style="@style/lin_base"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="@dimen/com_size_15"
+            android:paddingRight="@dimen/com_size_15"
+            android:paddingBottom="@dimen/com_size_15">
+            <TextView
+                style="@style/text_base"
+                android:layout_height="wrap_content"
+                android:text="@string/truck_belong_to" />
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/personal"
+                    />
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/business"
+                    />
+            </RadioGroup>
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

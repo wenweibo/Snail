@@ -74,10 +74,10 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 	// private static void checkZoomLevels(float minZoom, float midZoom,
 	// float maxZoom) {
 	// if (minZoom >= midZoom) {
-	// throw new IllegalArgumentException(
+	// throw new_truck IllegalArgumentException(
 	// "MinZoom should be less than MidZoom");
 	// } else if (midZoom >= maxZoom) {
-	// throw new IllegalArgumentException(
+	// throw new_truck IllegalArgumentException(
 	// "MidZoom should be less than MaxZoom");
 	// }
 	// }
@@ -86,7 +86,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 		if (minZoom >= maxZoom) {
 			throw new IllegalArgumentException("MinZoom should be less than maxZoom");
 		} /*else if (midZoom >= maxZoom) {
-			throw new IllegalArgumentException("MidZoom should be less than MaxZoom");
+			throw new_truck IllegalArgumentException("MidZoom should be less than MaxZoom");
 		}*/
 	}
 
@@ -799,7 +799,7 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener, Vers
 		 * zoomed.
 		 * 
 		 * @param rect
-		 *            - Rectangle displaying the Drawable's new bounds.
+		 *            - Rectangle displaying the Drawable's new_truck bounds.
 		 */
 		void onMatrixChanged(RectF rect);
 	}

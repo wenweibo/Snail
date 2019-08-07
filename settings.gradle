@@ -1,1 +1,1 @@
-include ':app', ':publicframework'
+include ':app', ':publicframework', ':certificateCamera'

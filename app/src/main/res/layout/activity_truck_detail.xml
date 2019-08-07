@@ -1,68 +1,236 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:orientation="vertical">
-    <android.support.design.widget.AppBarLayout
-        android:id="@+id/appbar_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppTheme.AppBarOverlay">
-        <android.support.design.widget.CollapsingToolbarLayout
-            android:layout_width="match_parent"
-            android:layout_height="250dip"
-            android:fitsSystemWindows="true"
-            app:contentScrim="?attr/colorPrimary"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-            <!--<android.support.v7.widget.AppCompatImageView-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:fitsSystemWindows="true"-->
-                <!--android:scaleType="centerCrop"-->
-                <!--android:src="@mipmap/img_beautiful_girl"-->
-                <!--app:layout_collapseMode="parallax"-->
-                <!--/>-->
-            <com.youth.banner.Banner
-                android:id="@+id/af_banner"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                />
 
-            <android.support.v7.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:navigationIcon="@mipmap/title_back"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:titleTextAppearance="@style/ToolbarTheme"
-                app:titleTextColor="@color/focus_color_3"
-               />
-
-        </android.support.design.widget.CollapsingToolbarLayout>
-    </android.support.design.widget.AppBarLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:src="@mipmap/ic_launcher"
-        app:layout_anchor="@id/appbar_layout"
-        app:layout_anchorGravity="bottom|end"/>
-
-    <android.support.v4.widget.NestedScrollView
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-        <TextView
-            android:layout_width="wrap_content"
+        android:fitsSystemWindows="true"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="18dp"
-            android:text="@string/large_text"
-            />
-    </android.support.v4.widget.NestedScrollView>
-</android.support.design.widget.CoordinatorLayout>
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="250dip"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/af_banner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fitsSystemWindows="true" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:gravity="center_horizontal"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@mipmap/title_back"
+                    app:titleTextAppearance="@style/ToolbarTheme">
+
+                    <TextView
+                        android:id="@+id/tv_title"
+                        style="@style/text_base"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/activity_title_size" />
+                </android.support.v7.widget.Toolbar>
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_color"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <!--标题。-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:padding="@dimen/com_size_10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/text_base"
+                            android:layout_weight="1"
+                            android:text="东方商用东风大力神 自卸车 340匹2013年11月 6x4 国三" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/com_size_15"
+                            android:background="@drawable/shape_green_stroke"
+                            android:padding="@dimen/com_size_10"
+                            android:text="+对比" />
+                    </LinearLayout>
+
+                    <!--标签-->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/com_size_10"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/text_remark"
+                            android:background="@drawable/shape_green_stroke"
+                            android:padding="@dimen/com_size_5"
+                            android:text="已降2000元"
+                            android:textColor="@color/colorPrimaryDark" />
+
+                        <TextView
+                            style="@style/text_remark"
+                            android:layout_marginLeft="@dimen/com_size_10"
+                            android:background="@drawable/shape_green_stroke"
+                            android:padding="@dimen/com_size_5"
+                            android:text="可议价"
+                            android:textColor="@color/colorPrimaryDark" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/com_size_10"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            style="@style/text_base"
+                            android:text="车辆报价" />
+
+                        <TextView
+                            style="@style/text_base"
+                            android:layout_marginLeft="@dimen/com_size_10"
+                            android:text="25万"
+                            android:textColor="@color/colorAccent" />
+                    </LinearLayout>
+                </LinearLayout>
+                <!--基本信息-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/com_size_15"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View style="@style/vLine.bigRed" />
+
+                        <TextView
+                            style="@style/text_base"
+                            android:padding="@dimen/com_size_10"
+                            android:text="基本信息" />
+                    </LinearLayout>
+
+                    <com.fxkj.publicframework.widget.NoScrollGridView
+                        android:id="@+id/ngv_base"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:cacheColorHint="@color/transparent"
+                        android:numColumns="3"
+                        android:padding="@dimen/com_size_15" />
+                </LinearLayout>
+
+                <!--车辆说明-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/com_size_15"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View style="@style/vLine.bigRed" />
+
+                        <TextView
+                            style="@style/text_base"
+                            android:padding="@dimen/com_size_10"
+                            android:text="车辆说明" />
+                    </LinearLayout>
+
+                    <TextView
+                        style="@style/text_base"
+                        android:padding="@dimen/com_size_15"
+                        android:text="记录数据的浪费睡点觉咯适得府君书两地分居了水电费吉林省会计法收到了房间是领导开发SDK雷锋精神贷了款" />
+                </LinearLayout>
+
+                <!--车况照片-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/com_size_15"
+                    android:background="@color/white"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <View style="@style/vLine.bigRed" />
+
+                        <TextView
+                            style="@style/text_base"
+                            android:padding="@dimen/com_size_10"
+                            android:text="车况照片" />
+                    </LinearLayout>
+
+                    <com.fxkj.publicframework.widget.NoScrollGridView
+                        android:id="@+id/ngl_images"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:numColumns="1"
+                        android:verticalSpacing="@dimen/com_size_5" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+
+    </android.support.design.widget.CoordinatorLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/icon_size2"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="@drawable/btn_red_stroke">
+        <ImageView
+            android:layout_width="@dimen/img_size_25"
+            android:layout_height="@dimen/img_size_25"
+            android:src="@mipmap/phone"/>
+        <TextView style="@style/text_base" android:text="电话咨询"
+            android:textColor="@color/white"
+            android:textSize="@dimen/listview_title_size"/>
+    </LinearLayout>
+
+</LinearLayout>

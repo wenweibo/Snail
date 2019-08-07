@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:background="@color/white"
+    android:paddingBottom="@dimen/com_size_30">
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/text_remark"
+        android:text="车辆类型"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/com_size_5">
+
+        <TextView
+            android:id="@+id/tv_content"
+            style="@style/text_base"
+            android:text="车辆类型"
+            />
+
+        <ImageView
+            android:id="@+id/iv_warning"
+            android:layout_width="@dimen/img_size_20"
+            android:layout_height="@dimen/img_size_20"
+            android:src="@mipmap/warnning"
+            android:layout_marginLeft="@dimen/com_size_5"
+            android:layout_gravity="bottom"/>
+    </LinearLayout>
+
+</LinearLayout>

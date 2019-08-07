@@ -46,11 +46,11 @@ public class ImageDetailFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-//        RequestOptions options = new RequestOptions()
+//        RequestOptions options = new_truck RequestOptions()
 //                .diskCacheStrategy(DiskCacheStrategy.ALL);
 //
 //        //此处修改是因为Glide版本修改为4.5.0
-//        Glide.with(getContext()).load(mImageUrl).apply(options).listener(new RequestListener<Drawable>() {
+//        Glide.with(getContext()).load(mImageUrl).apply(options).listener(new_truck RequestListener<Drawable>() {
 //            @Override
 //            public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
 //                return false;

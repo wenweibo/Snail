@@ -3,8 +3,8 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/main_color</item>
-        <item name="android:textColorPrimary">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/black</item>
         <!--<item name="android:statusBarColor">@color/black</item>-->
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
@@ -28,11 +28,20 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
     </style>
-    <style name="text_remark" >
+    <style name="text_base">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/listview_title_size</item>
+    </style>
+    <style name="text_remark" parent="text_base">
         <item name="android:textColor">@color/hint_text_color</item>
+        <item name="android:textSize">@dimen/tab_text_size</item>
+    </style>
+    <style name="text_remark_12" parent="text_remark">
         <item name="android:textSize">@dimen/tab_text_size2</item>
+    </style>
+    <style name="text_big" parent="text_base">
+        <item name="android:textSize">@dimen/activity_title_size_25</item>
     </style>
     <style name="ToolbarTheme" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">20sp</item>
@@ -50,25 +59,45 @@
         <item name="android:orientation">vertical</item>
         <item name="android:padding">@dimen/com_size_15</item>
         <item name="android:gravity">center_horizontal</item>
-        <item name="android:background">@drawable/btn_white_stroke</item>
+        <item name="android:background">@drawable/btn_white_corners</item>
     </style>
     <!--按钮中图片的样式-->
     <style name="btn_img">
         <item name="android:layout_width">@dimen/img_size</item>
         <item name="android:layout_height">@dimen/img_size</item>
     </style>
-    <style name="text_base">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">@dimen/tab_text_size</item>
-    </style>
+
     <style name="btn_base">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/icon_size2</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/listview_title_size</item>
     </style>
-    <style name="btn_base.red">
+    <style name="btn_base.redCorners">
         <item name="android:background">@drawable/btn_red_stroke_corners_5</item>
+    </style>
+    <style name="btn_base.red">
+        <item name="android:background">@drawable/btn_red_stroke</item>
+    </style>
+
+    <style name="edit_base">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/listview_title_size</item>
+        <item name="android:background">@null</item>
+        <item name="android:gravity">right</item>
+    </style>
+
+    <style name="edit_base.area" >
+        <item name="android:minHeight">200dip</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@drawable/shape_gray_corners</item>
+        <item name="android:gravity">left|top</item>
+        <item name="android:padding">@dimen/com_size_10</item>
+    </style>
+
+    <style name="errorAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorAccent</item>
     </style>
 </resources>

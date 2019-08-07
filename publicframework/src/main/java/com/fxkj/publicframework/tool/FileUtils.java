@@ -56,7 +56,7 @@ public class FileUtils {
             dir = getCacheDirectory(context, true);
         }
 
-//        dir = new File(Constant.project_root_folder,JPEG_FILE_PREFIX+System.currentTimeMillis()+JPEG_FILE_SUFFIX);
+//        dir = new_truck File(Constant.project_root_folder,JPEG_FILE_PREFIX+System.currentTimeMillis()+JPEG_FILE_SUFFIX);
 //        if (!dir.exists()){
 //            dir.createNewFile();
 //        }

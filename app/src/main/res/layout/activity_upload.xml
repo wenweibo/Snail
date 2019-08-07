@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    android:orientation="vertical"
+    tools:context=".sell.activity.UploadActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/com_size_15">
+
+                    <TextView
+                        style="@style/text_base"
+                        android:layout_marginLeft="@dimen/com_size_10"
+                        android:text="@string/truck_pic" />
+
+                    <TextView
+                        style="@style/text_remark"
+                        android:layout_marginLeft="@dimen/com_size_15"
+                        android:text="@string/must_fill"
+                        android:textColor="@color/colorAccent" />
+
+                    <TextView
+                        style="@style/text_remark_12"
+                        android:layout_marginLeft="@dimen/com_size_15"
+                        android:layout_weight="1"
+                        android:text="上传车辆照片,做到诚信买卖" />
+                </LinearLayout>
+
+                <com.fxkj.publicframework.widget.NoScrollGridView
+                    android:id="@+id/ngv_must"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/com_size_10"
+                    android:horizontalSpacing="@dimen/com_size_10"
+                    android:numColumns="3"
+                    android:verticalSpacing="@dimen/com_size_10"
+                    android:listSelector="@null"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/com_size_15"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/lin_un_must"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/com_size_15">
+
+                    <TextView
+                        style="@style/text_base"
+                        android:layout_marginLeft="@dimen/com_size_10"
+                        android:text="@string/truck_pic" />
+
+                    <TextView
+                        style="@style/text_remark"
+                        android:layout_marginLeft="@dimen/com_size_15"
+                        android:text="@string/un_must_fill"
+                        android:textColor="@color/hint_color" />
+
+                    <TextView
+                        style="@style/text_remark_12"
+                        android:layout_marginLeft="@dimen/com_size_15"
+                        android:layout_weight="1"
+                        android:text="多传多曝光,成交机会多" />
+
+                    <ImageView
+                        android:layout_width="@dimen/img_size_20"
+                        android:layout_height="@dimen/img_size_20"
+                        android:src="@mipmap/array_down_black" />
+                </LinearLayout>
+
+                <com.fxkj.publicframework.widget.NoScrollGridView
+                    android:id="@+id/ngv_un_must"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/com_size_10"
+                    android:horizontalSpacing="@dimen/com_size_10"
+                    android:numColumns="3"
+                    android:verticalSpacing="@dimen/com_size_10"
+                    android:listSelector="@null"/>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        style="@style/btn_base.red"
+        android:text="@string/sure_upload" />
+</LinearLayout>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#1bbce2</color>
+    <color name="colorPrimary">#fd5b58</color>
     <color name="colorPrimaryDark">#1bbce2</color>
     <color name="colorAccent">#ff7c1c</color>
 
@@ -19,6 +19,8 @@
     <color name="focus_color_3">#ff3333</color>
     <color name="focus_color_4">#FE346C</color>
     <color name="no_focus_color">#9ea8a8</color>
+    <color name="enable_false_color">#e5e8ed</color>
+    <color name="click_color">#fbfafa</color>
 
     <color name="textcolor">#fff</color>
     <color name="white">#fff</color>

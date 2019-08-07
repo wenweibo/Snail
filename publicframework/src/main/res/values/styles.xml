@@ -37,4 +37,16 @@
     <style name="LightHLine" parent="hLine">
         <item name="android:background">@color/line_bg</item>
     </style>
+    <style name="vLine" parent="hLine">
+        <item name="android:layout_width">@dimen/line</item>
+        <item name="android:layout_height">fill_parent</item>
+    </style>
+    <style name="vLine.bigRed" >
+        <item name="android:layout_width">@dimen/common_space</item>
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+    <style name="pop_bottom">
+        <item name="android:windowEnterAnimation">@anim/pop_bottom_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_bottom_out</item>
+    </style>
 </resources>

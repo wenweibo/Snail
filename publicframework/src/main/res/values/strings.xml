@@ -12,7 +12,6 @@
     <string name="load_succeed">加载成功</string>
     <string name="load_fail">加载失败</string>
 
-    <string name="cancle">取消</string>
     <string name="title">请选择时间</string>
     <string name="commit">确定</string>
     <string name="sure">确定</string>
@@ -21,4 +20,5 @@
     <string name="day">日</string>
     <string name="hour">时</string>
     <string name="minute">分</string>
+    <string name="cancle">取消</string>
 </resources>
