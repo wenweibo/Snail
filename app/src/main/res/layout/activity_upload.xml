@@ -115,6 +115,8 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/btn_upload"
         style="@style/btn_base.red"
+        android:enabled="false"
         android:text="@string/sure_upload" />
 </LinearLayout>

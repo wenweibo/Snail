@@ -1,19 +1,28 @@
 package com.cqkj.snail.sell.activity;
 
+import android.content.Intent;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.cqkj.snail.R;
 import com.cqkj.snail.sell.adapter.TruckPicAdapter;
 import com.fxkj.publicframework.activity.BaseTitleActivity;
 import com.fxkj.publicframework.widget.NoScrollGridView;
+import com.luck.picture.lib.PictureSelector;
+import com.luck.picture.lib.config.PictureConfig;
+import com.luck.picture.lib.entity.LocalMedia;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import win.smartown.android.library.certificateCamera.CameraActivity;
 import win.smartown.android.library.certificateCamera.TruckPic;
+import win.smartown.android.library.certificateCamera.twgallery.PicPreViewActivity;
 
 /**
  * 上传照片页面
@@ -31,6 +40,9 @@ public class UploadActivity extends BaseTitleActivity {
     // 非必须车辆照片列表
     @BindView(R.id.ngv_un_must)
     NoScrollGridView ngvUnmust;
+    // 上传按钮
+    @BindView(R.id.btn_upload)
+    Button btn_upload;
 
     private final String[] picNameArr = new String[]{"车辆铭牌", "左前45度", "车身正面照",
             "车辆牌照", "右后45度", "驾驶室", "车辆前轮", "车辆后轮", "前围骨架", "玻璃及编号",
@@ -44,6 +56,15 @@ public class UploadActivity extends BaseTitleActivity {
     ArrayList<TruckPic> unmustTruckPics;
     private TruckPicAdapter mustTruckPicAdapter;
     private TruckPicAdapter unmustTruckPicAdapter;
+
+    // 当前操作的列表
+    private ArrayList<TruckPic> currentTruckPics;
+    // 当前操作的适配器
+    private TruckPicAdapter currentTruckPicAdapter;
+    // 当前操作的列表下标
+    private int currentPosition;
+
+
 
     @Override
     protected int getLayoutId() {
@@ -97,6 +118,7 @@ public class UploadActivity extends BaseTitleActivity {
                     TruckPic truckPic = new TruckPic();
                     truckPic.setSpecimenRes(getResources().getIdentifier("left_xiangji_" + (i + 1), "mipmap", getPackageName()));
                     truckPic.setTitle(picNameArr[i]);
+                    truckPic.setMustFlag(1);
                     truckPics.add(truckPic);
                 } else {
                     break;
@@ -132,5 +154,88 @@ public class UploadActivity extends BaseTitleActivity {
             truckPic.setSelected(0);
         }
         truckPicAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case PictureConfig.CHOOSE_REQUEST:
+                    // 图片选择结果回调
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    // 例如 LocalMedia 里面返回三种path
+                    // 1.media.getPath(); 为原图path
+                    // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
+                    // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
+                    // 如果裁剪并压缩了，已取压缩路径为准，因为是先裁剪后压缩的
+                    String path = "";
+                    for (LocalMedia media : selectList) {
+                        if (media.isCut()) {
+                            path = media.getCutPath();
+                        }else{
+                            path = media.getPath();
+                        }
+                        Log.i("图片-----》", media.getPath());
+                    }
+                    currentTruckPics.get(currentPosition).setImgPath(path);
+                    currentTruckPicAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }else if (resultCode == CameraActivity.RESULT_CODE || resultCode == PicPreViewActivity.RESULT_CODE_PREVIEW){
+            // 拍照后返回 或者 预览返回
+            if (data != null){
+                setResultStatus(data);
+            }
+        }
+        setBtnStatus();
+    }
+
+    /**
+     * 操作图片后的处理
+     * @param data
+     */
+    private void setResultStatus(Intent data) {
+        // 获取是否是必须列表
+        int must = data.getExtras().getInt("must");
+        ArrayList<TruckPic> truckPics = data.getExtras().getParcelableArrayList("truckPics");
+        // 当前操作的列表集合
+        ArrayList<TruckPic> oldTruckPics = mustTruckPics;
+        // 当前操作的列表适配器
+        TruckPicAdapter truckPicAdapter = mustTruckPicAdapter;
+        // 如果是非必须列表
+        if (must == 1){
+            truckPicAdapter = unmustTruckPicAdapter;
+            oldTruckPics = unmustTruckPics;
+        }
+        oldTruckPics.clear();
+        oldTruckPics.addAll(truckPics);
+        truckPicAdapter.notifyDataSetChanged();
+    }
+
+    /**
+     * 设置当前操作内容
+     * @param currentTruckPics
+     * @param currentTruckPicAdapter
+     * @param currentPosition
+     */
+    public void setCurrent(ArrayList<TruckPic> currentTruckPics, TruckPicAdapter currentTruckPicAdapter, int currentPosition) {
+        this.currentTruckPics = currentTruckPics;
+        this.currentTruckPicAdapter = currentTruckPicAdapter;
+        this.currentPosition = currentPosition;
+    }
+
+    /**
+     * 设置提交按钮是否可用
+     */
+    private void setBtnStatus(){
+        boolean can = true;
+        // 但凡是必须上传列表中含有未选照片的数据，则不可上传
+        for (TruckPic truckPic:mustTruckPics) {
+            if (TextUtils.isEmpty(truckPic.getImgPath())){
+                can = false;
+            }
+        }
+        btn_upload.setEnabled(can);
     }
 }

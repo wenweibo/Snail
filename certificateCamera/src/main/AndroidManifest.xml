@@ -17,9 +17,11 @@
     <application
         android:allowBackup="true"
         android:supportsRtl="true">
-        <activity android:name=".PicActivity" android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
-            />
+        <activity android:name=".twgallery.PicPreViewActivity"></activity>
+        <activity
+            android:name=".PicActivity"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen" />
         <activity
             android:name=".CameraActivity"
             android:screenOrientation="landscape"

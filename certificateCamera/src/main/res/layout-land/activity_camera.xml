@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000">
+
+    <win.smartown.android.library.certificateCamera.CameraPreview
+        android:id="@+id/camera_surface"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="136dp"
+            android:layout_height="match_parent"
+            android:background="@color/preview_mock"
+            android:gravity="center">
+
+            <win.smartown.android.library.certificateCamera.twgallery.CoverFlow
+                android:id="@+id/cover_flow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                app:orientation="vertical"
+                app:spacing="2dip"
+                app:unselectedAlpha="0.7"
+                app:unselectedScale="0.8" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/preview_mock" />
+
+            <LinearLayout
+                android:id="@+id/camera_crop_container"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="vertical">
+
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="0dp"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:background="@color/preview_mock" />-->
+                <TextView
+                    android:id="@+id/tv_num"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/preview_mock"
+                    android:gravity="center"
+                    android:textColor="#afff"
+                    android:textSize="16dp"
+                    android:layout_weight="1"
+                    />
+                <ImageView
+                    android:id="@+id/camera_crop"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:scaleType="fitXY" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@color/preview_mock"
+                    android:gravity="center"
+                    android:text="@string/touch_to_focus"
+                    android:textColor="#afff"
+                    android:textSize="16dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:layout_width="136dp"
+            android:layout_height="match_parent"
+            android:background="@color/preview_mock">
+
+            <RelativeLayout
+                android:id="@+id/camera_option"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="10dip">
+
+
+                <LinearLayout
+                    android:id="@+id/lin_mid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/camera_flash"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/camera_flash_off" />
+
+                    <ImageView
+                        android:id="@+id/camera_take"
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:layout_margin="32dp"
+                        android:src="@mipmap/camera_take" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_finish"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="完成"
+                    android:textColor="@color/white"
+                    android:textSize="30sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/iv_result"
+                        android:layout_width="60dip"
+                        android:layout_height="60dip"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/left_xiangji_1" />
+
+                    <ImageView
+                        android:id="@+id/camera_close"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:src="@mipmap/camera_close" />
+                </LinearLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/camera_result"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/camera_result_ok"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/camera_result_ok" />
+
+                <ImageView
+                    android:id="@+id/camera_result_cancel"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="80dp"
+                    android:src="@mipmap/camera_result_cancel" />
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+</RelativeLayout>

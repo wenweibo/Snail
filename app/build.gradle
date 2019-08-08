@@ -39,4 +39,7 @@ dependencies {
     //    implementation 'androidx.appcompat:appcompat:1.0.2'
     implementation project(':publicframework')
     implementation project(':certificateCamera')
+    implementation project(':picture_library')
+    //PictureSelector图片选择
+//    implementation 'com.github.xuexiangjys.PictureSelector:picture-core:1.0.3'
 }

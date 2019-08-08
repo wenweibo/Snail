@@ -62,16 +62,23 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     public final static int RESULT_CODE = 0X14;
     // 货车图片列表
     private ArrayList<TruckPic> truckPics;
+    // 是否必须
+    private int must;
+    // 完成按钮
+    private View tv_finish;
 
     /**
      * @param type {@link #TYPE_IDCARD_FRONT}
      *             {@link #TYPE_IDCARD_BACK}
      *             {@link #TYPE_COMPANY_PORTRAIT}
      *             {@link #TYPE_COMPANY_LANDSCAPE}
+     * @param must 0:必须,1:非必须
      */
-    public static void openCertificateCamera(Activity activity, int type, ArrayList<TruckPic> truckPics) {
+    public static void openCertificateCamera(Activity activity, int type, ArrayList<TruckPic> truckPics, int position, int must) {
         Intent intent = new Intent(activity, CameraActivity.class);
         intent.putExtra("type", type);
+        intent.putExtra("must", must);
+        intent.putExtra("position", position);
         intent.putParcelableArrayListExtra("truckPics", truckPics);
         activity.startActivityForResult(intent, REQUEST_CODE);
     }
@@ -100,7 +107,8 @@ public class CameraActivity extends Activity implements View.OnClickListener {
     private TextView tv_num;
 
     private int type;
-
+    // 进入拍照的项目下标
+    private int position;
     private int currentPosition;
 
     @Override
@@ -108,6 +116,8 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         truckPics = getIntent().getParcelableArrayListExtra("truckPics");
         type = getIntent().getIntExtra("type", 0);
+        position = getIntent().getIntExtra("position", 0);
+        must = getIntent().getIntExtra("must", 0);
         if (type == TYPE_COMPANY_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         } else {
@@ -203,7 +213,10 @@ public class CameraActivity extends Activity implements View.OnClickListener {
 
             }
         });
-        cover_flow.setSelection(0);
+        cover_flow.setSelection(position);
+
+        tv_finish = findViewById(R.id.tv_finish);
+        tv_finish.setOnClickListener(this);
         mRequestOptions = new RequestOptions()
                 .error(R.mipmap.defaultimage)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -221,7 +234,7 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         } else if (id == R.id.camera_flash) {
             boolean isFlashOn = cameraPreview.switchFlashLight();
             flashImageView.setImageResource(isFlashOn ? R.mipmap.camera_flash_on : R.mipmap.camera_flash_off);
-        } else if (id == R.id.camera_result_ok) {
+        } else if (id == R.id.camera_result_ok || id == R.id.tv_finish) {
             goBack();
         } else if (id == R.id.camera_result_cancel) {
             optionView.setVisibility(View.VISIBLE);
@@ -233,7 +246,8 @@ public class CameraActivity extends Activity implements View.OnClickListener {
             Intent intent = new Intent(this,PicActivity.class);
             intent.putParcelableArrayListExtra("truckPics",truckPics);
             intent.putExtra("currentPosition",currentPosition);
-            startActivity(intent);
+            startActivityForResult(intent,0);
+//            startActivity(intent);
         }
     }
 
@@ -367,9 +381,20 @@ public class CameraActivity extends Activity implements View.OnClickListener {
      */
     private void goBack() {
         Intent intent = new Intent();
-        intent.putExtra("result", getCropFile().getPath());
+//        intent.putExtra("result", getCropFile().getPath());
+        intent.putExtra("truckPics", truckPics);
+        intent.putExtra("must", must);
         setResult(RESULT_CODE, intent);
         finish();
     }
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == 0 && data != null){
+            currentPosition = data.getExtras().getInt("currentPosition");
+            cover_flow.setSelection(currentPosition,true);
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
 }
