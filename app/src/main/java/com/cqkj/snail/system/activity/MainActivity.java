@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -18,6 +19,9 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
 
+import com.cqkj.publicframework.activity.BaseActivityManager;
+import com.cqkj.publicframework.tool.ToastUtil;
+import com.cqkj.snail.AppApplication;
 import com.cqkj.snail.R;
 import com.xuexiang.xui.utils.StatusBarUtils;
 
@@ -32,8 +36,7 @@ import butterknife.ButterKnife;
 
 /**
  * 主页
- *
- * @author wwb 2019/01/03
+ * @author wwb 2019/07/25
  */
 public class MainActivity extends ActivityGroup {
     @BindView(R.id.view_tab_host)
@@ -195,9 +198,11 @@ public class MainActivity extends ActivityGroup {
         }
 
         public void onClick(View v) {
-            if (position == 3) {
+            // 点击的是“我的”且是未登录状态，则跳转到登录页面
+            if (position == 3 && AppApplication.userEntity == null) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             } else {
+                // 否则打开对应的标签页
                 tabHost.setCurrentTab(position);
             }
         }
@@ -245,21 +250,6 @@ public class MainActivity extends ActivityGroup {
 
     }
 
-    /**
-     * 设置状态栏颜色
-     */
-//    private void setBarStatus() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//            //获取窗口区域
-//            Window window = getWindow();
-//            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-//            //设置显示为白色背景，黑色字体
-//            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-//
-//        }
-//
-//    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -269,5 +259,18 @@ public class MainActivity extends ActivityGroup {
     protected void onResume() {
         super.onResume();
     }
-
+    private long exitTime = 0;
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP){
+            if (System.currentTimeMillis() - exitTime > 2000) {
+                ToastUtil.showShort(this, "再按一次退出");
+                exitTime = System.currentTimeMillis();
+            } else {
+                BaseActivityManager.getInstance().AppExit(this);
+                finish();
+            }
+        }
+        return super.dispatchKeyEvent(event);
+    }
 }

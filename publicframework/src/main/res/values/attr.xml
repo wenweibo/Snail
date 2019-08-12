@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="RatingBarView">
-        <attr name="starImageSize" format="dimension"/>
-        <attr name="starCount" format="integer"/>
-        <attr name="starEmpty" format="reference"/>
-        <attr name="starFill" format="reference"/>
+        <attr name="starImageSize" format="dimension" />
+        <attr name="starCount" format="integer" />
+        <attr name="starEmpty" format="reference" />
+        <attr name="starFill" format="reference" />
     </declare-styleable>
 
     <declare-styleable name="CalendarView">
@@ -46,5 +46,14 @@
         <attr name="week_color" format="color" />
         <!--周的文字大小-->
         <attr name="week_size" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="SideBar">
+        <attr name="mRadius" format="dimension" />
+        <attr name="mTextColor" format="color" />
+        <attr name="mBgTextColor" format="color" />
+        <attr name="mBgColor" format="color" />
+        <attr name="mBgTextSize" format="dimension" />
+        <attr name="mTextSize" format="dimension" />
     </declare-styleable>
 </resources>

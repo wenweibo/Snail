@@ -5,6 +5,55 @@
     android:background="@color/bg_color"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:id="@+id/base_title_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_hight"
+        android:layout_gravity="center_vertical"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/img_size_10"
+        android:paddingRight="@dimen/img_size_10">
+
+        <TextView
+            android:id="@+id/tv_location"
+            style="@style/text_base"
+            android:layout_height="match_parent"
+            android:drawableRight="@mipmap/title_location"
+            android:drawablePadding="@dimen/com_size_5"
+            android:gravity="center_vertical"
+            android:text="南昌"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/lin_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/com_size_10"
+            android:layout_weight="1"
+            android:background="@drawable/shape_white_corners_50"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/com_size_5"
+                android:src="@mipmap/title_search" />
+
+            <TextView
+                style="@style/text_base"
+                android:hint="搜索车辆" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/message_img" />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -86,14 +135,14 @@
                 android:layout_marginTop="@dimen/com_size_15"
                 android:orientation="vertical">
 
-                <com.fxkj.publicframework.widget.NoScrollGridView
+                <com.cqkj.publicframework.widget.NoScrollGridView
                     android:id="@+id/ngv_menu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:numColumns="4" />
 
-                <com.fxkj.publicframework.widget.NoScrollGridView
+                <com.cqkj.publicframework.widget.NoScrollGridView
                     android:id="@+id/ngv_menu2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -124,7 +173,7 @@
                         <TextView
                             style="@style/text_base"
                             android:text="最新上架"
-                            android:textSize="@dimen/activity_title_size"/>
+                            android:textSize="@dimen/activity_title_size" />
 
                         <View
                             android:layout_width="match_parent"
@@ -143,8 +192,7 @@
                         <TextView
                             style="@style/text_base"
                             android:text="浏览记录"
-                            android:textSize="@dimen/activity_title_size"
-                            />
+                            android:textSize="@dimen/activity_title_size" />
 
                         <View
                             android:layout_width="match_parent"
@@ -154,12 +202,13 @@
                             android:visibility="gone" />
                     </LinearLayout>
                 </LinearLayout>
-                <com.fxkj.publicframework.widget.WListView
+
+                <com.cqkj.publicframework.widget.WListView
                     android:id="@+id/wlv_trucks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:dividerHeight="1px"
-                    android:divider="@color/line_bg"/>
+                    android:divider="@color/line_bg"
+                    android:dividerHeight="1px" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

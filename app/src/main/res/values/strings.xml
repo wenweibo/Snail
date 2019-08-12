@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
     <string name="app_name">Snail</string>
     <string name="first_pager">首页</string>
     <string name="buy_car">买车</string>
@@ -154,4 +154,14 @@
     <string name="input_msg">填写信息</string>
     <string name="upload_pic">上传照片</string>
     <string name="sure_upload">确认上传</string>
+    <string name="username_hint">请输入用户名</string>
+    <string name="mobile_hint">请输入手机号</string>
+    <string name="mobile_hint2">手机号码应该是11位数字</string>
+    <string name="password_hint">请输入密码</string>
+    <string name="password_hint2">请输入6-12位字母或数字密码</string>
+    <string name="password_repeat_hint">请再次输入密码</string>
+    <string name="password_unqequal">两次输入密码不一致</string>
+    <string name="register_success">注册成功</string>
+    <string name="login_success">登录成功</string>
+    <string name="select_city">选择城市</string>
 </resources>

@@ -10,8 +10,8 @@ import android.widget.LinearLayout;
 
 import com.cqkj.snail.R;
 import com.cqkj.snail.sell.adapter.TruckPicAdapter;
-import com.fxkj.publicframework.activity.BaseTitleActivity;
-import com.fxkj.publicframework.widget.NoScrollGridView;
+import com.cqkj.publicframework.activity.BaseTitleActivity;
+import com.cqkj.publicframework.widget.NoScrollGridView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;

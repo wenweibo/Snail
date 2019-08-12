@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:id="@+id/lin_child"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/com_size_20"
+    android:background="@color/white"
+    >
+    <com.cqkj.publicframework.widget.NoScrollGridView
+        android:id="@+id/ngv_city"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:verticalSpacing="@dimen/com_size_5"
+        android:horizontalSpacing="@dimen/com_size_20"
+        android:numColumns="3"
+        android:layout_marginRight="@dimen/com_size_20"/>
+</LinearLayout>

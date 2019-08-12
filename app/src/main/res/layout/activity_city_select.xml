@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_color"
+    tools:context=".system.activity.CitySelectActivity">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ExpandableListView
+            android:id="@+id/elv_city"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:divider="@null"
+            android:groupIndicator="@null"/>
+
+        <TextView
+            android:id="@+id/tv_dialog"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="#ffffffff"
+            android:textSize="35dp"
+            android:visibility="gone"
+            />
+
+        <com.cqkj.publicframework.widget.contactar.SideBar
+            android:id="@+id/sideBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center"
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="50dp"
+            app:mBgColor="#aa000000"
+            app:mBgTextColor="#ff1152"
+            app:mBgTextSize="40dp"
+            app:mRadius="5dp"
+            app:mTextColor="#ff1152"
+            app:mTextSize="15sp" />
+    </FrameLayout>
+
+</LinearLayout>

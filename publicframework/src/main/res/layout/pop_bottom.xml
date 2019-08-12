@@ -20,7 +20,7 @@
              android:text="标题"
              android:textColor="@color/hint_text_color"
              android:padding="@dimen/img_size_10"/>
-         <com.fxkj.publicframework.widget.WListView
+         <com.cqkj.publicframework.widget.WListView
              android:id="@+id/lv_content"
              android:layout_width="match_parent"
              android:layout_height="wrap_content"

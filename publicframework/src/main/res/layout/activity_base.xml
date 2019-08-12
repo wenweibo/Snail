@@ -21,8 +21,9 @@
     <RelativeLayout
         android:id="@+id/base_title_main_layout"
         android:layout_width="fill_parent"
-        android:layout_height="48dp"
-        android:background="@color/colorPrimary">
+        android:layout_height="@dimen/title_hight"
+        android:background="@color/colorPrimary"
+        >
 
         <!--回退键-->
         <ImageView

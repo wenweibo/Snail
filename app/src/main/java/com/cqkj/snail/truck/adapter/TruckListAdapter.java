@@ -14,7 +14,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cqkj.snail.R;
 import com.cqkj.snail.truck.activity.TruckDetailActivity;
 import com.cqkj.snail.truck.entity.TruckEntity;
-import com.fxkj.publicframework.adapter.CommonAdapter;
+import com.cqkj.publicframework.adapter.CommonAdapter;
 
 import java.util.List;
 

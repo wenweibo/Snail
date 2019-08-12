@@ -5,7 +5,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.cqkj.snail.R;
-import com.fxkj.publicframework.activity.BaseTitleActivity;
+import com.cqkj.publicframework.activity.BaseTitleActivity;
 
 import butterknife.BindView;
 

@@ -8,8 +8,8 @@ import com.cqkj.snail.R;
 import com.cqkj.snail.buytruck.adapter.TruckTypeAdapter;
 import com.cqkj.snail.sell.activity.SellBaseInputActivity;
 import com.cqkj.snail.truck.entity.MenuEntity;
-import com.fxkj.publicframework.activity.BaseTitleActivity;
-import com.fxkj.publicframework.tool.ToastUtil;
+import com.cqkj.publicframework.activity.BaseTitleActivity;
+import com.cqkj.publicframework.tool.ToastUtil;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.cqkj.snail.truck.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,11 +18,8 @@ import com.cqkj.snail.truck.adapter.ImgAdapter;
 import com.cqkj.snail.truck.adapter.TruckBaseAdapter;
 import com.cqkj.snail.truck.entity.ImageViewInfo;
 import com.cqkj.snail.truck.entity.TruckBaseEntity;
-import com.fxkj.publicframework.widget.NoScrollGridView;
+import com.cqkj.publicframework.widget.NoScrollGridView;
 import com.xuexiang.xui.utils.StatusBarUtils;
-import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheet;
-import com.xuexiang.xui.widget.dialog.bottomsheet.BottomSheetItemView;
-import com.xuexiang.xui.widget.imageview.nine.NineGridImageView;
 import com.xuexiang.xui.widget.imageview.nine.NineGridImageViewAdapter;
 import com.xuexiang.xui.widget.imageview.preview.PreviewBuilder;
 import com.xuexiang.xui.widget.imageview.preview.loader.GlideMediaLoader;

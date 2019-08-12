@@ -4,14 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.cqkj.snail.R;
-import com.cqkj.snail.truck.adapter.FirstMenuAdapter;
 import com.cqkj.snail.truck.entity.MenuEntity;
-import com.fxkj.publicframework.adapter.CommonAdapter;
-import com.fxkj.publicframework.tool.CommonUtil;
+import com.cqkj.publicframework.adapter.CommonAdapter;
 
 import java.util.List;
 

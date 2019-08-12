@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.cqkj.snail.R;
 import com.cqkj.snail.truck.entity.MenuEntity;
-import com.fxkj.publicframework.adapter.CommonAdapter;
+import com.cqkj.publicframework.adapter.CommonAdapter;
 
 import java.util.List;
 
