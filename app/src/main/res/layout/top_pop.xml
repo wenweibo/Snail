@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <com.xuexiang.xui.widget.XUIWrapContentListView
+                android:id="@+id/xlv_dictinfo"
+                style="@style/base_listview"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/lin_price"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/img_size_10">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="价格"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/listview_title_size" />
+
+                    <TextView
+                        android:id="@+id/tv_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="不限"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="@dimen/listview_title_size" />
+                </LinearLayout>
+
+                <com.jaygoo.widget.RangeSeekBar
+                    android:paddingBottom="@dimen/com_size_5"
+                    android:id="@+id/range_seek_bar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/com_size_20"
+                    app:rsb_gravity="bottom"
+                    app:rsb_max="50"
+                    app:rsb_mode="range"
+                    app:rsb_progress_color="@color/colorPrimary"
+                    app:rsb_thumb_drawable="@mipmap/seek_them"
+                    app:rsb_tick_mark_layout_gravity="bottom"
+                    app:rsb_tick_mark_mode="other"
+                    app:rsb_tick_mark_text_array="@array/wordsArray"
+                    app:rsb_tick_mark_text_color="@color/item_text_color"
+                    app:rsb_tick_mark_text_margin="@dimen/com_size_20" />
+
+                <Button
+                    android:id="@+id/btn_sure"
+                    style="@style/btn_base.redCorners"
+                    android:layout_width="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/sure" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

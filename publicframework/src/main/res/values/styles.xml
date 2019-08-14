@@ -49,4 +49,16 @@
         <item name="android:windowEnterAnimation">@anim/pop_bottom_in</item>
         <item name="android:windowExitAnimation">@anim/pop_bottom_out</item>
     </style>
+    <style name="pop_top">
+        <item name="android:windowEnterAnimation">@anim/pop_top_in</item>
+        <item name="android:windowExitAnimation">@anim/pop_top_out</item>
+    </style>
+
+    <style name="base_listview">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:divider">@color/line_bg</item>
+        <item name="android:dividerHeight">@dimen/line</item>
+        <item name="android:cacheColorHint">@color/transparent</item>
+    </style>
 </resources>

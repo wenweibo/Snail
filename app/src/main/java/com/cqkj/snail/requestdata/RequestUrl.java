@@ -15,6 +15,8 @@ public class RequestUrl {
     public static final short request_register = 2;
     // 地域查询（无条件）
     public static final short request_area = 3;
+    // 字典详情查询(树形)
+    public static final short request_dictIfo = 4;
 
     public static final String[] url = {
             // 0:登录
@@ -23,8 +25,10 @@ public class RequestUrl {
             "mobile/logOut.fxaction",
             // 2:注册
             "/userInfo/save",
-            // 3:地域查询（无条件）
-            "/AreaInfo/list"
+            // 3:地域查询(列表)
+            "/AreaInfo/page",
+            // 字典详情查询(树形)
+            "/dictInfo/getByCode"
     };
 }
 

@@ -53,165 +53,177 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/message_img" />
     </LinearLayout>
-
-    <ScrollView
+    <com.cqkj.publicframework.widget.pull.PullToRefreshLayout
+        android:id="@+id/refresh_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <include layout="@layout/refresh_head" />
 
-            <com.youth.banner.Banner
-                android:id="@+id/af_banner"
-                android:layout_width="match_parent"
-                android:layout_height="150dip" />
+        <com.cqkj.publicframework.widget.pull.PullableScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-            <!--顶部按钮-->
             <LinearLayout
-                style="@style/lin_base"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:id="@+id/lin_sell_car"
-                    style="@style/lin_base.btn_lin">
-
-                    <ImageView
-                        style="@style/btn_img"
-                        android:src="@mipmap/sell_car" />
-
-                    <TextView
-                        style="@style/text_base"
-                        android:layout_marginTop="@dimen/com_size_10"
-                        android:text="立即买车" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/lin_buy_car"
-                    style="@style/lin_base.btn_lin">
-
-                    <ImageView
-                        style="@style/btn_img"
-                        android:src="@mipmap/buy_car" />
-
-                    <TextView
-                        style="@style/text_base"
-                        android:layout_marginTop="@dimen/com_size_10"
-                        android:text="我要卖车" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/lin_recycle_car"
-                    style="@style/lin_base.btn_lin">
-
-                    <ImageView
-                        style="@style/btn_img"
-                        android:src="@mipmap/recycle_car" />
-
-                    <TextView
-                        style="@style/text_base"
-                        android:layout_marginTop="@dimen/com_size_10"
-                        android:text="蜗收车" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/lin_assess_car"
-                    style="@style/lin_base.btn_lin">
-
-                    <ImageView
-                        style="@style/btn_img"
-                        android:src="@mipmap/assess_car" />
-
-                    <TextView
-                        style="@style/text_base"
-                        android:layout_marginTop="@dimen/com_size_10"
-                        android:text="蜗估车" />
-                </LinearLayout>
-            </LinearLayout>
-            <!--顶部按钮-->
-            <LinearLayout
-                style="@style/lin_base"
-                android:layout_marginTop="@dimen/com_size_15"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.cqkj.publicframework.widget.NoScrollGridView
-                    android:id="@+id/ngv_menu"
+                <com.youth.banner.Banner
+                    android:id="@+id/af_banner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:numColumns="4" />
+                    android:layout_height="150dip" />
 
-                <com.cqkj.publicframework.widget.NoScrollGridView
-                    android:id="@+id/ngv_menu2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:numColumns="4" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:orientation="vertical"
-                android:paddingTop="@dimen/com_size_10">
-
+                <!--顶部按钮-->
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
+                    style="@style/lin_base"
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/lin_new"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:id="@+id/lin_sell_car"
+                        style="@style/lin_base.btn_lin">
+
+                        <ImageView
+                            style="@style/btn_img"
+                            android:src="@mipmap/sell_car" />
 
                         <TextView
                             style="@style/text_base"
-                            android:text="最新上架"
-                            android:textSize="@dimen/activity_title_size" />
-
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dip"
-                            android:layout_marginTop="@dimen/com_size_5"
-                            android:background="@color/colorPrimary" />
+                            android:layout_marginTop="@dimen/com_size_10"
+                            android:text="立即买车" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/lin_record"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/com_size_20"
-                        android:orientation="vertical">
+                        android:id="@+id/lin_buy_car"
+                        style="@style/lin_base.btn_lin">
+
+                        <ImageView
+                            style="@style/btn_img"
+                            android:src="@mipmap/buy_car" />
 
                         <TextView
                             style="@style/text_base"
-                            android:text="浏览记录"
-                            android:textSize="@dimen/activity_title_size" />
+                            android:layout_marginTop="@dimen/com_size_10"
+                            android:text="我要卖车" />
+                    </LinearLayout>
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="2dip"
-                            android:layout_marginTop="@dimen/com_size_5"
-                            android:background="@color/colorPrimary"
-                            android:visibility="gone" />
+                    <LinearLayout
+                        android:id="@+id/lin_recycle_car"
+                        style="@style/lin_base.btn_lin">
+
+                        <ImageView
+                            style="@style/btn_img"
+                            android:src="@mipmap/recycle_car" />
+
+                        <TextView
+                            style="@style/text_base"
+                            android:layout_marginTop="@dimen/com_size_10"
+                            android:text="蜗收车" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lin_assess_car"
+                        style="@style/lin_base.btn_lin">
+
+                        <ImageView
+                            style="@style/btn_img"
+                            android:src="@mipmap/assess_car" />
+
+                        <TextView
+                            style="@style/text_base"
+                            android:layout_marginTop="@dimen/com_size_10"
+                            android:text="蜗估车" />
                     </LinearLayout>
                 </LinearLayout>
+                <!--顶部按钮-->
+                <LinearLayout
+                    style="@style/lin_base"
+                    android:layout_marginTop="@dimen/com_size_15"
+                    android:orientation="vertical">
 
-                <com.cqkj.publicframework.widget.WListView
-                    android:id="@+id/wlv_trucks"
+                    <com.cqkj.publicframework.widget.NoScrollGridView
+                        android:id="@+id/ngv_menu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:numColumns="4" />
+
+                    <com.cqkj.publicframework.widget.NoScrollGridView
+                        android:id="@+id/ngv_menu2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:numColumns="4" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:divider="@color/line_bg"
-                    android:dividerHeight="1px" />
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/com_size_10">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/lin_new"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/text_base"
+                                android:text="最新上架"
+                                android:textSize="@dimen/activity_title_size" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2dip"
+                                android:layout_marginTop="@dimen/com_size_5"
+                                android:background="@color/colorPrimary" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/lin_record"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/com_size_20"
+                            android:orientation="vertical">
+
+                            <TextView
+                                style="@style/text_base"
+                                android:text="浏览记录"
+                                android:textSize="@dimen/activity_title_size" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="2dip"
+                                android:layout_marginTop="@dimen/com_size_5"
+                                android:background="@color/colorPrimary"
+                                android:visibility="gone" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <com.cqkj.publicframework.widget.WListView
+                        android:id="@+id/wlv_trucks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="@color/line_bg"
+                        android:dividerHeight="1px" />
+                </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
+            <!--</ScrollView>-->
+        </com.cqkj.publicframework.widget.pull.PullableScrollView>
 
-
+        <include layout="@layout/load_more" />
+    </com.cqkj.publicframework.widget.pull.PullToRefreshLayout>
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.cqkj.snail.tool;
 
 import android.graphics.Rect;
 
+import com.cqkj.publicframework.tool.PinYinUtil;
 import com.cqkj.snail.requestdata.RequestManager;
 import com.cqkj.snail.requestdata.RequestUrl;
 import com.cqkj.snail.system.entity.CityEntity;
@@ -61,6 +62,10 @@ public class CommonUtil {
         if (cityEntities == null || cityEntities.isEmpty()) {
             return null;
         }
+        // 设置拼音
+        for (CityEntity cityEntity : cityEntities) {
+            cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
+        }
         List<List<CityEntity>> groupList = new ArrayList<>();
         Collections.sort(cityEntities);
         List<CityEntity> list = null;
@@ -77,7 +82,7 @@ public class CommonUtil {
                 list = new ArrayList<>();
             }
             list.add(cityEntity);
-            if (i == cityEntities.size()-1){
+            if (i == cityEntities.size() - 1) {
                 groupList.add(list);
             }
         }

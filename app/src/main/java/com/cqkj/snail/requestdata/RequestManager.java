@@ -1,13 +1,16 @@
 package com.cqkj.snail.requestdata;
 
-import com.cqkj.publicframework.tool.PinYinUtil;
-import com.cqkj.snail.AppApplication;
-import com.cqkj.snail.system.entity.CityEntity;
-import com.cqkj.snail.system.entity.UserEntity;
 import com.cqkj.publicframework.beans.CallBackObject;
 import com.cqkj.publicframework.requestdata.CallBack;
 import com.cqkj.publicframework.tool.NetUtils;
+import com.cqkj.publicframework.tool.PinYinUtil;
 import com.cqkj.publicframework.tool.SpUtils;
+import com.cqkj.snail.AppApplication;
+import com.cqkj.snail.buy.entity.DictInfoEntity;
+import com.cqkj.snail.config.DictInfo;
+import com.cqkj.snail.system.entity.CityEntity;
+import com.cqkj.snail.system.entity.UserEntity;
+import com.cqkj.snail.tool.CommonRequest;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -17,7 +20,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -29,7 +31,10 @@ import java.util.Set;
 public class RequestManager extends com.cqkj.publicframework.requestdata.RequestManager {
     private static RequestManager requestManager;
     /***余善钢*/
-    private String ipurl = "http://172.17.24.83:8080/";
+//    private String ipurl = "http://172.17.24.83:8080/";
+//    public static String fileipurl = "http://172.17.24.99:8080/jdyhgl/a.up";
+    /***陶赠元*/
+    private String ipurl = "http://172.17.24.103:8080/";
     public static String fileipurl = "http://172.17.24.99:8080/jdyhgl/a.up";
 
     public static RequestManager getRequestManager() {
@@ -106,21 +111,49 @@ public class RequestManager extends com.cqkj.publicframework.requestdata.Request
                 SpUtils.putParam(AppApplication.context, "userName", userName);
                 SpUtils.putParam(AppApplication.context, "loginPassword", (String) params.get("loginPassword"));
                 break;
-            // 获取城市数据
             case RequestUrl.request_area:
-                JSONArray cityObj = obj.getJSONArray("data");
+                // 获取城市数据
+                JSONObject cityObj = obj.getJSONObject("data");
+                JSONArray contentArr = cityObj.getJSONArray("content");
                 AppApplication.cityEntities = new ArrayList<>();
-                for (int i = 0; i < cityObj.length(); i++) {
-                    JSONObject jsonObject = cityObj.getJSONObject(i);
-                    CityEntity cityEntity = gson.fromJson(jsonObject.toString(),CityEntity.class);
+                for (int i = 0; i < contentArr.length(); i++) {
+                    JSONObject jsonObject = contentArr.getJSONObject(i);
+                    CityEntity cityEntity = gson.fromJson(jsonObject.toString(), CityEntity.class);
                     cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
                     AppApplication.cityEntities.add(cityEntity);
+                }
+                break;
+            case RequestUrl.request_dictIfo:
+                JSONObject dictObj = obj.getJSONObject("data");
+                DictInfoEntity dictInfoEntity = gson.fromJson(dictObj.toString(), DictInfoEntity.class);
+                // 获取数据字典后的处理
+                String dictCode = (String) params.get("dictCode");
+                if (DictInfo.VEHICLE_TYPE.equals(dictCode)) {
+                    // 获取车型成功后
+                    DictInfo.vehicleTypes = dictInfoEntity.getChildren();
+                } else if (DictInfo.VEHICLE_BRAND.equals(dictCode)) {
+                    // 获取车源品牌字典成功后
+                    DictInfo.vehicleBrands = dictInfoEntity.getChildren();
+                } else if (DictInfo.PRICE.equals(dictCode)) {
+                    // 获取价格字典成功后
+                    DictInfo.prices = dictInfoEntity.getChildren();
+                } else if (DictInfo.EMISSION_STANDARD.equals(dictCode)) {
+                    // 获取排放标准字典成功后
+                    DictInfo.emissionStandards = dictInfoEntity.getChildren();
+                } else if (DictInfo.MILEAGE.equals(dictCode)) {
+                    // 获取行驶里程字典成功后
+                    DictInfo.mileages = dictInfoEntity.getChildren();
+                } else if (DictInfo.PUBLICATION_STATUS.equals(dictCode)) {
+                    // 获取发布状态字典成功后
+                    DictInfo.publicationStatus = dictInfoEntity.getChildren();
+                } else if (DictInfo.SORT_KIND.equals(dictCode)) {
+                    // 获取发布状态字典成功后
+                    DictInfo.sortKinds = dictInfoEntity.getChildren();
                 }
                 break;
         }
         return callBackObject;
     }
-
 
 
 }

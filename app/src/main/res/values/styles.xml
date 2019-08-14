@@ -31,6 +31,7 @@
     <style name="text_base">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/layout_title_color</item>
         <item name="android:textSize">@dimen/listview_title_size</item>
     </style>
     <style name="text_remark" parent="text_base">

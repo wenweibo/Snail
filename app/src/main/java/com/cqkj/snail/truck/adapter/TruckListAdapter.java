@@ -2,7 +2,6 @@ package com.cqkj.snail.truck.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -13,6 +12,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.cqkj.snail.R;
 import com.cqkj.snail.truck.activity.TruckDetailActivity;
+import com.cqkj.snail.config.PublishStatus;
 import com.cqkj.snail.truck.entity.TruckEntity;
 import com.cqkj.publicframework.adapter.CommonAdapter;
 
@@ -22,10 +22,12 @@ import butterknife.BindView;
 
 /**
  * 货车列表适配器
+ *
  * @author 闻维波 2019/08/01
  */
 public class TruckListAdapter extends CommonAdapter {
     private RequestOptions mRequestOptions;
+
     public TruckListAdapter(Context _context, List<TruckEntity> _list) {
         context = _context;
         list = _list;
@@ -45,53 +47,53 @@ public class TruckListAdapter extends CommonAdapter {
         Glide.with(context)
                 .asBitmap()
                 .apply(mRequestOptions)
-                .load(truckEntity.getPic()).into(viewHolder.iv_truck);
+                .load(truckEntity.getAttachmentPic()).into(viewHolder.iv_truck);
         // 如果降价标签没有给出降价额度
-        if (TextUtils.isEmpty(truckEntity.getCutPrice())){
-            // 则将降价标签隐藏
-            viewHolder.tv_cut_price.setVisibility(View.GONE);
-        }else{
-            // 否则显示降价标签，并填入降价额度
-            viewHolder.tv_cut_price.setVisibility(View.VISIBLE);
-            viewHolder.tv_cut_price.setText("已降" + truckEntity.getCutPrice() + "元");
-        }
+//        if (TextUtils.isEmpty(truckEntity.getCutPrice())){
+//            // 则将降价标签隐藏
+//            viewHolder.tv_cut_price.setVisibility(View.GONE);
+//        }else{
+//            // 否则显示降价标签，并填入降价额度
+//            viewHolder.tv_cut_price.setVisibility(View.VISIBLE);
+//            viewHolder.tv_cut_price.setText("已降" + truckEntity.getCutPrice() + "元");
+//        }
 
         // 如果发布状态为“1”，则说明已售出
-        if ("1".equals(truckEntity.getPublicationStatus())){
+        if (PublishStatus.SOLD.equals(truckEntity.getStatus())) {
             // 显示售出标记
             viewHolder.tv_sell.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             // 隐藏售出标记
             viewHolder.tv_sell.setVisibility(View.GONE);
         }
 
         // 如果新品标记不为空
-        if (!TextUtils.isEmpty(truckEntity.getNewTruck())){
-            // 显示新品标记
-            viewHolder.iv_new.setVisibility(View.VISIBLE);
-        }else{
-            // 隐藏新品标记
-            viewHolder.iv_new.setVisibility(View.GONE);
-        }
+//        if (!TextUtils.isEmpty(truckEntity.getNewTruck())){
+//            // 显示新品标记
+//            viewHolder.iv_new.setVisibility(View.VISIBLE);
+//        }else{
+//            // 隐藏新品标记
+//            viewHolder.iv_new.setVisibility(View.GONE);
+//        }
 
-        viewHolder.tv_title.setText(truckEntity.getMainTitle());
-        viewHolder.tv_remark.setText(truckEntity.getSubTitle());
-        viewHolder.tv_price.setText(truckEntity.getSellingPrice());
+        viewHolder.tv_title.setText(truckEntity.getVehicleBrand() + truckEntity.getVehicleType() + " " + truckEntity.getHorsePower());
+        viewHolder.tv_remark.setText(truckEntity.getCreateTime() + truckEntity.getEmissionStandard());
+        viewHolder.tv_price.setText(truckEntity.getPrice());
 
         // 如果议价标记为“1”
-        if ("1".equals(truckEntity.getBargainingFlag())){
-            // 则显示可议价标记
-            viewHolder.tv_bargaining.setVisibility(View.VISIBLE);
-        }else{
-            // 否则，隐藏可议价标记
-            viewHolder.tv_bargaining.setVisibility(View.GONE);
-        }
+//        if ("1".equals(truckEntity.getBargainingFlag())) {
+//            // 则显示可议价标记
+//            viewHolder.tv_bargaining.setVisibility(View.VISIBLE);
+//        } else {
+//            // 否则，隐藏可议价标记
+//            viewHolder.tv_bargaining.setVisibility(View.GONE);
+//        }
         convertView.setOnClickListener(new ItemOnClick(truckEntity));
         return convertView;
     }
 
-    class ItemOnClick implements View.OnClickListener{
-        private  TruckEntity truckEntity;
+    class ItemOnClick implements View.OnClickListener {
+        private TruckEntity truckEntity;
 
         ItemOnClick(TruckEntity truckEntity) {
             this.truckEntity = truckEntity;

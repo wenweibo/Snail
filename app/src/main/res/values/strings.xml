@@ -164,4 +164,10 @@
     <string name="register_success">注册成功</string>
     <string name="login_success">登录成功</string>
     <string name="select_city">选择城市</string>
+    <string name="buy_car_search_hint">车辆/价格/品牌</string>
+    <string name="price_max">价格最高</string>
+    <string name="vechicle_type">车型</string>
+    <string name="vehicle_brand">品牌</string>
+    <string name="price">价格</string>
+    <string name="more">更多</string>
 </resources>

@@ -1,4 +1,4 @@
-package com.cqkj.snail.buytruck.adapter;
+package com.cqkj.snail.buy.adapter;
 
 import android.content.Context;
 import android.view.View;

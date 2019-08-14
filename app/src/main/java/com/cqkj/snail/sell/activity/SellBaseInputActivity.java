@@ -6,6 +6,8 @@ import android.widget.LinearLayout;
 
 import com.cqkj.snail.R;
 import com.cqkj.publicframework.activity.BaseTitleActivity;
+import com.cqkj.snail.config.DictInfo;
+import com.cqkj.snail.weight.TopPop;
 
 import butterknife.BindView;
 

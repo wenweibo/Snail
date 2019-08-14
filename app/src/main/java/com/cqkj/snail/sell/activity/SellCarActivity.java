@@ -1,12 +1,11 @@
-package com.cqkj.snail.system.activity;
+package com.cqkj.snail.sell.activity;
 
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridView;
 
 import com.cqkj.snail.R;
-import com.cqkj.snail.buytruck.adapter.TruckTypeAdapter;
-import com.cqkj.snail.sell.activity.SellBaseInputActivity;
+import com.cqkj.snail.buy.adapter.TruckTypeAdapter;
 import com.cqkj.snail.truck.entity.MenuEntity;
 import com.cqkj.publicframework.activity.BaseTitleActivity;
 import com.cqkj.publicframework.tool.ToastUtil;

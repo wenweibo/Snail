@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,10 +13,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cqkj.publicframework.tool.ToastUtil;
+import com.cqkj.publicframework.widget.pull.PullToRefreshLayout;
+import com.cqkj.snail.AppApplication;
 import com.cqkj.snail.R;
+import com.cqkj.snail.requestdata.RequestUrl;
 import com.cqkj.snail.system.entity.CityEntity;
+import com.cqkj.snail.tool.CommonRequest;
 import com.cqkj.snail.truck.adapter.FirstMenuAdapter;
 import com.cqkj.snail.truck.adapter.TruckListAdapter;
+import com.cqkj.snail.config.PublishStatus;
 import com.cqkj.snail.truck.entity.MenuEntity;
 import com.cqkj.snail.truck.entity.TruckEntity;
 import com.cqkj.publicframework.activity.BaseTitleActivity;
@@ -33,14 +41,16 @@ import java.util.List;
 
 import butterknife.BindView;
 
-
 /**
  * 首页
  *
  * @author 闻维波 2019/07/26
  */
 public class FirstPagerActivity extends BaseTitleActivity implements OnBannerListener {
-    // 标头定位男
+    // 刷新控件
+    @BindView(R.id.refresh_view)
+    PullToRefreshLayout refresh_view;
+    // 标头定位
     @BindView(R.id.tv_location)
     TextView tvLocation;
     // 轮播图
@@ -129,6 +139,29 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         linNew.setOnClickListener(this);
         linRecord.setOnClickListener(this);
         tvLocation.setOnClickListener(this);
+
+        refresh_view.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+                // 下拉刷新操作
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        refresh_view.refreshFinish(PullToRefreshLayout.SUCCEED);
+                    }
+                }.sendEmptyMessageDelayed(0, 3000);
+            }
+
+            @Override
+            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+                new Handler() {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        refresh_view.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                    }
+                }.sendEmptyMessageDelayed(0, 3000);
+            }
+        });
     }
 
     @Override
@@ -145,14 +178,23 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         recordTrucks = new ArrayList<>();
         truckListAdapter = new TruckListAdapter(this, trucksData);
         wlvTrucks.setAdapter(truckListAdapter);
+
     }
 
     @Override
     public void onSuccess(int flag, CallBackObject obj) throws ParseException {
+        super.onSuccess(flag, obj);
+        switch (flag) {
+            case RequestUrl.request_area:
+                tvLocation.performLongClick();
+                break;
+        }
     }
 
     @Override
     public void onFailure(int flag, String message) {
+        super.onFailure(flag, message);
+        ToastUtil.showShort(this,message);
     }
 
     @Override
@@ -180,8 +222,15 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
                 tabChange(linRecord, linNew);
                 break;
             case R.id.tv_location:
-                Intent intent = new Intent(this, CitySelectActivity.class);
-                startActivityForResult(intent, 0);
+                // 如果有城市数据，则跳转至城市选择页面
+                if (AppApplication.cityEntities != null && !AppApplication.cityEntities.isEmpty()) {
+                    Intent intent = new Intent(this, CitySelectActivity.class);
+                    startActivityForResult(intent, 0);
+                } else {
+                    // 否则，去重新拉取城市数据
+                    showDialog("");
+                    CommonRequest.getCitys(this);
+                }
                 break;
         }
     }
@@ -196,8 +245,8 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // 城市选择完成回调
-        if (resultCode == CitySelectActivity.RESULT_CODE_SELECT_CITY){
-            if (data != null){
+        if (resultCode == CitySelectActivity.RESULT_CODE_SELECT_CITY) {
+            if (data != null) {
                 CityEntity cityEntity = (CityEntity) data.getExtras().getSerializable("cityEntity");
                 tvLocation.setText(cityEntity.getName());
             }
@@ -296,21 +345,17 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         List<TruckEntity> truckEntities = new ArrayList<>();
         for (int i = 0; i < 6; i++) {
             TruckEntity truckEntity = new TruckEntity();
-            truckEntity.setPic("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564653997279&di=04e1ea12fed27c0f3dcaed8c55164c2b&imgtype=0&src=http%3A%2F%2Fimga.360che.com%2Fimga%2F550x366%2F0%2F112%2F112268.jpg");
-            truckEntity.setTruckId(i + "");
-            truckEntity.setMainTitle("牛逼的卡车" + i + type);
-            truckEntity.setSubTitle("2014年01月 8x4 国四/南昌");
-            truckEntity.setSellingPrice("25万");
+            truckEntity.setAttachmentPic("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564653997279&di=04e1ea12fed27c0f3dcaed8c55164c2b&imgtype=0&src=http%3A%2F%2Fimga.360che.com%2Fimga%2F550x366%2F0%2F112%2F112268.jpg");
+            truckEntity.setId(i + "");
+            truckEntity.setVehicleBrand("牛逼的卡车" + i + type);
+            truckEntity.setVehicleType("哈哈" + i);
+            truckEntity.setHorsePower("130 匹");
+            truckEntity.setCreateTime("2014年01月");
+            truckEntity.setPrice("25万");
             if (i % 2 == 0) {
-                truckEntity.setBargainingFlag("0");
-                truckEntity.setCutPrice("2000");
-                truckEntity.setNewTruck("最新上架");
-                truckEntity.setPublicationStatus("0");
+                truckEntity.setStatus(PublishStatus.ON_SALE);
             } else {
-                truckEntity.setBargainingFlag("1");
-                truckEntity.setCutPrice("");
-                truckEntity.setNewTruck("");
-                truckEntity.setPublicationStatus("1");
+                truckEntity.setStatus(PublishStatus.SOLD);
             }
             truckEntities.add(truckEntity);
             truckEntity = null;

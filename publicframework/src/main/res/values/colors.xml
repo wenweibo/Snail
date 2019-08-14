@@ -3,7 +3,8 @@
     <color name="colorPrimary">#fd5b58</color>
     <color name="colorPrimaryDark">#1bbce2</color>
     <color name="colorAccent">#ff7c1c</color>
-
+    <!--页面背景色-->
+    <color name="bg_color">#F4F4F4</color>
     <color name="layout_bg">#f8ffff</color><!--卡片背景颜色 -->
     <color name="line_bg">#cbd4d3</color><!--线条颜色 -->
     <color name="hint_text_color">#9ea8a8</color><!--注释内容及未触发按钮颜色 -->

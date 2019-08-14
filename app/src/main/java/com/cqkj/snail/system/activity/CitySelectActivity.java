@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.cqkj.publicframework.activity.BaseTitleActivity;
 import com.cqkj.publicframework.tool.PinYinUtil;
 import com.cqkj.publicframework.widget.contactar.SideBar;
+import com.cqkj.snail.AppApplication;
 import com.cqkj.snail.R;
 import com.cqkj.snail.system.adapter.CityExpandAdapter;
 import com.cqkj.snail.system.entity.CityEntity;
@@ -120,6 +121,7 @@ public class CitySelectActivity extends BaseTitleActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 // 调用城市适配器筛选器
@@ -137,87 +139,22 @@ public class CitySelectActivity extends BaseTitleActivity {
     }
 
     /**
-     * 模拟城市数据
+     * 解析城市数据
      */
     private void initCitys() {
         cityEntities = new ArrayList<>();
-        CityEntity cityEntity = new CityEntity();
-        cityEntity.setName("南昌");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
+        // 获取缓存好的省份列表，并遍历将省份中的市级信息存入本页面源数据中
+        if (AppApplication.cityEntities != null) {
+            for (CityEntity cityEntity : AppApplication.cityEntities) {
+                List<CityEntity> children = cityEntity.getChildren();
+                if (children !=null && !children.isEmpty()){
+                    cityEntities.addAll(children);
+                }
+            }
+        }
 
-        cityEntity = new CityEntity();
-        cityEntity.setName("南宁");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("苏宁");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("南京");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("那边");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("哪边");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("九江");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("赣州");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("长沙");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("长春");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("乌鲁木齐");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("阿勒泰");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("北京");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("张家界");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
-
-        cityEntity = new CityEntity();
-        cityEntity.setName("宜春");
-        cityEntity.setLetters(PinYinUtil.getFirstSpell(cityEntity.getName()));
-        cityEntities.add(cityEntity);
         parentList = CommonUtil.sortAndGroupCitys(cityEntities);
-        changeSidebar();
+        sideBar.setTextList(a);
     }
 
     private void changeSidebar() {

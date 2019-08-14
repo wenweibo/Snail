@@ -12,7 +12,6 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -23,6 +22,8 @@ import com.cqkj.publicframework.activity.BaseActivityManager;
 import com.cqkj.publicframework.tool.ToastUtil;
 import com.cqkj.snail.AppApplication;
 import com.cqkj.snail.R;
+import com.cqkj.snail.buy.activity.BuyCarActivity;
+import com.cqkj.snail.sell.activity.SellCarActivity;
 import com.xuexiang.xui.utils.StatusBarUtils;
 
 import java.util.ArrayList;
@@ -65,6 +66,7 @@ public class MainActivity extends ActivityGroup {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initUI();
+
     }
 
 

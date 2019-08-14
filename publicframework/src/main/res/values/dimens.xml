@@ -34,6 +34,6 @@
     <dimen name="grid_circle_btn">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="title_layout_height">48dp</dimen>
-    <dimen name="line">2px</dimen>
+    <dimen name="line">1px</dimen>
     <dimen name="title_hight">50dip</dimen>
 </resources>

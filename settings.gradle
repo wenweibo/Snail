@@ -1,1 +1,1 @@
-include ':app', ':publicframework', ':certificateCamera', ':ucrop', ':picture_library'
+include ':app', ':publicframework', ':certificateCamera', ':ucrop', ':picture_library', ':RangeSeekBar'

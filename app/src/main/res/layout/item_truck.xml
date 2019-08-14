@@ -24,7 +24,8 @@
             android:padding="@dimen/com_size_5"
             android:text="已将10000"
             android:textSize="@dimen/small_text_size"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_sell"
@@ -43,7 +44,8 @@
             android:layout_width="@dimen/img_size_25"
             android:layout_height="@dimen/img_size_25"
             android:src="@mipmap/new_truck"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
     </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -88,6 +90,7 @@
                 android:paddingLeft="@dimen/com_size_5"
                 android:text="可议价"
                 android:textColor="@color/color_bg_success"
+                android:visibility="gone"
                 />
         </LinearLayout>
     </LinearLayout>

@@ -4,12 +4,200 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_color"
-    android:orientation="vertical"
-    android:gravity="center"
-    >
-   <TextView
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="@string/buy_car"
-       />
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/base_title_main_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_hight"
+        android:layout_gravity="center_vertical"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/img_size_10"
+        android:paddingRight="@dimen/img_size_10">
+
+        <TextView
+            android:id="@+id/tv_location"
+            style="@style/text_base"
+            android:layout_height="match_parent"
+            android:drawableRight="@mipmap/title_location"
+            android:drawablePadding="@dimen/com_size_5"
+            android:gravity="center_vertical"
+            android:text="南昌"
+            android:textColor="@color/white" />
+
+        <LinearLayout
+            android:id="@+id/lin_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/com_size_10"
+            android:layout_weight="1"
+            android:background="@drawable/shape_white_corners_50"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/com_size_5"
+                android:src="@mipmap/title_search" />
+
+            <TextView
+                style="@style/text_base"
+                android:hint="@string/buy_car_search_hint" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lin_top_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:padding="@dimen/com_size_10">
+
+        <LinearLayout
+            android:id="@+id/lin_sort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_remark"
+                android:layout_marginRight="@dimen/com_size_5"
+                android:text="@string/price_max" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arraw_down_gray" />
+        </LinearLayout>
+
+        <View
+            style="@style/vLine"
+            android:layout_marginLeft="@dimen/com_size_5"
+            android:layout_marginRight="@dimen/com_size_5" />
+
+        <LinearLayout
+            android:id="@+id/lin_truck_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_remark"
+                android:layout_marginRight="@dimen/com_size_5"
+                android:text="@string/vechicle_type" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arraw_down_gray" />
+        </LinearLayout>
+
+        <View
+            style="@style/vLine"
+            android:layout_marginLeft="@dimen/com_size_5"
+            android:layout_marginRight="@dimen/com_size_5" />
+
+        <LinearLayout
+            android:id="@+id/lin_brand"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_remark"
+                android:layout_marginRight="@dimen/com_size_5"
+                android:text="@string/vehicle_brand" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arraw_down_gray" />
+        </LinearLayout>
+
+        <View
+            style="@style/vLine"
+            android:layout_marginLeft="@dimen/com_size_5"
+            android:layout_marginRight="@dimen/com_size_5" />
+
+        <LinearLayout
+            android:id="@+id/lin_price"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_remark"
+                android:layout_marginRight="@dimen/com_size_5"
+                android:text="@string/price" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arraw_down_gray" />
+        </LinearLayout>
+
+        <View
+            style="@style/vLine"
+            android:layout_marginLeft="@dimen/com_size_5"
+            android:layout_marginRight="@dimen/com_size_5" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/text_remark"
+                android:layout_marginRight="@dimen/com_size_5"
+                android:text="@string/more" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arraw_down_gray" />
+        </LinearLayout>
+    </LinearLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/com_size_5">
+
+            <com.xuexiang.xui.widget.flowlayout.FlowTagLayout
+                android:id="@+id/ftl_condition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:ftl_check_mode="display" />
+        </LinearLayout>
+    </ScrollView>
+
+
+    <com.cqkj.publicframework.widget.pull.PullToRefreshLayout
+        android:id="@+id/refresh_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <include layout="@layout/refresh_head" />
+        <com.cqkj.publicframework.widget.pull.PullableListView
+            android:id="@+id/plv_truck"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <include layout="@layout/load_more" />
+    </com.cqkj.publicframework.widget.pull.PullToRefreshLayout>
 </LinearLayout>

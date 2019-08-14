@@ -2,97 +2,188 @@ package com.cqkj.snail.truck.entity;
 
 /**
  * 货车实体
+ *
  * @author 闻维波 2019/08/01
  */
 public class TruckEntity {
-    // 车源ID
-    private String truckId;
-    // 主标题
-    private String mainTitle;
-    // 副标题
-    private String subTitle;
-    // 标价
-    private String sellingPrice;
-    // 发布状态 0：在售，1：已售
-    private String publicationStatus;
-    // 展示图片路径
-    private String pic;
-    // 议价标记 0：不可议价，1：可议价
-    private String bargainingFlag;
-    // 降价 ""/降价额
-    private String cutPrice;
-    // 新品标记 ""/"最新上架"
-    private String newTruck;
+    // 车源id
+    private String id;
+    // 创建人
+    private String createUser;
+    // 上架时间
+    private String createTime;
+    // 更新人
+    private String updateUser;
+    // 更新时间
+    private String updateTime;
+    // 车辆类型
+    private String vehicleType;
+    // 里程数
+    private String mileage;
+    // 发动机品牌
+    private String engineBrand;
+    // 燃油类型
+    private String fuelType;
+    // 排放标准
+    private String emissionStandard;
+    // 车源品牌
+    private String vehicleBrand;
+    // 车系
+    private String vehicleSystem;
+    // 颜色
+    private String colour;
+    // 马力
+    private String horsePower;
+    // 驱动方式
+    private String drivingMode;
+    // 图片
+    private String attachmentPic;
+    // 报价
+    private String price;
+    // 发布状态
+    private String status;
 
-    public void setBargainingFlag(String bargainingFlag) {
-        this.bargainingFlag = bargainingFlag;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public void setCutPrice(String cutPrice) {
-        this.cutPrice = cutPrice;
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
     }
 
-    public void setNewTruck(String newTruck) {
-        this.newTruck = newTruck;
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
     }
 
-    public String getBargainingFlag() {
-        return bargainingFlag;
+    public void setUpdateUser(String updateUser) {
+        this.updateUser = updateUser;
     }
 
-    public String getCutPrice() {
-        return cutPrice;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
-    public String getNewTruck() {
-        return newTruck;
+    public void setVehicleType(String vehicleType) {
+        this.vehicleType = vehicleType;
     }
 
-    public void setTruckId(String truckId) {
-        this.truckId = truckId;
+    public void setMileage(String mileage) {
+        this.mileage = mileage;
     }
 
-    public void setMainTitle(String mainTitle) {
-        this.mainTitle = mainTitle;
+    public void setEngineBrand(String engineBrand) {
+        this.engineBrand = engineBrand;
     }
 
-    public void setSubTitle(String subTitle) {
-        this.subTitle = subTitle;
+    public void setFuelType(String fuelType) {
+        this.fuelType = fuelType;
     }
 
-    public void setSellingPrice(String sellingPrice) {
-        this.sellingPrice = sellingPrice;
+    public void setEmissionStandard(String emissionStandard) {
+        this.emissionStandard = emissionStandard;
     }
 
-    public void setPublicationStatus(String publicationStatus) {
-        this.publicationStatus = publicationStatus;
+    public void setVehicleBrand(String vehicleBrand) {
+        this.vehicleBrand = vehicleBrand;
     }
 
-    public void setPic(String pic) {
-        this.pic = pic;
+    public void setVehicleSystem(String vehicleSystem) {
+        this.vehicleSystem = vehicleSystem;
     }
 
-    public String getTruckId() {
-        return truckId;
+    public void setColour(String colour) {
+        this.colour = colour;
     }
 
-    public String getMainTitle() {
-        return mainTitle;
+    public void setHorsePower(String horsePower) {
+        this.horsePower = horsePower;
     }
 
-    public String getSubTitle() {
-        return subTitle;
+    public void setDrivingMode(String drivingMode) {
+        this.drivingMode = drivingMode;
     }
 
-    public String getSellingPrice() {
-        return sellingPrice;
+    public void setAttachmentPic(String attachmentPic) {
+        this.attachmentPic = attachmentPic;
     }
 
-    public String getPublicationStatus() {
-        return publicationStatus;
+    public void setPrice(String price) {
+        this.price = price;
     }
 
-    public String getPic() {
-        return pic;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public String getCreateTime() {
+        return createTime;
+    }
+
+    public String getUpdateUser() {
+        return updateUser;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public String getVehicleType() {
+        return vehicleType;
+    }
+
+    public String getMileage() {
+        return mileage;
+    }
+
+    public String getEngineBrand() {
+        return engineBrand;
+    }
+
+    public String getFuelType() {
+        return fuelType;
+    }
+
+    public String getEmissionStandard() {
+        return emissionStandard;
+    }
+
+    public String getVehicleBrand() {
+        return vehicleBrand;
+    }
+
+    public String getVehicleSystem() {
+        return vehicleSystem;
+    }
+
+    public String getColour() {
+        return colour;
+    }
+
+    public String getHorsePower() {
+        return horsePower;
+    }
+
+    public String getDrivingMode() {
+        return drivingMode;
+    }
+
+    public String getAttachmentPic() {
+        return attachmentPic;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public String getStatus() {
+        return status;
     }
 }
