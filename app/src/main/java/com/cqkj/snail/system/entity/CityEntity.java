@@ -18,6 +18,8 @@ public class CityEntity implements Serializable, Comparable<CityEntity> {
     private String id;
     // 上一级id
     private String parentId;
+    // 上一级名称
+    private String parentName;
     // 城市编码
     private String adcode;
     // 城市名称
@@ -26,10 +28,18 @@ public class CityEntity implements Serializable, Comparable<CityEntity> {
     private String letters;
     // 地区级别
     private String areaLevel;
-    // 下一句城市列表
+    // 下一级城市列表
     private List<CityEntity> children;
-    // 选中标识
+    // 选中标识 0:未选中，1：选中
     private int selectFlag;
+
+    public void setParentName(String parentName) {
+        this.parentName = parentName;
+    }
+
+    public String getParentName() {
+        return parentName;
+    }
 
     public void setSelectFlag(int selectFlag) {
         this.selectFlag = selectFlag;

@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.cqkj.publicframework.tool.CommonUtil;
 import com.cqkj.snail.R;
+import com.cqkj.snail.buy.entity.TruckPicEntity;
 import com.cqkj.snail.truck.activity.TruckDetailActivity;
 import com.cqkj.snail.config.PublishStatus;
 import com.cqkj.snail.truck.entity.TruckEntity;
@@ -32,7 +34,6 @@ public class TruckListAdapter extends CommonAdapter {
         context = _context;
         list = _list;
         layoutid = R.layout.item_truck;
-//        glide = Glide.with(context);
         mRequestOptions = new RequestOptions()
                 .error(R.mipmap.defaultimage)
                 .diskCacheStrategy(DiskCacheStrategy.ALL);
@@ -43,11 +44,17 @@ public class TruckListAdapter extends CommonAdapter {
         convertView = super.getView(position, convertView, parent);
         ViewHolder viewHolder = new ViewHolder(convertView);
         TruckEntity truckEntity = (TruckEntity) getItem(position);
+
         // 加载车辆图片
+        List<TruckPicEntity> attachmentPic = truckEntity.getAttachmentPic();
+        String picPath = "";
+        if (attachmentPic != null && !attachmentPic.isEmpty()) {
+            picPath = attachmentPic.get(0).getSavePath();
+        }
         Glide.with(context)
                 .asBitmap()
                 .apply(mRequestOptions)
-                .load(truckEntity.getAttachmentPic()).into(viewHolder.iv_truck);
+                .load(picPath).into(viewHolder.iv_truck);
         // 如果降价标签没有给出降价额度
 //        if (TextUtils.isEmpty(truckEntity.getCutPrice())){
 //            // 则将降价标签隐藏
@@ -76,9 +83,12 @@ public class TruckListAdapter extends CommonAdapter {
 //            viewHolder.iv_new.setVisibility(View.GONE);
 //        }
 
-        viewHolder.tv_title.setText(truckEntity.getVehicleBrand() + truckEntity.getVehicleType() + " " + truckEntity.getHorsePower());
-        viewHolder.tv_remark.setText(truckEntity.getCreateTime() + truckEntity.getEmissionStandard());
-        viewHolder.tv_price.setText(truckEntity.getPrice());
+        viewHolder.tv_title.setText(truckEntity.getVehicleBrandContent() +
+                truckEntity.getVehicleTypeContent() + " " + truckEntity.getHorsePower());
+        viewHolder.tv_remark.setText(truckEntity.getCreateTime() + " " +
+                truckEntity.getDrivingModeContent() + " " + truckEntity.getEmissionStandardContent() +
+                "/" + CommonUtil.changeStringNotNull(truckEntity.getCarWatchingPlaceContent()));
+        viewHolder.tv_price.setText(truckEntity.getPrice() + "万");
 
         // 如果议价标记为“1”
 //        if ("1".equals(truckEntity.getBargainingFlag())) {
@@ -102,6 +112,7 @@ public class TruckListAdapter extends CommonAdapter {
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(context, TruckDetailActivity.class);
+            intent.putExtra("truckEntity", truckEntity);
             context.startActivity(intent);
         }
     }

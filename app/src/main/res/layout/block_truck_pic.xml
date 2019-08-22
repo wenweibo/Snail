@@ -3,7 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/lin_pic_block">
     <LinearLayout
         style="@style/lin_base"
         android:orientation="vertical">
@@ -28,6 +29,7 @@
                 android:gravity="center_vertical"
                 android:orientation="vertical">
                 <TextView
+                    android:id="@+id/tv_pic_num"
                     style="@style/text_base"
                     android:text="0/21"
                     android:textSize="@dimen/activity_title_size_25" />

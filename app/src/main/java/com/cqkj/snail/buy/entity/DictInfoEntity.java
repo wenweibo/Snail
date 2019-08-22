@@ -1,13 +1,17 @@
 package com.cqkj.snail.buy.entity;
 
+import android.support.annotation.NonNull;
+
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 字典实体
+ *
  * @author 闻维波
  * @since 2019/08/13
  */
-public class DictInfoEntity {
+public class DictInfoEntity implements Comparable<DictInfoEntity>, Serializable {
     // 字典id
     private String id;
     // 创建人
@@ -22,6 +26,8 @@ public class DictInfoEntity {
     private String parentId;
     // 字典名称
     private String dictName;
+    // 名称拼音
+    private String letter;
     // 字典编号
     private String dictCode;
     // 排序号
@@ -30,6 +36,15 @@ public class DictInfoEntity {
     private List<DictInfoEntity> children;
     // 是否选中，0--否，1--是
     private int selectFlag;
+
+
+    public void setLetter(String letter) {
+        this.letter = letter;
+    }
+
+    public String getLetter() {
+        return letter;
+    }
 
     public void setSelectFlag(int selectFlag) {
         this.selectFlag = selectFlag;
@@ -117,5 +132,10 @@ public class DictInfoEntity {
 
     public List<DictInfoEntity> getChildren() {
         return children;
+    }
+
+    @Override
+    public int compareTo(@NonNull DictInfoEntity o) {
+        return this.getLetter().charAt(0) - o.getLetter().charAt(0);
     }
 }

@@ -12,14 +12,20 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
 import com.cqkj.publicframework.tool.ToastUtil;
 import com.cqkj.publicframework.widget.pull.PullToRefreshLayout;
 import com.cqkj.snail.AppApplication;
 import com.cqkj.snail.R;
+import com.cqkj.snail.requestdata.RequestManager;
 import com.cqkj.snail.requestdata.RequestUrl;
+import com.cqkj.snail.system.callbackevent.LocationEvent;
 import com.cqkj.snail.system.entity.CityEntity;
 import com.cqkj.snail.tool.CommonRequest;
+import com.cqkj.snail.tool.CommonUtil;
+import com.cqkj.snail.tool.MyLocationListener;
 import com.cqkj.snail.truck.adapter.FirstMenuAdapter;
 import com.cqkj.snail.truck.adapter.TruckListAdapter;
 import com.cqkj.snail.config.PublishStatus;
@@ -35,8 +41,12 @@ import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -46,7 +56,8 @@ import butterknife.BindView;
  *
  * @author 闻维波 2019/07/26
  */
-public class FirstPagerActivity extends BaseTitleActivity implements OnBannerListener {
+public class FirstPagerActivity extends BaseTitleActivity implements OnBannerListener,
+        PullToRefreshLayout.OnRefreshListener {
     // 刷新控件
     @BindView(R.id.refresh_view)
     PullToRefreshLayout refresh_view;
@@ -102,7 +113,7 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
     // 车辆集合
     private List<TruckEntity> trucksData = new ArrayList<>();
     // 最新上架车辆集合
-    private List<TruckEntity> newTrucks;
+    private List<TruckEntity> newTrucks = new ArrayList<>();
     // 浏览记录车辆集合
     private List<TruckEntity> recordTrucks;
     // 车辆列表适配器
@@ -111,13 +122,15 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        CommonUtil.evenRegister(this);
         // 默认加载最新上架车辆列表
         linNew.performClick();
+
     }
+
 
     @Override
     protected int getLayoutId() {
-//        setBack(false);
         return R.layout.activity_first;
     }
 
@@ -140,28 +153,7 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         linRecord.setOnClickListener(this);
         tvLocation.setOnClickListener(this);
 
-        refresh_view.setOnRefreshListener(new PullToRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
-                // 下拉刷新操作
-                new Handler() {
-                    @Override
-                    public void handleMessage(Message msg) {
-                        refresh_view.refreshFinish(PullToRefreshLayout.SUCCEED);
-                    }
-                }.sendEmptyMessageDelayed(0, 3000);
-            }
-
-            @Override
-            public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
-                new Handler() {
-                    @Override
-                    public void handleMessage(Message msg) {
-                        refresh_view.loadmoreFinish(PullToRefreshLayout.SUCCEED);
-                    }
-                }.sendEmptyMessageDelayed(0, 3000);
-            }
-        });
+        refresh_view.setOnRefreshListener(this);
     }
 
     @Override
@@ -173,12 +165,19 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
 
         // 初始化车辆列表
         wlvTrucks.setScroll(true);
-        newTrucks = getTruckEntites(0);
+//        newTrucks = getTruckEntites(0);
 //        recordTrucks = getTruckEntites(1);
         recordTrucks = new ArrayList<>();
         truckListAdapter = new TruckListAdapter(this, trucksData);
         wlvTrucks.setAdapter(truckListAdapter);
 
+    }
+
+    @Override
+    protected void loadData() {
+        super.loadData();
+        showDialog("");
+        getTrucks();
     }
 
     @Override
@@ -188,13 +187,23 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
             case RequestUrl.request_area:
                 tvLocation.performLongClick();
                 break;
+            case RequestUrl.request_trucks:
+                refresh_view.refreshFinish(PullToRefreshLayout.SUCCEED);
+                List<TruckEntity> truckList = (List<TruckEntity>) obj.getObject();
+                newTrucks.clear();
+                if (truckList != null && !truckList.isEmpty()) {
+                    newTrucks.addAll(truckList);
+                }
+                tabChange(linNew, linRecord);
+                break;
         }
     }
 
     @Override
     public void onFailure(int flag, String message) {
         super.onFailure(flag, message);
-        ToastUtil.showShort(this,message);
+        refresh_view.refreshFinish(PullToRefreshLayout.SUCCEED);
+        ToastUtil.showShort(this, message);
     }
 
     @Override
@@ -239,6 +248,7 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
     @Override
     public void onDestroy() {
         super.onDestroy();
+        CommonUtil.evenUnregister(this);
     }
 
     @Override
@@ -248,7 +258,8 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         if (resultCode == CitySelectActivity.RESULT_CODE_SELECT_CITY) {
             if (data != null) {
                 CityEntity cityEntity = (CityEntity) data.getExtras().getSerializable("cityEntity");
-                tvLocation.setText(cityEntity.getName());
+                AppApplication.selectCity = cityEntity;
+                tvLocation.setText(com.cqkj.publicframework.tool.CommonUtil.changeStringEllipsis(cityEntity.getName()));
             }
         }
     }
@@ -290,8 +301,6 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
                 .setOnBannerListener(this)
                 // 必须最后调用的方法，启动轮播图。
                 .start();
-
-
     }
 
     /**
@@ -302,6 +311,28 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
     @Override
     public void OnBannerClick(int position) {
         Log.i("tag", "你点了第" + position + "张轮播图");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(LocationEvent event) {
+        //收到此广播，刷新位置信息
+        if (AppApplication.locationCity != null) {
+            tvLocation.setText(com.cqkj.publicframework.tool.CommonUtil.
+                    changeStringEllipsis(AppApplication.locationCity.getName()));
+        }
+    }
+
+    /**
+     * 下拉刷新监听
+     * @param pullToRefreshLayout
+     */
+    @Override
+    public void onRefresh(PullToRefreshLayout pullToRefreshLayout) {
+        getTrucks();
+    }
+
+    @Override
+    public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
     }
 
     /**
@@ -334,33 +365,20 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         }
         return menuEntities;
     }
-
     /**
-     * 模拟获取车辆列表
-     *
-     * @param type
-     * @return
+     * 获取车源列表
      */
-    private List<TruckEntity> getTruckEntites(int type) {
-        List<TruckEntity> truckEntities = new ArrayList<>();
-        for (int i = 0; i < 6; i++) {
-            TruckEntity truckEntity = new TruckEntity();
-            truckEntity.setAttachmentPic("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564653997279&di=04e1ea12fed27c0f3dcaed8c55164c2b&imgtype=0&src=http%3A%2F%2Fimga.360che.com%2Fimga%2F550x366%2F0%2F112%2F112268.jpg");
-            truckEntity.setId(i + "");
-            truckEntity.setVehicleBrand("牛逼的卡车" + i + type);
-            truckEntity.setVehicleType("哈哈" + i);
-            truckEntity.setHorsePower("130 匹");
-            truckEntity.setCreateTime("2014年01月");
-            truckEntity.setPrice("25万");
-            if (i % 2 == 0) {
-                truckEntity.setStatus(PublishStatus.ON_SALE);
-            } else {
-                truckEntity.setStatus(PublishStatus.SOLD);
-            }
-            truckEntities.add(truckEntity);
-            truckEntity = null;
-        }
-        return truckEntities;
+    public void getTrucks() {
+        HashMap<String, String> params = new HashMap<>();
+        params.put("pageSize","6");
+        params.put("pageNo", "1");
+//        params.put("carWatchingPlace",
+//                AppApplication.selectCity != null ? AppApplication.selectCity.getAdcode() :
+//                        (AppApplication.locationCity != null ?
+//                                AppApplication.locationCity.getAdcode() : ""));
+        // 最新上架
+        params.put("sortCondition", "SHELF_TIME");
+        RequestManager.getRequestManager().post(RequestUrl.request_trucks, params, false, this);
     }
 
     /**
@@ -395,4 +413,5 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         }
         truckListAdapter.notifyDataSetChanged();
     }
+
 }

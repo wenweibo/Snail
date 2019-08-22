@@ -21,7 +21,6 @@ public class CommonAdapter extends BaseAdapter {
     protected List<?> list;
     protected int layoutid;
     protected RequestManager glide;
-
     @Override
     public int getCount() {
         return list.size();

@@ -67,7 +67,7 @@
         </LinearLayout>
         <TextView
             android:id="@+id/tv_remark"
-            style="@style/text_remark"
+            style="@style/text_remark_12"
             android:text="福田欧曼ETX 载货车 290匹"
             android:layout_weight="1"
             />

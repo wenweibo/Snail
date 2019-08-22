@@ -87,6 +87,19 @@ public class CommonUtil {
     public static String changeStringNotNull(String str){
         return str==null?"":str;
     }
+
+    /**
+     * 字符串过长，转化为 x...x
+     * @param str
+     * @return
+     */
+    public static String changeStringEllipsis(String str){
+        str = changeStringNotNull(str);
+        if (str.length()>3){
+            str = str.substring(0,1)+"..."+str.substring(str.length()-1);
+        }
+        return str;
+    }
     /**
      * 生成随机id
      *

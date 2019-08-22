@@ -13,12 +13,14 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.cqkj.snail.R;
+import com.cqkj.snail.buy.entity.TruckPicEntity;
 import com.cqkj.snail.tool.CommonUtil;
 import com.cqkj.snail.truck.adapter.ImgAdapter;
 import com.cqkj.snail.truck.adapter.TruckBaseAdapter;
 import com.cqkj.snail.truck.entity.ImageViewInfo;
 import com.cqkj.snail.truck.entity.TruckBaseEntity;
 import com.cqkj.publicframework.widget.NoScrollGridView;
+import com.cqkj.snail.truck.entity.TruckEntity;
 import com.xuexiang.xui.utils.StatusBarUtils;
 import com.xuexiang.xui.widget.imageview.nine.NineGridImageViewAdapter;
 import com.xuexiang.xui.widget.imageview.preview.PreviewBuilder;
@@ -59,6 +61,12 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
     // 图片列表视图
     @BindView(R.id.ngl_images)
     NoScrollGridView ngl_images;
+    // 货车标题
+    @BindView(R.id.tv_trcuk_title)
+    TextView tvTrcukTitle;
+    // 价格
+    @BindView(R.id.tv_price)
+    TextView tvPrice;
 
     // banner图片地址集合
     private ArrayList<String> list_path;
@@ -68,6 +76,7 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
     List<TruckBaseEntity> truckBaseEntities;
     // 图片列表
     private List<ImageViewInfo> imageViewInfos;
+    private TruckEntity truckEntity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,13 +99,13 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
         //设置标头菜单按钮
         toolbar.inflateMenu(R.menu.menu_custom);
 
-        initBanner();
+
         appbar_layout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             @Override
             public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
                 // 向上滚动
                 if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()) {
-                    tv_title.setText("我们的故事");
+                    tv_title.setText("货车详情");
                     StatusBarUtils.setStatusBarDarkMode(TruckDetailActivity.this);
                 } else {
                     StatusBarUtils.setStatusBarLightMode(TruckDetailActivity.this);
@@ -107,13 +116,19 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
     }
 
     private void initData() {
+        truckEntity = (TruckEntity) getIntent().getExtras().getSerializable("truckEntity");
         getBaseData();
+        initBanner();
         // 组成数据
         imageViewInfos = CommonUtil.computeBoundsBackward(list_path);
         ngv_base.setAdapter(new TruckBaseAdapter(this, truckBaseEntities));
 
         ImgAdapter adapter = new ImgAdapter(this, imageViewInfos, ngl_images);
         ngl_images.setAdapter(adapter);
+
+        tvTrcukTitle.setText(truckEntity.getVehicleBrandContent() +
+                truckEntity.getVehicleTypeContent() + " " + truckEntity.getHorsePower());
+        tvPrice.setText(truckEntity.getPrice()+"万");
     }
 
 
@@ -145,36 +160,35 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
     private void initBanner() {
         // 放图片地址的集合
         list_path = new ArrayList<>();
-        // 放标题的集合
-        list_title = new ArrayList<>();
-        list_path.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564721623561&di=50a2e2ba770ad99e1279b6fbb1bd1e71&imgtype=0&src=http%3A%2F%2Fimg1001.pocoimg.cn%2Fimage%2Fpoco%2Fworks%2F04%2F2010%2F0826%2F02%2F54102567201008260201332544174819597_007_54102567.jpg");
-        list_path.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564721623561&di=1d1acd893b4b73486d3b191769dfa55f&imgtype=0&src=http%3A%2F%2Fimg1.gtimg.com%2Fauto%2Fpics%2Fhv1%2F250%2F208%2F2286%2F148700440.jpg");
-        list_path.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564721623560&di=e50c4c6163a95fcd3690c9fb6fd0ff51&imgtype=0&src=http%3A%2F%2Fimg11.kcimg.cn%2Fofficialpic%2F0%2F20%2Finitc.jpg%25211200");
-        list_path.add("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1564721623559&di=7c7d994b209cfc5e6937deb880d2e8fb&imgtype=0&src=http%3A%2F%2Fpic30.nipic.com%2F20130615%2F10448193_103148405000_2.jpg");
-        list_title.add("好好学习");
-        list_title.add("天天向上");
-        list_title.add("热爱劳动");
-        list_title.add("不搞对象");
-        // 设置内置样式
-        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-        // 设置图片加载器
-        banner.setImageLoader(new MyLoader());
-        // 设置图片网址或地址的集合
-        banner.setImages(list_path);
-        // 设置轮播的动画效果
-        banner.setBannerAnimation(Transformer.Default);
-        // 设置轮播图的标题集合
-        banner.setBannerTitles(list_title);
-        // 设置轮播间隔时间
-        banner.setDelayTime(3000);
-        // 设置是否为自动轮播，默认是“是”。
-        banner.isAutoPlay(true);
-        // 设置指示器的位置，小点点，左中右。
-        banner.setIndicatorGravity(BannerConfig.CENTER)
-                // 以上内容都可写成链式布局，这是轮播图的监听。比较重要。方法在下面。
-                .setOnBannerListener(this)
-                // 必须最后调用的方法，启动轮播图。
-                .start();
+        List<TruckPicEntity> attachmentPics = truckEntity.getAttachmentPic();
+        if (attachmentPics != null && attachmentPics.size() > 0) {
+            for (TruckPicEntity truckPicEntity : attachmentPics) {
+                list_path.add(truckPicEntity.getSavePath());
+            }
+            // 设置内置样式
+            banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+            // 设置图片加载器
+            banner.setImageLoader(new MyLoader());
+            // 设置图片网址或地址的集合
+            banner.setImages(list_path);
+            // 设置轮播的动画效果
+            banner.setBannerAnimation(Transformer.Default);
+            // 设置轮播图的标题集合
+            banner.setBannerTitles(list_title);
+            // 设置轮播间隔时间
+            banner.setDelayTime(3000);
+            // 设置是否为自动轮播，默认是“是”。
+            banner.isAutoPlay(true);
+            // 设置指示器的位置，小点点，左中右。
+            banner.setIndicatorGravity(BannerConfig.CENTER)
+                    // 以上内容都可写成链式布局，这是轮播图的监听。比较重要。方法在下面。
+                    .setOnBannerListener(this)
+                    // 必须最后调用的方法，启动轮播图。
+                    .start();
+            banner.setVisibility(View.VISIBLE);
+        }else{
+            banner.setVisibility(View.GONE);
+        }
 
 
     }
@@ -290,7 +304,6 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
             return super.generateImageView(context);
         }
     };
-
 
 
 }

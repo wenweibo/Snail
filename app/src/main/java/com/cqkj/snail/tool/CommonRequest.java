@@ -12,7 +12,10 @@ import java.util.HashMap;
  * @since 2019/08/14 08:59
  */
 public class CommonRequest {
-
+    /**
+     *  每页加载数据条数
+     */
+    public static final int PAGE_SIZE = 20;
     /**
      * 获取城市数据
      */

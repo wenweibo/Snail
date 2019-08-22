@@ -8,7 +8,12 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import com.cqkj.publicframework.beans.CallBackObject;
+import com.cqkj.publicframework.tool.ToastUtil;
 import com.cqkj.snail.R;
+import com.cqkj.snail.config.ResultCode;
+import com.cqkj.snail.requestdata.RequestManager;
+import com.cqkj.snail.requestdata.RequestUrl;
 import com.cqkj.snail.sell.adapter.TruckPicAdapter;
 import com.cqkj.publicframework.activity.BaseTitleActivity;
 import com.cqkj.publicframework.widget.NoScrollGridView;
@@ -16,6 +21,7 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +48,7 @@ public class UploadActivity extends BaseTitleActivity {
     NoScrollGridView ngvUnmust;
     // 上传按钮
     @BindView(R.id.btn_upload)
-    Button btn_upload;
+    Button btnUpload;
 
     private final String[] picNameArr = new String[]{"车辆铭牌", "左前45度", "车身正面照",
             "车辆牌照", "右后45度", "驾驶室", "车辆前轮", "车辆后轮", "前围骨架", "玻璃及编号",
@@ -63,7 +69,6 @@ public class UploadActivity extends BaseTitleActivity {
     private TruckPicAdapter currentTruckPicAdapter;
     // 当前操作的列表下标
     private int currentPosition;
-
 
 
     @Override
@@ -100,6 +105,56 @@ public class UploadActivity extends BaseTitleActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        btnUpload.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()) {
+            case R.id.btn_upload:
+                showDialog("");
+                // 批量上传照片
+                List<String> paths = new ArrayList<>();
+                // 添加必输列表
+                paths.addAll(structurePicPaths(mustTruckPics));
+                // 添加非必输列表
+                paths.addAll(structurePicPaths(unmustTruckPics));
+                RequestManager.getRequestManager().postFile(RequestUrl.post_file, paths,
+                        this);
+                break;
+        }
+    }
+
+    @Override
+    public void onSuccess(int flag, CallBackObject obj) throws ParseException {
+        super.onSuccess(flag, obj);
+        switch (flag) {
+            case RequestUrl.post_file:
+                String attachId = (String) obj.getObject();
+                if (!TextUtils.isEmpty(attachId)) {
+                    ToastUtil.showShort(this, R.string.upload_success);
+                    Intent data = new Intent();
+                    data.putExtra("attachId",attachId);
+                    data.putExtra("firstPic",mustTruckPics.get(0).getImgPath());
+                    setResult(ResultCode.UPLOAD_PIC, data);
+                    finish();
+                } else {
+                    ToastUtil.showShort(this, R.string.upload_fail);
+                }
+                break;
+        }
+    }
+
+    @Override
+    public void onFailure(int flag, String message) {
+        super.onFailure(flag, message);
+        ToastUtil.showShort(this, message);
     }
 
     /**
@@ -173,7 +228,7 @@ public class UploadActivity extends BaseTitleActivity {
                     for (LocalMedia media : selectList) {
                         if (media.isCut()) {
                             path = media.getCutPath();
-                        }else{
+                        } else {
                             path = media.getPath();
                         }
                         Log.i("图片-----》", media.getPath());
@@ -182,9 +237,9 @@ public class UploadActivity extends BaseTitleActivity {
                     currentTruckPicAdapter.notifyDataSetChanged();
                     break;
             }
-        }else if (resultCode == CameraActivity.RESULT_CODE || resultCode == PicPreViewActivity.RESULT_CODE_PREVIEW){
+        } else if (resultCode == CameraActivity.RESULT_CODE || resultCode == PicPreViewActivity.RESULT_CODE_PREVIEW) {
             // 拍照后返回 或者 预览返回
-            if (data != null){
+            if (data != null) {
                 setResultStatus(data);
             }
         }
@@ -193,6 +248,7 @@ public class UploadActivity extends BaseTitleActivity {
 
     /**
      * 操作图片后的处理
+     *
      * @param data
      */
     private void setResultStatus(Intent data) {
@@ -204,7 +260,7 @@ public class UploadActivity extends BaseTitleActivity {
         // 当前操作的列表适配器
         TruckPicAdapter truckPicAdapter = mustTruckPicAdapter;
         // 如果是非必须列表
-        if (must == 1){
+        if (must == 1) {
             truckPicAdapter = unmustTruckPicAdapter;
             oldTruckPics = unmustTruckPics;
         }
@@ -215,6 +271,7 @@ public class UploadActivity extends BaseTitleActivity {
 
     /**
      * 设置当前操作内容
+     *
      * @param currentTruckPics
      * @param currentTruckPicAdapter
      * @param currentPosition
@@ -228,14 +285,32 @@ public class UploadActivity extends BaseTitleActivity {
     /**
      * 设置提交按钮是否可用
      */
-    private void setBtnStatus(){
+    private void setBtnStatus() {
         boolean can = true;
         // 但凡是必须上传列表中含有未选照片的数据，则不可上传
-        for (TruckPic truckPic:mustTruckPics) {
-            if (TextUtils.isEmpty(truckPic.getImgPath())){
+        for (TruckPic truckPic : mustTruckPics) {
+            if (TextUtils.isEmpty(truckPic.getImgPath())) {
                 can = false;
             }
         }
-        btn_upload.setEnabled(can);
+        btnUpload.setEnabled(can);
+    }
+
+    /**
+     * 构建上传图片路径集合
+     *
+     * @param pics
+     * @return
+     */
+    private List<String> structurePicPaths(List<TruckPic> pics) {
+        List<String> list = new ArrayList<>();
+        if (pics != null) {
+            for (TruckPic truckPic : pics) {
+                if (!TextUtils.isEmpty(truckPic.getImgPath())) {
+                    list.add(truckPic.getImgPath());
+                }
+            }
+        }
+        return list;
     }
 }

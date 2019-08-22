@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 android {
+    signingConfigs {
+        debug {
+            storeFile file('C:\\Users\\Administrator\\.android\\debug.keystore')
+        }
+    }
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.cqkj.snail"
@@ -16,6 +21,12 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDir 'libs'
+            jni.srcDirs = []    //disable automatic ndk-build
         }
     }
 }
@@ -51,4 +62,6 @@ dependencies {
     implementation project(':picture_library')
     // 花样进度条
     implementation project(':RangeSeekBar')
+    implementation files('libs/slidingmenu.jar')
+    implementation files('libs/BaiduLBS_Android.jar')
 }

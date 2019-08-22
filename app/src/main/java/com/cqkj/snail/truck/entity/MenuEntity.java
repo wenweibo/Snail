@@ -1,5 +1,7 @@
 package com.cqkj.snail.truck.entity;
 
+import com.cqkj.snail.buy.entity.DictInfoEntity;
+
 /**
  * 菜单实体
  */
@@ -14,6 +16,16 @@ public class MenuEntity {
     private String title;
     // 是否选中
     private boolean Selected;
+    // 对应的车型信息
+    private DictInfoEntity dictInfoEntity;
+
+    public void setDictInfoEntity(DictInfoEntity dictInfoEntity) {
+        this.dictInfoEntity = dictInfoEntity;
+    }
+
+    public DictInfoEntity getDictInfoEntity() {
+        return dictInfoEntity;
+    }
 
     public void setSelected(boolean selected) {
         Selected = selected;

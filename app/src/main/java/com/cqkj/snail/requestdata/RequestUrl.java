@@ -17,6 +17,12 @@ public class RequestUrl {
     public static final short request_area = 3;
     // 字典详情查询(树形)
     public static final short request_dictIfo = 4;
+   // 车源列表查询(列表)
+    public static final short request_trucks = 5;
+  // 多个附件上传
+    public static final short post_file = 6;
+  // 卖车(插入)
+    public static final short post_sell = 7;
 
     public static final String[] url = {
             // 0:登录
@@ -27,8 +33,14 @@ public class RequestUrl {
             "/userInfo/save",
             // 3:地域查询(列表)
             "/AreaInfo/page",
-            // 字典详情查询(树形)
-            "/dictInfo/getByCode"
+            // 4:字典详情查询(树形)
+            "/dictInfo/getByCode",
+            // 5:车源列表查询(列表)
+            "/truckInfo/page",
+            // 6:多个附件上传
+            "/attach/multiUpload",
+            // 7:卖车(插入)
+            "truckInfo/save"
     };
 }
 

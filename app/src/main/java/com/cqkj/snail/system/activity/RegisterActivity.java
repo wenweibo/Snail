@@ -28,6 +28,9 @@ public class RegisterActivity extends BaseTitleActivity {
     // 用户名输入框
     @BindView(R.id.tedit_username)
     TextInputEditText teditUsername;
+    // 姓名输入框
+    @BindView(R.id.tedit_name)
+    TextInputEditText teditName;
     // 手机号输入框
     @BindView(R.id.tedit_mobile)
     TextInputEditText teditMobile;
@@ -110,6 +113,10 @@ public class RegisterActivity extends BaseTitleActivity {
             teditUsername.setError(getString(R.string.username_hint));
             return getString(R.string.username_hint);
         }
+        if (TextUtils.isEmpty(teditName.getText().toString())) {
+            teditUsername.setError(getString(R.string.name_hint));
+            return getString(R.string.name_hint);
+        }
         String mobileNum = teditMobile.getText().toString();
         if (TextUtils.isEmpty(mobileNum)) {
             teditMobile.setError(getString(R.string.mobile_hint));
@@ -146,6 +153,8 @@ public class RegisterActivity extends BaseTitleActivity {
         HashMap<String, String> params = new HashMap<>();
         // 登录名
         params.put("loginName", teditUsername.getText().toString());
+        // 用户姓名
+        params.put("userName", teditName.getText().toString());
         // 	登录密码
         params.put("loginPassword", teditPassword.getText().toString());
         // 	联系方式

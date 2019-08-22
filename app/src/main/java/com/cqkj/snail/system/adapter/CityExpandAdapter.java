@@ -6,17 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.Filter;
-import android.widget.Filterable;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.cqkj.publicframework.widget.NoScrollGridView;
 import com.cqkj.snail.R;
 import com.cqkj.snail.system.entity.CityEntity;
-import com.cqkj.snail.tool.CommonUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,26 +21,24 @@ import java.util.List;
  * @author 闻维波
  * @since 2019/08/12 11:43
  */
-public class CityExpandAdapter extends BaseExpandableListAdapter implements SectionIndexer, Filterable {
+public class CityExpandAdapter extends BaseExpandableListAdapter implements SectionIndexer {
     // 上下文
     private Context context;
     // 源数据
     private List<List<CityEntity>> parentList;
-    // 存储原始数据
-    private List<CityEntity> cityEntities;
     // 布局加载器
     private LayoutInflater inflater;
-    // 城市筛选器
-    private CityFilter cityFilter;
     // 选中回调接口
     private CitySelect citySelect;
+    // 是否是多选
+    private boolean isMultiple;
 
     public CityExpandAdapter(Context context, List<List<CityEntity>> parentList,
-                             List<CityEntity> cityEntities, CitySelect citySelect) {
+                             boolean isMultiple, CitySelect citySelect) {
         this.context = context;
         this.parentList = parentList;
-        this.cityEntities = cityEntities;
         this.citySelect = citySelect;
+        this.isMultiple = isMultiple;
         // 初始化布局加载器
         inflater = LayoutInflater.from(context);
     }
@@ -66,11 +60,7 @@ public class CityExpandAdapter extends BaseExpandableListAdapter implements Sect
 
     @Override
     public List<CityEntity> getGroup(int groupPosition) {
-        if (parentList != null && groupPosition < parentList.size()) {
-            return parentList.get(groupPosition);
-        } else {
-            return null;
-        }
+        return parentList.get(groupPosition);
     }
 
     @Override
@@ -126,14 +116,8 @@ public class CityExpandAdapter extends BaseExpandableListAdapter implements Sect
             childHolder = (ChildHolder) convertView.getTag();
         }
         // 设置网格视图适配器
-        childHolder.ngv_city.setAdapter(new CityChildAdaper(context, parentList.get(groupPosition)));
-        // 设置网格视图（城市网格）点击事件
-        childHolder.ngv_city.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                citySelect.selectCity(parentList.get(groupPosition).get(position));
-            }
-        });
+        childHolder.ngv_city.setAdapter(new CityChildAdaper(context, parentList,
+                getGroup(groupPosition), isMultiple, citySelect));
         return convertView;
     }
 
@@ -170,13 +154,6 @@ public class CityExpandAdapter extends BaseExpandableListAdapter implements Sect
         return 0;
     }
 
-    @Override
-    public Filter getFilter() {
-        if (cityFilter == null) {
-            cityFilter = new CityFilter();
-        }
-        return cityFilter;
-    }
 
     class GroupHolder {
         TextView tvLetter;
@@ -184,48 +161,6 @@ public class CityExpandAdapter extends BaseExpandableListAdapter implements Sect
 
     class ChildHolder {
         NoScrollGridView ngv_city;
-    }
-
-
-    private class CityFilter extends Filter {
-        @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
-            // 初始化筛选结果对象
-            FilterResults filterResults = new FilterResults();
-            // 筛选后的城市列表
-            List<CityEntity> filterCitys = new ArrayList<>();
-            // 如果传入的筛选条件为空，则默认返回源数据
-            if (constraint.toString().isEmpty()) {
-                filterCitys = cityEntities;
-            } else {
-                // 遍历源数据，找出符合筛选条件的城市对象
-                for (CityEntity cityEntity : cityEntities) {
-                    String s = constraint.toString().toUpperCase();
-                    // 如果城市名称的拼音首字母是筛选字符或城市名称中包含筛选字符，则说明该城市是需要的城市
-                    if (cityEntity.getLetters().startsWith(s) || cityEntity.getName().contains(s)) {
-                        filterCitys.add(cityEntity);
-                    }
-                }
-            }
-            // 将筛选后的城市对象列表进行排序并且生成组集合
-            List<List<CityEntity>> lists = CommonUtil.sortAndGroupCitys(filterCitys);
-            if (lists == null) {
-                lists = new ArrayList<>();
-            }
-            filterResults.values = lists;
-            filterResults.count = lists.size();
-            return filterResults;
-        }
-
-        @Override
-        protected void publishResults(CharSequence constraint, FilterResults results) {
-            parentList = (List<List<CityEntity>>) results.values;
-            if (results.count > 0) {
-                notifyDataSetChanged();
-            } else {
-                notifyDataSetInvalidated();
-            }
-        }
     }
 
     public interface CitySelect {

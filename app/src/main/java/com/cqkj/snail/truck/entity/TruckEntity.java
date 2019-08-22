@@ -1,11 +1,16 @@
 package com.cqkj.snail.truck.entity;
 
+import com.cqkj.snail.buy.entity.TruckPicEntity;
+
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * 货车实体
  *
  * @author 闻维波 2019/08/01
  */
-public class TruckEntity {
+public class TruckEntity implements Serializable {
     // 车源id
     private String id;
     // 创建人
@@ -18,30 +23,150 @@ public class TruckEntity {
     private String updateTime;
     // 车辆类型
     private String vehicleType;
+    // 车辆类型名称
+    private String vehicleTypeContent;
     // 里程数
     private String mileage;
     // 发动机品牌
     private String engineBrand;
+    // 发动机品牌名称
+    private String engineBrandContent;
     // 燃油类型
     private String fuelType;
+    // 燃油类型名称
+    private String fuelTypeContent;
     // 排放标准
     private String emissionStandard;
+    // 排放标准名称
+    private String emissionStandardContent;
     // 车源品牌
     private String vehicleBrand;
+    // 车源品牌名称
+    private String vehicleBrandContent;
     // 车系
     private String vehicleSystem;
+    // 车系名称
+    private String vehicleSystemContent;
     // 颜色
     private String colour;
+    // 颜色名称
+    private String colourContent;
     // 马力
     private String horsePower;
     // 驱动方式
     private String drivingMode;
+    // 驱动方式名称
+    private String drivingModeContent;
     // 图片
-    private String attachmentPic;
+    private List<TruckPicEntity> attachmentPic;
     // 报价
     private String price;
     // 发布状态
     private String status;
+    // 发布状态名称
+    private String statusContent;
+    // 看车地点
+    private String carWatchingPlace;
+    // 看车地点名称
+    private String carWatchingPlaceContent;
+    // 排序方式
+    private String sortCondition;
+
+    public void setVehicleTypeContent(String vehicleTypeContent) {
+        this.vehicleTypeContent = vehicleTypeContent;
+    }
+
+    public void setEngineBrandContent(String engineBrandContent) {
+        this.engineBrandContent = engineBrandContent;
+    }
+
+    public void setFuelTypeContent(String fuelTypeContent) {
+        this.fuelTypeContent = fuelTypeContent;
+    }
+
+    public void setEmissionStandardContent(String emissionStandardContent) {
+        this.emissionStandardContent = emissionStandardContent;
+    }
+
+    public void setVehicleBrandContent(String vehicleBrandContent) {
+        this.vehicleBrandContent = vehicleBrandContent;
+    }
+
+    public void setVehicleSystemContent(String vehicleSystemContent) {
+        this.vehicleSystemContent = vehicleSystemContent;
+    }
+
+    public void setColourContent(String colourContent) {
+        this.colourContent = colourContent;
+    }
+
+    public void setDrivingModeContent(String drivingModeContent) {
+        this.drivingModeContent = drivingModeContent;
+    }
+
+    public void setStatusContent(String statusContent) {
+        this.statusContent = statusContent;
+    }
+
+    public void setCarWatchingPlace(String carWatchingPlace) {
+        this.carWatchingPlace = carWatchingPlace;
+    }
+
+    public void setCarWatchingPlaceContent(String carWatchingPlaceContent) {
+        this.carWatchingPlaceContent = carWatchingPlaceContent;
+    }
+
+    public void setSortCondition(String sortCondition) {
+        this.sortCondition = sortCondition;
+    }
+
+    public String getVehicleTypeContent() {
+        return vehicleTypeContent;
+    }
+
+    public String getEngineBrandContent() {
+        return engineBrandContent;
+    }
+
+    public String getFuelTypeContent() {
+        return fuelTypeContent;
+    }
+
+    public String getEmissionStandardContent() {
+        return emissionStandardContent;
+    }
+
+    public String getVehicleBrandContent() {
+        return vehicleBrandContent;
+    }
+
+    public String getVehicleSystemContent() {
+        return vehicleSystemContent;
+    }
+
+    public String getColourContent() {
+        return colourContent;
+    }
+
+    public String getDrivingModeContent() {
+        return drivingModeContent;
+    }
+
+    public String getStatusContent() {
+        return statusContent;
+    }
+
+    public String getCarWatchingPlace() {
+        return carWatchingPlace;
+    }
+
+    public String getCarWatchingPlaceContent() {
+        return carWatchingPlaceContent;
+    }
+
+    public String getSortCondition() {
+        return sortCondition;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -103,7 +228,7 @@ public class TruckEntity {
         this.drivingMode = drivingMode;
     }
 
-    public void setAttachmentPic(String attachmentPic) {
+    public void setAttachmentPic( List<TruckPicEntity>  attachmentPic) {
         this.attachmentPic = attachmentPic;
     }
 
@@ -175,7 +300,7 @@ public class TruckEntity {
         return drivingMode;
     }
 
-    public String getAttachmentPic() {
+    public  List<TruckPicEntity>  getAttachmentPic() {
         return attachmentPic;
     }
 

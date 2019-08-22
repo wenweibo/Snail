@@ -37,11 +37,13 @@
             android:text="当前定位城市"/>
         <TextView
             android:id="@+id/tv_location"
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
-            android:text="南昌"
-            android:textSize="18sp"
+            android:background="@drawable/shape_gray_stroke"
+            android:textSize="@dimen/tab_text_size"
+            android:padding="@dimen/com_size_5"
             android:layout_marginTop="10dip"
+            android:gravity="center"
             />
     </LinearLayout>
 </LinearLayout>

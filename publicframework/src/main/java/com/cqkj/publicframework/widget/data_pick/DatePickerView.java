@@ -77,6 +77,26 @@ public class DatePickerView extends View {
         }
     };
 
+
+    /**
+     * 获取当前选中的下标
+     */
+    public int getmCurrentSelected() {
+        return mCurrentSelected;
+    }
+
+    public void setmCurrentSelected(int mCurrentSelected) {
+        this.mCurrentSelected = mCurrentSelected;
+    }
+
+    /**
+     * 获取当前选中文本
+     * @return
+     */
+    public String getCurrentStr(){
+        return mDataList.get(mCurrentSelected);
+    }
+
     public DatePickerView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -89,7 +109,7 @@ public class DatePickerView extends View {
 
     private void performSelect() {
         if (mSelectListener != null) {
-            mSelectListener.onSelect(mDataList.get(mCurrentSelected));
+            mSelectListener.onSelect(mCurrentSelected, mDataList.get(mCurrentSelected));
         }
     }
 
@@ -168,7 +188,7 @@ public class DatePickerView extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Style.FILL);
         mPaint.setTextAlign(Align.CENTER);
-        mPaint.setColor(ContextCompat.getColor(context, R.color.focus_color));
+        mPaint.setColor(ContextCompat.getColor(context, R.color.colorPrimary));
         //第二个paint
         nPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         nPaint.setStyle(Style.FILL);
@@ -317,7 +337,7 @@ public class DatePickerView extends View {
     }
 
     public interface onSelectListener {
-        void onSelect(String text);
+        void onSelect(int position, String text);
     }
 
     public void setCanScroll(boolean canScroll) {

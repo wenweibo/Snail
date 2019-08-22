@@ -24,7 +24,7 @@
             android:drawableRight="@mipmap/title_location"
             android:drawablePadding="@dimen/com_size_5"
             android:gravity="center_vertical"
-            android:text="南昌"
+            android:text="@string/locationing"
             android:textColor="@color/white" />
 
         <LinearLayout
@@ -187,17 +187,23 @@
                 app:ftl_check_mode="display" />
         </LinearLayout>
     </ScrollView>
-
-
-    <com.cqkj.publicframework.widget.pull.PullToRefreshLayout
-        android:id="@+id/refresh_view"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <include layout="@layout/refresh_head" />
-        <com.cqkj.publicframework.widget.pull.PullableListView
-            android:id="@+id/plv_truck"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/no_data" android:visibility="gone"/>
+        <com.cqkj.publicframework.widget.pull.PullToRefreshLayout
+            android:id="@+id/refresh_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <include layout="@layout/load_more" />
-    </com.cqkj.publicframework.widget.pull.PullToRefreshLayout>
+            android:layout_height="match_parent"
+            android:visibility="visible">
+            <include layout="@layout/refresh_head" />
+            <com.cqkj.publicframework.widget.pull.PullableListView
+                android:id="@+id/plv_truck"
+                style="@style/base_listview" />
+            <include layout="@layout/load_more" />
+        </com.cqkj.publicframework.widget.pull.PullToRefreshLayout>
+    </LinearLayout>
+
+
 </LinearLayout>

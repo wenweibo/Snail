@@ -37,6 +37,7 @@ import butterknife.ButterKnife;
 
 /**
  * 主页
+ *
  * @author wwb 2019/07/25
  */
 public class MainActivity extends ActivityGroup {
@@ -129,7 +130,7 @@ public class MainActivity extends ActivityGroup {
         ImageView icon3 = (ImageView) tab3.findViewById(R.id.icon);
         icon3.setImageResource(R.mipmap.guide_discover_nm);
         icon3.setTag(getString(R.string.sell_car));
-        ((TextView)tab3.findViewById(R.id.tv_title)).setText(getString(R.string.sell_car));
+        ((TextView) tab3.findViewById(R.id.tv_title)).setText(getString(R.string.sell_car));
         img_remind = (ImageView) tab3.findViewById(R.id.img_remind);
         img_remind.setVisibility(View.GONE);
         tabRelativeLayouts.add(tab3);
@@ -200,8 +201,8 @@ public class MainActivity extends ActivityGroup {
         }
 
         public void onClick(View v) {
-            // 点击的是“我的”且是未登录状态，则跳转到登录页面
-            if (position == 3 && AppApplication.userEntity == null) {
+            // 点击的是“我的”或“卖车”且是未登录状态，则跳转到登录页面
+            if ((position == 3 || position == 2) && AppApplication.userEntity == null) {
                 startActivity(new Intent(MainActivity.this, LoginActivity.class));
             } else {
                 // 否则打开对应的标签页
@@ -261,10 +262,12 @@ public class MainActivity extends ActivityGroup {
     protected void onResume() {
         super.onResume();
     }
+
     private long exitTime = 0;
+
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP){
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_UP) {
             if (System.currentTimeMillis() - exitTime > 2000) {
                 ToastUtil.showShort(this, "再按一次退出");
                 exitTime = System.currentTimeMillis();

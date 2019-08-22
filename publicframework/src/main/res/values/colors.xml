@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#fd5b58</color>
+    <color name="shallowRed">#ffdfdf</color>
     <color name="colorPrimaryDark">#1bbce2</color>
     <color name="colorAccent">#ff7c1c</color>
     <!--页面背景色-->

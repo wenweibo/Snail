@@ -170,4 +170,24 @@
     <string name="vehicle_brand">品牌</string>
     <string name="price">价格</string>
     <string name="more">更多</string>
+    <string name="brand_select">品牌选择</string>
+    <string name="locationing">定位中</string>
+
+    <string-array name="area_arr">
+        <item>   城市   </item>
+        <item>   省份   </item>
+    </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sure_to_query_truck">确定查询车辆</string>
+    <string name="truck_info">车辆信息</string>
+    <string name="city_select">城市选择</string>
+    <string name="name_hint">请输入姓名</string>
+    <string name="upload_fail">上传失败</string>
+    <string name="upload_success">上传成功</string>
+    <string name="submit_sell_truck">提交卖车</string>
+    <string name="place_hint">请选择看车地点</string>
+    <string name="submit_success">提交成功</string>
+
 </resources>

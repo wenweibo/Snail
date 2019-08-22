@@ -12,6 +12,26 @@ public class UserEntity {
     private String loginName;
     // 用户姓名
     private String userName;
+    // 电话
+    private String phone;
+    // 登录密码
+    private String loginPassword;
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setLoginPassword(String loginPassword) {
+        this.loginPassword = loginPassword;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getLoginPassword() {
+        return loginPassword;
+    }
 
     public void setId(String id) {
         this.id = id;

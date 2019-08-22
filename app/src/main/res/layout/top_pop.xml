@@ -47,7 +47,8 @@
                         android:layout_height="wrap_content"
                         android:text="不限"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="@dimen/listview_title_size" />
+                        android:textSize="@dimen/listview_title_size"
+                        android:tag=""/>
                 </LinearLayout>
 
                 <com.jaygoo.widget.RangeSeekBar

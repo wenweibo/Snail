@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 
+import com.baidu.location.LocationClient;
 import com.cqkj.publicframework.beans.CallBackObject;
 import com.cqkj.publicframework.requestdata.CallBack;
 import com.cqkj.publicframework.tool.SpUtils;
@@ -91,6 +92,7 @@ public class SplashActivity extends AppCompatActivity implements CallBack {
             case RequestUrl.request_area:
                 // 获取城市数据成功后，去获取车型字典
                 CommonRequest.getDictByCode(DictInfo.VEHICLE_TYPE, this);
+
                 break;
             case RequestUrl.request_do_login:
                 // 登录成功，跳转到主页
@@ -130,6 +132,9 @@ public class SplashActivity extends AppCompatActivity implements CallBack {
      * 跳转到主页
      */
     private void startToMain() {
+        // 城市定位
+        LocationClient mLocationClient = CommonUtil.initLocation(this);
+        mLocationClient.start();
         startActivity(new Intent(this, MainActivity.class));
         finish();
     }

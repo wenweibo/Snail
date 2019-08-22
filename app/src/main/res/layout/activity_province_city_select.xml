@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".system.activity.ProvinceCitySelectActivity"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <!--标题栏-->
+    <RelativeLayout
+        android:id="@+id/lin_top"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_hight"
+        android:background="@color/white"
+        >
+        <!--回退键-->
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@null"
+            android:paddingLeft="@dimen/grid_circle_btn"
+            android:paddingRight="@dimen/grid_circle_btn"
+            android:src="@mipmap/title_back_gray" />
+
+        <TextView
+            android:id="@+id/tv_right_menu"
+            style="@style/text_base"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingLeft="@dimen/grid_circle_btn"
+            android:paddingRight="@dimen/grid_circle_btn"
+            android:text="重置" />
+
+        <com.cqkj.publicframework.widget.TabControlView
+            android:id="@+id/tcv_province_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:tcv_items="@array/area_arr"
+            app:tcv_textSize="@dimen/listview_title_size"
+            app:tcv_strokeWidth="@dimen/line"
+            app:tcv_selectedColor="@color/colorPrimary"
+            app:tcv_unselectedTextColor="@color/colorPrimary"
+            android:layout_centerInParent="true"
+            app:tcv_optionWidth="80dip"/>
+    </RelativeLayout>
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/bg_color"/>
+</LinearLayout>

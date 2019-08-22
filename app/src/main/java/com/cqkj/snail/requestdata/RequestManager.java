@@ -11,6 +11,7 @@ import com.cqkj.snail.config.DictInfo;
 import com.cqkj.snail.system.entity.CityEntity;
 import com.cqkj.snail.system.entity.UserEntity;
 import com.cqkj.snail.tool.CommonRequest;
+import com.cqkj.snail.truck.entity.TruckEntity;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -20,6 +21,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,7 +36,7 @@ public class RequestManager extends com.cqkj.publicframework.requestdata.Request
 //    private String ipurl = "http://172.17.24.83:8080/";
 //    public static String fileipurl = "http://172.17.24.99:8080/jdyhgl/a.up";
     /***陶赠元*/
-    private String ipurl = "http://172.17.24.103:8080/";
+    private String ipurl = "http://172.17.24.20:8080/";
     public static String fileipurl = "http://172.17.24.99:8080/jdyhgl/a.up";
 
     public static RequestManager getRequestManager() {
@@ -75,16 +77,9 @@ public class RequestManager extends com.cqkj.publicframework.requestdata.Request
         }
     }
 
-    public void postFile(File _file, CallBack callBack) {
-        super.postFile2(fileipurl, _file, callBack, null);
-    }
-
-    public void postFile(File _file, CallBack callBack, HashMap params) {
-        super.postFile2(fileipurl, _file, callBack, params);
-    }
-
-    public void postFile(File _file, CallBack callBack, int type, int index) {
-        super.postFile(fileipurl, _file, callBack, type, index);
+    public void postFile(int tag, List<String> paths, CallBack callBack) {
+        String url = ipurl + RequestUrl.url[tag];
+        super.postMultiFile(tag, url, paths, null, callBack);
     }
 
 
@@ -95,17 +90,27 @@ public class RequestManager extends com.cqkj.publicframework.requestdata.Request
         Gson gson = new Gson();
 
         switch (flag) {
-            // 登录
+            case RequestUrl.post_file:
+                // 上传图片
+                JSONObject picData = obj.getJSONObject("data");
+                if (picData.has("attachId")) {
+                    String attachId = picData.getString("attachId");
+                    callBackObject.setObject(attachId);
+                }
+                break;
             case RequestUrl.request_do_login:
+                // 登录
                 JSONObject loginObj = obj.getJSONObject("data");
                 String id = loginObj.getString("id");
                 String loginName = loginObj.getString("loginName");
                 String userName = loginObj.getString("userName");
+                String phone = loginObj.getString("phone");
                 // 存储用户信息
                 AppApplication.userEntity = new UserEntity();
                 AppApplication.userEntity.setId(id);
                 AppApplication.userEntity.setLoginName(loginName);
                 AppApplication.userEntity.setUserName(userName);
+                AppApplication.userEntity.setPhone(phone);
                 SpUtils.putParam(AppApplication.context, "id", id);
                 SpUtils.putParam(AppApplication.context, "loginName", loginName);
                 SpUtils.putParam(AppApplication.context, "userName", userName);
@@ -147,9 +152,36 @@ public class RequestManager extends com.cqkj.publicframework.requestdata.Request
                     // 获取发布状态字典成功后
                     DictInfo.publicationStatus = dictInfoEntity.getChildren();
                 } else if (DictInfo.SORT_KIND.equals(dictCode)) {
-                    // 获取发布状态字典成功后
+                    // 获取排序方式字典成功后
                     DictInfo.sortKinds = dictInfoEntity.getChildren();
+                } else if (DictInfo.DRIVING_MODE.equals(dictCode)) {
+                    // 获取驱动方式字典成功后
+                    DictInfo.drivingModes = dictInfoEntity.getChildren();
+                } else if (DictInfo.ENGINE_BRAND.equals(dictCode)) {
+                    // 获取发动机品牌字典成功后
+                    DictInfo.engineBrands = dictInfoEntity.getChildren();
+                } else if (DictInfo.FUEL_TYPE.equals(dictCode)) {
+                    // 获取燃油类型字典成功后
+                    DictInfo.fuelTypes = dictInfoEntity.getChildren();
+                } else if (DictInfo.COLOUR.equals(dictCode)) {
+                    // 获取汽车颜色字典成功后
+                    DictInfo.colours = dictInfoEntity.getChildren();
                 }
+                break;
+            case RequestUrl.request_trucks:
+                // 获取车源列表
+                JSONObject truckObj = obj.getJSONObject("data");
+                // 获取车辆总数
+                int total = truckObj.getInt("totalElements");
+                callBackObject.setRowCount(total);
+                List<TruckEntity> truckEntities = new ArrayList<>();
+                JSONArray truckArr = truckObj.getJSONArray("content");
+                for (int i = 0; i < truckArr.length(); i++) {
+                    JSONObject jsonObject = truckArr.getJSONObject(i);
+                    TruckEntity truckEntity = gson.fromJson(jsonObject.toString(), TruckEntity.class);
+                    truckEntities.add(truckEntity);
+                }
+                callBackObject.setObject(truckEntities);
                 break;
         }
         return callBackObject;

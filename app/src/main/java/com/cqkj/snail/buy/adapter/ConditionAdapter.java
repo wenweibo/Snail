@@ -16,8 +16,10 @@ import com.xuexiang.xui.widget.flowlayout.BaseTagAdapter;
  * @since 2019/08/13 11:03
  */
 public class ConditionAdapter extends BaseTagAdapter<DictInfoEntity, View> {
-    public ConditionAdapter(Context context) {
+    private ConditionInterface conditionInterface;
+    public ConditionAdapter(Context context,ConditionInterface conditionInterface) {
         super(context);
+        this.conditionInterface = conditionInterface;
     }
 
     @Override
@@ -31,21 +33,27 @@ public class ConditionAdapter extends BaseTagAdapter<DictInfoEntity, View> {
     }
 
     @Override
-    protected void convert(View holder, DictInfoEntity item, final int position) {
+    protected void convert(View holder, final DictInfoEntity item, final int position) {
         TextView tv_title = holder.findViewById(R.id.tv_title);
         tv_title.setText(item.getDictName());
         ImageView iv_delete = holder.findViewById(R.id.iv_delete);
-        iv_delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConditionAdapter.this.removeElement(position);
-            }
-        });
-        tv_title.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ConditionAdapter.this.removeElement(position);
-            }
-        });
+        DeleteOnClick deleteOnClick = new DeleteOnClick(item);
+        iv_delete.setOnClickListener(deleteOnClick);
+        tv_title.setOnClickListener(deleteOnClick);
+    }
+    class DeleteOnClick implements View.OnClickListener{
+        DictInfoEntity dictInfoEntity;
+        public DeleteOnClick(DictInfoEntity dictInfoEntity) {
+            this.dictInfoEntity = dictInfoEntity;
+        }
+        @Override
+        public void onClick(View v) {
+            ConditionAdapter.this.removeElement(dictInfoEntity);
+            conditionInterface.deleteTag(dictInfoEntity);
+            dictInfoEntity.setSelectFlag(0);
+        }
+    }
+    public interface ConditionInterface{
+        void deleteTag(DictInfoEntity dictInfoEntity);
     }
 }

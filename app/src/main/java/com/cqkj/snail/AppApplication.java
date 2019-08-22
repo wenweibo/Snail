@@ -15,6 +15,12 @@ public class AppApplication extends Application {
     public static UserEntity userEntity;
     // 城市列表
     public static List<CityEntity> cityEntities;
+    // 选中的城市
+    public static CityEntity selectCity;
+    // 选中的城市(多选存储列表)
+    public static List<CityEntity> selectCitys;
+    // 当前定位的城市
+    public static CityEntity locationCity;
     @Override
     public void onCreate() {
         super.onCreate();

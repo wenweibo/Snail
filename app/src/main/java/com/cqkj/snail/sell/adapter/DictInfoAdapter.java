@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.cqkj.publicframework.adapter.CommonAdapter;
 import com.cqkj.snail.R;
 import com.cqkj.snail.buy.entity.DictInfoEntity;
-import com.cqkj.snail.weight.TopPop;
 
 import java.util.List;
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/lin_truckinfo_block"
     style="@style/lin_base"
     android:layout_marginTop="@dimen/com_size_15"
     android:orientation="vertical">
@@ -16,6 +17,7 @@
 
         <!--燃料类型-->
         <LinearLayout
+            android:id="@+id/lin_faul_type"
             style="@style/lin_base"
             android:background="@drawable/btn_white_corners"
             android:gravity="center_vertical"
@@ -29,6 +31,7 @@
                 android:text="@string/fuel_mode" />
 
             <TextView
+                android:id="@+id/tv_faul_type"
                 style="@style/text_base"
                 android:layout_marginLeft="@dimen/com_size_15"
                 android:layout_weight="1"
@@ -52,7 +55,8 @@
             android:orientation="horizontal"
             android:paddingTop="@dimen/com_size_15"
             android:paddingRight="@dimen/com_size_15"
-            android:paddingBottom="@dimen/com_size_15">
+            android:paddingBottom="@dimen/com_size_15"
+            android:visibility="gone">
 
             <TextView
                 style="@style/text_base"
@@ -73,9 +77,12 @@
                 android:src="@mipmap/to" />
         </LinearLayout>
 
-        <View style="@style/hLine" />
+        <View
+            style="@style/hLine"
+            android:visibility="gone" />
         <!--车辆颜色-->
         <LinearLayout
+            android:id="@+id/lin_color"
             style="@style/lin_base"
             android:background="@drawable/btn_white_corners"
             android:gravity="center_vertical"
@@ -90,6 +97,7 @@
                 android:text="@string/truck_color" />
 
             <TextView
+                android:id="@+id/tv_color"
                 style="@style/text_base"
                 android:layout_marginLeft="@dimen/com_size_15"
                 android:layout_weight="1"
@@ -103,7 +111,9 @@
                 android:src="@mipmap/to" />
         </LinearLayout>
 
-        <View style="@style/hLine" />
+        <View
+            style="@style/hLine"
+            android:visibility="gone" />
 
         <LinearLayout
             style="@style/lin_base"
@@ -111,10 +121,13 @@
             android:orientation="vertical"
             android:paddingTop="@dimen/com_size_15"
             android:paddingRight="@dimen/com_size_15"
-            android:paddingBottom="@dimen/com_size_15">
+            android:paddingBottom="@dimen/com_size_15"
+            android:visibility="gone">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <TextView
                     style="@style/text_base"
                     android:layout_height="wrap_content"
@@ -122,60 +135,71 @@
 
                 <TextView
                     style="@style/text_remark"
-                    android:text="最多可选一个"
-                    android:layout_marginLeft="@dimen/com_size_15"/>
+                    android:layout_marginLeft="@dimen/com_size_15"
+                    android:text="最多可选一个" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/com_size_15">
-                <TextView android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/com_size_15"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="可议价"
                     android:background="@drawable/shape_gray_stroke_corners"
+                    android:gravity="center"
                     android:padding="@dimen/com_size_10"
-                    android:gravity="center"/>
-                <TextView android:layout_width="match_parent"
+                    android:text="可议价" />
+
+                <TextView
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/com_size_10"
                     android:layout_weight="1"
-                    android:text="可议价"
                     android:background="@mipmap/selected"
+                    android:gravity="center"
                     android:padding="@dimen/com_size_10"
-                    android:gravity="center"/>
+                    android:text="可议价" />
             </LinearLayout>
         </LinearLayout>
-        <View style="@style/hLine" />
+
+        <View
+            style="@style/hLine"
+            android:visibility="gone" />
+
         <LinearLayout
             style="@style/lin_base"
             android:gravity="center_vertical"
             android:orientation="horizontal"
             android:paddingTop="@dimen/com_size_15"
             android:paddingRight="@dimen/com_size_15"
-            android:paddingBottom="@dimen/com_size_15">
+            android:paddingBottom="@dimen/com_size_15"
+            android:visibility="gone">
+
             <TextView
                 style="@style/text_base"
                 android:layout_height="wrap_content"
                 android:text="@string/truck_belong_to" />
+
             <RadioGroup
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/personal"
-                    />
+                    android:text="@string/personal" />
+
                 <RadioButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/business"
-                    />
+                    android:text="@string/business" />
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>

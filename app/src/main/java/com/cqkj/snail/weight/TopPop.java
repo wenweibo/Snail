@@ -103,16 +103,20 @@ public class TopPop extends PopupWindow implements OnRangeChangedListener, View.
         if (leftValue == range_seek_bar.getMinProgress()
                 && rightValue == range_seek_bar.getMaxProgress()) {
             tv_price.setText("不限");
+            tv_price.setTag("");
         } else if (leftValue != range_seek_bar.getMinProgress()
                 && rightValue == range_seek_bar.getMaxProgress()) {
             // 如果最小价格不等于0且最大价格等于最大值，则显示leftValue以上
             tv_price.setText(Math.round(leftValue) + "万以上");
+            tv_price.setTag(Math.round(leftValue)+"-NO_LIMIT");
         } else if (leftValue == range_seek_bar.getMinProgress()
                 && rightValue != range_seek_bar.getMaxProgress()) {
             // 如果最小价格等于0且最大价格不等于最大值，则显示rightValue以下
             tv_price.setText(Math.round(rightValue) + "万以下");
+            tv_price.setTag("0-"+Math.round(rightValue));
         } else {
             tv_price.setText(Math.round(leftValue) + "-" + Math.round(rightValue) + "万");
+            tv_price.setTag(Math.round(leftValue)+"-"+Math.round(rightValue));
         }
     }
 
@@ -129,7 +133,7 @@ public class TopPop extends PopupWindow implements OnRangeChangedListener, View.
         DictInfoEntity dictInfoEntity = new DictInfoEntity();
         String dictCodeName = tv_price.getText().toString();
         dictInfoEntity.setDictName(dictCodeName);
-        dictInfoEntity.setDictCode(dictCodeName.replace("万", ""));
+        dictInfoEntity.setDictCode(tv_price.getTag().toString());
         dictInfoEntity.setParentId(DictInfo.PRICE);
         dictInfoInterface.onSelect(dictInfoEntity);
         dismiss();

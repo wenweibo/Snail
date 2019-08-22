@@ -60,7 +60,7 @@ public class CustomDatePicker {
     private int startYear, startMonth, startDay, startHour, startMinute, endYear, endMonth, endDay, endHour, endMinute;
     private boolean spanYear, spanMon, spanDay, spanHour, spanMin;
     private Calendar selectedCalender, startCalendar, endCalendar;
-    private TextView tv_cancle, tv_select, hour_text, minute_text;
+    private TextView tv_title, tv_cancle, tv_select, hour_text, minute_text, day_text;
     private String pattern;
 
     public CustomDatePicker(Context context, ResultHandler resultHandler, String startDate, String endDate, String pattern) {
@@ -111,8 +111,10 @@ public class CustomDatePicker {
         day_pv = (DatePickerView) datePickerDialog.findViewById(R.id.day_pv);
         hour_pv = (DatePickerView) datePickerDialog.findViewById(R.id.hour_pv);
         minute_pv = (DatePickerView) datePickerDialog.findViewById(R.id.minute_pv);
+        tv_title = (TextView) datePickerDialog.findViewById(R.id.tv_title);
         tv_cancle = (TextView) datePickerDialog.findViewById(R.id.tv_cancle);
         tv_select = (TextView) datePickerDialog.findViewById(R.id.tv_select);
+        day_text = (TextView) datePickerDialog.findViewById(R.id.day_text);
         hour_text = (TextView) datePickerDialog.findViewById(R.id.hour_text);
         minute_text = (TextView) datePickerDialog.findViewById(R.id.minute_text);
 
@@ -300,7 +302,7 @@ public class CustomDatePicker {
     private void addListener() {
         year_pv.setOnSelectListener(new DatePickerView.onSelectListener() {
             @Override
-            public void onSelect(String text) {
+            public void onSelect(int position, String text) {
                 selectedCalender.set(Calendar.YEAR, Integer.parseInt(text));
                 monthChange();
             }
@@ -308,7 +310,7 @@ public class CustomDatePicker {
 
         month_pv.setOnSelectListener(new DatePickerView.onSelectListener() {
             @Override
-            public void onSelect(String text) {
+            public void onSelect(int position, String text) {
                 selectedCalender.set(Calendar.DAY_OF_MONTH, 1);
                 selectedCalender.set(Calendar.MONTH, Integer.parseInt(text) - 1);
                 dayChange();
@@ -317,7 +319,7 @@ public class CustomDatePicker {
 
         day_pv.setOnSelectListener(new DatePickerView.onSelectListener() {
             @Override
-            public void onSelect(String text) {
+            public void onSelect(int position, String text) {
                 selectedCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(text));
                 hourChange();
             }
@@ -325,7 +327,7 @@ public class CustomDatePicker {
 
         hour_pv.setOnSelectListener(new DatePickerView.onSelectListener() {
             @Override
-            public void onSelect(String text) {
+            public void onSelect(int position, String text) {
                 selectedCalender.set(Calendar.HOUR_OF_DAY, Integer.parseInt(text));
                 minuteChange();
             }
@@ -333,7 +335,7 @@ public class CustomDatePicker {
 
         minute_pv.setOnSelectListener(new DatePickerView.onSelectListener() {
             @Override
-            public void onSelect(String text) {
+            public void onSelect(int position, String text) {
                 selectedCalender.set(Calendar.MINUTE, Integer.parseInt(text));
             }
         });
@@ -487,14 +489,17 @@ public class CustomDatePicker {
 
     public void show(String time) {
         if (canAccess) {
-            if (isValidDate(time, "yyyy-MM-dd") || TextUtils.isEmpty(time)) {
+//            if (TextUtils.isEmpty(time)){
+//                time = new
+//            }
+            if (isValidDate(time, pattern) || TextUtils.isEmpty(time)) {
                 if (startCalendar.getTime().getTime() < endCalendar.getTime().getTime()) {
                     canAccess = true;
                     initParameter();
                     initTimer();
                     addListener();
                     if (TextUtils.isEmpty(time)) {
-                        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+                        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.CHINA);
                         time = sdf.format(new Date());
                     }
                     setSelectedTime(time);
@@ -528,6 +533,33 @@ public class CustomDatePicker {
     }
 
     /**
+     * 设置控件是否显示月份
+     *
+     * @param show
+     */
+    public void showDay(boolean show) {
+        if (canAccess) {
+            if (show) {
+                disScrollUnit();
+                day_pv.setVisibility(View.VISIBLE);
+                day_text.setVisibility(View.VISIBLE);
+                hour_pv.setVisibility(View.VISIBLE);
+                hour_text.setVisibility(View.VISIBLE);
+                minute_pv.setVisibility(View.VISIBLE);
+                minute_text.setVisibility(View.VISIBLE);
+            } else {
+                disScrollUnit(SCROLL_TYPE.HOUR, SCROLL_TYPE.MINUTE);
+                day_pv.setVisibility(View.GONE);
+                day_text.setVisibility(View.GONE);
+                hour_pv.setVisibility(View.GONE);
+                hour_text.setVisibility(View.GONE);
+                minute_pv.setVisibility(View.GONE);
+                minute_text.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    /**
      * 设置日期控件是否可以循环滚动
      */
     public void setIsLoop(boolean isLoop) {
@@ -538,6 +570,15 @@ public class CustomDatePicker {
             this.hour_pv.setIsLoop(isLoop);
             this.minute_pv.setIsLoop(isLoop);
         }
+    }
+
+    /**
+     * 设置标题
+     *
+     * @param title
+     */
+    public void setTitle(String title) {
+        tv_title.setText(title);
     }
 
     /**
@@ -571,25 +612,28 @@ public class CustomDatePicker {
             selectedCalender.set(Calendar.MONTH, Integer.parseInt(dateStr[1]) - 1);
             executeAnimator(month_pv);
 
-            day.clear();
             int selectedMonth = selectedCalender.get(Calendar.MONTH) + 1;
-            if (selectedYear == startYear && selectedMonth == startMonth) {
-                for (int i = startDay; i <= selectedCalender.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
-                    day.add(formatTimeUnit(i));
+            if (str.length > 2) {
+                day.clear();
+                if (selectedYear == startYear && selectedMonth == startMonth) {
+                    for (int i = startDay; i <= selectedCalender.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
+                        day.add(formatTimeUnit(i));
+                    }
+                } else if (selectedYear == endYear && selectedMonth == endMonth) {
+                    for (int i = 1; i <= endDay; i++) {
+                        day.add(formatTimeUnit(i));
+                    }
+                } else {
+                    for (int i = 1; i <= selectedCalender.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
+                        day.add(formatTimeUnit(i));
+                    }
                 }
-            } else if (selectedYear == endYear && selectedMonth == endMonth) {
-                for (int i = 1; i <= endDay; i++) {
-                    day.add(formatTimeUnit(i));
-                }
-            } else {
-                for (int i = 1; i <= selectedCalender.getActualMaximum(Calendar.DAY_OF_MONTH); i++) {
-                    day.add(formatTimeUnit(i));
-                }
+                day_pv.setData(day);
+                day_pv.setSelected(dateStr[2]);
+                selectedCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateStr[2]));
+                executeAnimator(day_pv);
+
             }
-            day_pv.setData(day);
-            day_pv.setSelected(dateStr[2]);
-            selectedCalender.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateStr[2]));
-            executeAnimator(day_pv);
 
             if (str.length == 2) {
                 String[] timeStr = str[1].split(":");

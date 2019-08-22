@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/bg_color"
     android:orientation="vertical"
     tools:context=".sell.activity.SellBaseInputActivity">
 
     <ScrollView
+        android:id="@+id/sv_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,41 +26,51 @@
             <include layout="@layout/block_truck_msg" />
             <!--车辆信息-->
             <include layout="@layout/block_truck_msg_select_fill" />
-        <LinearLayout
-            style="@style/lin_base"
-            android:background="@color/white"
-            android:gravity="center_vertical"
-            android:orientation="vertical"
-            android:padding="@dimen/com_size_15"
-            android:layout_marginTop="@dimen/com_size_15">
-            <TextView
-                style="@style/text_base"
-                android:text="车辆说明" />
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/com_size_10"
-                app:counterEnabled="true"
-                app:counterMaxLength="200"
-                app:hintEnabled="false"
-                app:counterOverflowTextAppearance="@style/errorAppearance"
-                >
-                <EditText style="@style/edit_base.area" android:hint="请填写车辆说明"/>
-            </android.support.design.widget.TextInputLayout>
-            <TextView style="@style/text_remark_12"
-                android:layout_width="match_parent"
-                android:gravity="center"
-                android:text="为保障买卖双方的权益,我平台客服会对您提交的信息一一核实"
-                />
-        </LinearLayout>
 
+            <LinearLayout
+                style="@style/lin_base"
+                android:layout_marginTop="@dimen/com_size_15"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="vertical"
+                android:padding="@dimen/com_size_15"
+                android:visibility="gone">
 
-                <Button style="@style/text_base" android:text="提交卖车"
+                <TextView
+                    style="@style/text_base"
+                    android:text="车辆说明" />
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="@dimen/com_size_20"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/listview_title_size"
-                    android:background="@drawable/btn_red_stroke"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/com_size_10"
+                    app:counterEnabled="true"
+                    app:counterMaxLength="200"
+                    app:counterOverflowTextAppearance="@style/errorAppearance"
+                    app:hintEnabled="false">
+
+                    <EditText
+                        style="@style/edit_base.area"
+                        android:hint="请填写车辆说明" />
+                </android.support.design.widget.TextInputLayout>
+
+                <TextView
+                    style="@style/text_remark_12"
+                    android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:text="为保障买卖双方的权益,我平台客服会对您提交的信息一一核实" />
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/btn_submit"
+                style="@style/text_base"
+                android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/com_size_20"
+                android:background="@drawable/btn_red_stroke"
+                android:text="@string/submit_sell_truck"
+                android:textColor="@color/white"
+                android:textSize="@dimen/listview_title_size" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
