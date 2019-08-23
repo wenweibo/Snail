@@ -12,9 +12,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.cqkj.publicframework.tool.CommonUtil;
 import com.cqkj.snail.R;
 import com.cqkj.snail.buy.entity.TruckPicEntity;
-import com.cqkj.snail.tool.CommonUtil;
+import com.cqkj.snail.requestdata.RequestManager;
 import com.cqkj.snail.truck.adapter.ImgAdapter;
 import com.cqkj.snail.truck.adapter.TruckBaseAdapter;
 import com.cqkj.snail.truck.entity.ImageViewInfo;
@@ -120,7 +121,7 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
         getBaseData();
         initBanner();
         // 组成数据
-        imageViewInfos = CommonUtil.computeBoundsBackward(list_path);
+        imageViewInfos = com.cqkj.snail.tool.CommonUtil.computeBoundsBackward(list_path);
         ngv_base.setAdapter(new TruckBaseAdapter(this, truckBaseEntities));
 
         ImgAdapter adapter = new ImgAdapter(this, imageViewInfos, ngl_images);
@@ -128,7 +129,7 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
 
         tvTrcukTitle.setText(truckEntity.getVehicleBrandContent() +
                 truckEntity.getVehicleTypeContent() + " " + truckEntity.getHorsePower());
-        tvPrice.setText(truckEntity.getPrice()+"万");
+        tvPrice.setText(truckEntity.getPrice() + "万");
     }
 
 
@@ -160,11 +161,31 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
     private void initBanner() {
         // 放图片地址的集合
         list_path = new ArrayList<>();
+        // 将必传图片列表取出
         List<TruckPicEntity> attachmentPics = truckEntity.getAttachmentPic();
-        if (attachmentPics != null && attachmentPics.size() > 0) {
+        // 如果必传列表不为空,则将之添加至图片列表中
+        if (attachmentPics != null) {
             for (TruckPicEntity truckPicEntity : attachmentPics) {
-                list_path.add(truckPicEntity.getSavePath());
+                list_path.add(RequestManager.fileipurl + truckPicEntity.getSaveName());
             }
+        }
+        // 将车辆牌照图片列表取出
+        List<TruckPicEntity> attachmentPicLicensePlates = truckEntity.getAttachmentPicLicensePlates();
+        // 如果车辆牌照图片列表不为空，则将之添加至图片列表中
+        if (attachmentPicLicensePlates != null) {
+            for (TruckPicEntity truckPicEntity : attachmentPicLicensePlates) {
+                list_path.add(RequestManager.fileipurl + truckPicEntity.getSaveName());
+            }
+        }
+        // 将驾驶室图片列表取出
+        List<TruckPicEntity> attachmentPicCab = truckEntity.getAttachmentPicCab();
+        // 如果驾驶室图片列表不为空，则将之添加至图片列表中
+        if (attachmentPicCab!=null){
+            for (TruckPicEntity truckPicEntity : attachmentPicCab) {
+                list_path.add(RequestManager.fileipurl + truckPicEntity.getSaveName());
+            }
+        }
+        if (list_path.size() > 0) {
             // 设置内置样式
             banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
             // 设置图片加载器
@@ -186,7 +207,7 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
                     // 必须最后调用的方法，启动轮播图。
                     .start();
             banner.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             banner.setVisibility(View.GONE);
         }
 
@@ -219,68 +240,71 @@ public class TruckDetailActivity extends AppCompatActivity implements OnBannerLi
         }
     }
 
+    /**
+     * 组装基础数据
+     */
     private void getBaseData() {
         truckBaseEntities = new ArrayList<>();
         TruckBaseEntity truckBaseEntity = new TruckBaseEntity();
         truckBaseEntity.setTitle("车辆类型");
-        truckBaseEntity.setContent("自卸车");
+        truckBaseEntity.setContent(CommonUtil.changeStringNotNull(truckEntity.getVehicleTypeContent()));
         truckBaseEntities.add(truckBaseEntity);
 
         truckBaseEntity = new TruckBaseEntity();
         truckBaseEntity.setTitle("表显里程");
-        truckBaseEntity.setContent("12.2万公里");
+        truckBaseEntity.setContent(CommonUtil.changeStringNotNull(truckEntity.getMileage()));
         truckBaseEntities.add(truckBaseEntity);
 
         truckBaseEntity = new TruckBaseEntity();
         truckBaseEntity.setTitle("发动机品牌");
-        truckBaseEntity.setContent("玉柴");
+        truckBaseEntity.setContent(CommonUtil.changeStringNotNull(truckEntity.getEngineBrandContent()));
         truckBaseEntities.add(truckBaseEntity);
 
         truckBaseEntity = new TruckBaseEntity();
         truckBaseEntity.setTitle("燃料类型");
-        truckBaseEntity.setContent("柴油");
+        truckBaseEntity.setContent(CommonUtil.changeStringNotNull(truckEntity.getFuelTypeContent()));
         truckBaseEntities.add(truckBaseEntity);
 
         truckBaseEntity = new TruckBaseEntity();
         truckBaseEntity.setTitle("排放标准");
-        truckBaseEntity.setContent("国三");
+        truckBaseEntity.setContent(CommonUtil.changeStringNotNull(truckEntity.getEmissionStandardContent()));
         truckBaseEntity.setFlag(true);
         truckBaseEntities.add(truckBaseEntity);
 
         truckBaseEntity = new TruckBaseEntity();
         truckBaseEntity.setTitle("车辆品牌");
-        truckBaseEntity.setContent("东风商用");
+        truckBaseEntity.setContent(CommonUtil.changeStringNotNull(truckEntity.getVehicleBrandContent()));
         truckBaseEntities.add(truckBaseEntity);
 
         truckBaseEntity = new TruckBaseEntity();
         truckBaseEntity.setTitle("型号");
-        truckBaseEntity.setContent("东风大力神");
+        truckBaseEntity.setContent(CommonUtil.changeStringNotNull(truckEntity.getVehicleSystemContent()));
         truckBaseEntities.add(truckBaseEntity);
 
         truckBaseEntity = new TruckBaseEntity();
         truckBaseEntity.setTitle("颜色");
-        truckBaseEntity.setContent("红色");
+        truckBaseEntity.setContent(CommonUtil.changeStringNotNull(truckEntity.getColourContent()));
         truckBaseEntities.add(truckBaseEntity);
 
         truckBaseEntity = new TruckBaseEntity();
         truckBaseEntity.setTitle("马力");
-        truckBaseEntity.setContent("340匹");
+        truckBaseEntity.setContent(CommonUtil.changeStringNotNull(truckEntity.getHorsePower()));
         truckBaseEntities.add(truckBaseEntity);
 
         truckBaseEntity = new TruckBaseEntity();
         truckBaseEntity.setTitle("驱动方式");
-        truckBaseEntity.setContent("6x4");
+        truckBaseEntity.setContent(CommonUtil.changeStringNotNull(truckEntity.getDrivingModeContent()));
         truckBaseEntities.add(truckBaseEntity);
 
-        truckBaseEntity = new TruckBaseEntity();
-        truckBaseEntity.setTitle("箱体长度");
-        truckBaseEntity.setContent("5.8m");
-        truckBaseEntities.add(truckBaseEntity);
+//        truckBaseEntity = new TruckBaseEntity();
+//        truckBaseEntity.setTitle("箱体长度");
+//        truckBaseEntity.setContent("5.8m");
+//        truckBaseEntities.add(truckBaseEntity);
 
-        truckBaseEntity = new TruckBaseEntity();
-        truckBaseEntity.setTitle("栏板高度");
-        truckBaseEntity.setContent("1.2m");
-        truckBaseEntities.add(truckBaseEntity);
+//        truckBaseEntity = new TruckBaseEntity();
+//        truckBaseEntity.setTitle("栏板高度");
+//        truckBaseEntity.setContent("1.2m");
+//        truckBaseEntities.add(truckBaseEntity);
     }
 
     private NineGridImageViewAdapter<ImageViewInfo> mAdapter = new NineGridImageViewAdapter<ImageViewInfo>() {

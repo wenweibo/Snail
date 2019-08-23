@@ -32,10 +32,12 @@ import com.cqkj.snail.tool.CommonRequest;
 import com.cqkj.snail.tool.CommonUtil;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindView;
+import win.smartown.android.library.certificateCamera.TruckPic;
 
 /**
  * 买车基本信息输入
@@ -124,12 +126,12 @@ public class SellBaseInputActivity extends BaseTitleActivity {
     // 汽车颜色显示文本
     @BindView(R.id.tv_color)
     TextView tvColor;
-     // 图片数量
+    // 图片数量
     @BindView(R.id.tv_pic_num)
     TextView tvPicNum;
-     // 提交按钮
+    // 提交按钮
     @BindView(R.id.btn_submit)
-     Button btnSubmit;
+    Button btnSubmit;
 
     // 时间选择器
     private CustomDatePicker customDatePicker;
@@ -143,15 +145,22 @@ public class SellBaseInputActivity extends BaseTitleActivity {
     private CustomSinglePicker ftPicker;
     // 汽车颜色选择器
     private CustomSinglePicker cPicker;
-    // 图片id，多个的场合以“，”隔开
+    // 必传图片id，多个的场合以“，”隔开
     private String attachmentPic;
+    // 图片附件_车辆牌照：图片id
+    private String attachmentPicLicensePlates;
+    // 	图片附件_驾驶室：图片id
+    private String attachmentPicCab;
 
+    // 必输列表
+    ArrayList<TruckPic> mustTruckPics;
+    // 非必输列表
+    ArrayList<TruckPic> unmustTruckPics;
 
     @Override
     protected int getLayoutId() {
         return R.layout.activity_sell_base_input;
     }
-
 
 
     @Override
@@ -183,6 +192,7 @@ public class SellBaseInputActivity extends BaseTitleActivity {
         tvVehicle.setText(vehicleEntity.getDictName());
         tvVehicle.setTag(vehicleEntity.getDictCode());
     }
+
     @Override
     protected void initListener() {
         super.initListener();
@@ -198,6 +208,7 @@ public class SellBaseInputActivity extends BaseTitleActivity {
         linColor.setOnClickListener(this);
         btnSubmit.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View view) {
         super.onClick(view);
@@ -208,7 +219,10 @@ public class SellBaseInputActivity extends BaseTitleActivity {
                 break;
             case R.id.iv_add_pic:
                 // 添加照片
-                startActivityForResult(new Intent(this, UploadActivity.class), 0);
+                Intent intent1 = new Intent(this, UploadActivity.class);
+                intent1.putParcelableArrayListExtra("mustTruckPics", mustTruckPics);
+                intent1.putParcelableArrayListExtra("unmustTruckPics", unmustTruckPics);
+                startActivityForResult(intent1, 0);
                 break;
             case R.id.lin_brand:
                 // 跳转至品牌选择页面
@@ -251,11 +265,11 @@ public class SellBaseInputActivity extends BaseTitleActivity {
             case R.id.btn_submit:
                 // 提交卖车
                 String result = checkParams();
-                if (TextUtils.isEmpty(result)){
+                if (TextUtils.isEmpty(result)) {
                     showDialog("");
                     postSell();
-                }else{
-                    ToastUtil.showShort(this,result);
+                } else {
+                    ToastUtil.showShort(this, result);
                 }
                 break;
         }
@@ -330,8 +344,6 @@ public class SellBaseInputActivity extends BaseTitleActivity {
         } else if (resultCode == ResultCode.UPLOAD_PIC) {
             // 上传完照片
             if (data != null) {
-                // 附件id
-                attachmentPic = data.getExtras().getString("attachId");
                 // 第一张照片
                 String firstPic = data.getExtras().getString("firstPic");
                 RequestOptions mRequestOptions = new RequestOptions()
@@ -341,19 +353,35 @@ public class SellBaseInputActivity extends BaseTitleActivity {
                         .asBitmap()
                         .apply(mRequestOptions)
                         .load(firstPic).into(ivAddPic);
-
-                // 更新图片数量显示
+                mustTruckPics = data.getExtras().getParcelableArrayList("mustTruckPics");
+                unmustTruckPics = data.getExtras().getParcelableArrayList("unmustTruckPics");
+                // 已上传图片数量
                 int num = 0;
-                if (!TextUtils.isEmpty(attachmentPic)){
-                    String[] ids = null;
-                    if (attachmentPic.contains(",")){
-                        ids = attachmentPic.split(",");
-                    }else{
-                        ids = new String[]{attachmentPic};
+                // 修改必传图片id
+                if (mustTruckPics != null) {
+                    attachmentPic = "";
+                    for (TruckPic truckPic : mustTruckPics) {
+                        if (!TextUtils.isEmpty(truckPic.getImgId())) {
+                            attachmentPic += truckPic.getImgId() + ",";
+                            num++;
+                        }
                     }
-                    num = ids.length;
+                    attachmentPic = attachmentPic.isEmpty() ?
+                            attachmentPic : attachmentPic.substring(0, attachmentPic.length() - 1);
                 }
-                tvPicNum.setText(num+"/21");
+
+                if (unmustTruckPics != null && unmustTruckPics.size() == 2) {
+                    attachmentPicLicensePlates = unmustTruckPics.get(0).getImgId();
+                    if (!TextUtils.isEmpty(attachmentPicLicensePlates)){
+                        num += 1;
+                    }
+                    attachmentPicCab = unmustTruckPics.get(1).getImgId();
+                    if (!TextUtils.isEmpty(attachmentPicCab)){
+                        num += 1;
+                    }
+                }
+                // 更新图片数量显示
+                tvPicNum.setText(num + "/5");
             }
         }
     }
@@ -399,8 +427,13 @@ public class SellBaseInputActivity extends BaseTitleActivity {
                                 // 将选中的文本赋值给对应的文本控件
                                 textView.setText(text);
                                 // 将选中的字典码设置为对应文本的标记
-                                textView.setTag(dictInfoEntities
-                                        .get(position).getDictCode());
+                                for (int i = 0; i < dictInfoEntities.size(); i++) {
+                                    DictInfoEntity dictInfoEntity = dictInfoEntities.get(i);
+                                    if (text.equals(dictInfoEntity.getDictName())) {
+                                        textView.setTag(dictInfoEntity.getDictCode());
+                                    }
+                                }
+
                             }
                         });
                 picker.setTitle(remark);
@@ -416,11 +449,12 @@ public class SellBaseInputActivity extends BaseTitleActivity {
 
     /**
      * 校验表单数据
+     *
      * @return
      */
-    private String checkParams(){
+    private String checkParams() {
         // 如果没有附件id，则说明没有上传图片
-        if (TextUtils.isEmpty(attachmentPic)){
+        if (TextUtils.isEmpty(attachmentPic)) {
             // 默认点击添加图片按钮，也就是跳转到上传页面
             ivAddPic.performClick();
             return getString(R.string.pic_explain);
@@ -428,7 +462,7 @@ public class SellBaseInputActivity extends BaseTitleActivity {
 
         String placeTag = (String) tvPlace.getTag();
         // 如果看车地点没有选
-        if (TextUtils.isEmpty(placeTag)){
+        if (TextUtils.isEmpty(placeTag)) {
             // 默认点击看车地点选择按钮
             linPlace.performClick();
             return getString(R.string.place_hint);
@@ -436,22 +470,22 @@ public class SellBaseInputActivity extends BaseTitleActivity {
 
         String brandTag = (String) tvBrand.getTag();
         // 如果没有选择车辆品牌
-        if (TextUtils.isEmpty(brandTag)){
+        if (TextUtils.isEmpty(brandTag)) {
             // 默认点击品牌选择
             linBrand.performClick();
             return getString(R.string.truck_brand_hint);
         }
 
         // 如果没有输入价格
-        if (TextUtils.isEmpty(etPrice.getText().toString())){
+        if (TextUtils.isEmpty(etPrice.getText().toString())) {
             int[] eScreen = new int[2];
             etPrice.getLocationInWindow(eScreen);
-            svMain.scrollTo(eScreen[0],eScreen[1]);
+            svMain.scrollTo(eScreen[0], eScreen[1]);
             return getString(R.string.truck_price_hint);
         }
 
         // 如果没有选择年份
-        if (TextUtils.isEmpty(tvDate.getText().toString())){
+        if (TextUtils.isEmpty(tvDate.getText().toString())) {
             // 默认点击年份选择
             linDate.performClick();
             return getString(R.string.truck_particular_hint);
@@ -459,22 +493,22 @@ public class SellBaseInputActivity extends BaseTitleActivity {
 
         String emissionTag = (String) tvEmission.getTag();
         // 如果没有选择排放标准
-        if (TextUtils.isEmpty(emissionTag)){
+        if (TextUtils.isEmpty(emissionTag)) {
             linEmission.performClick();
             return getString(R.string.emission_standard_hint);
         }
 
         // 如果没有输入里程
-        if (TextUtils.isEmpty(etMileage.getText().toString())){
+        if (TextUtils.isEmpty(etMileage.getText().toString())) {
             int[] eScreen = new int[2];
             etMileage.getLocationInWindow(eScreen);
-            svMain.scrollTo(eScreen[0],eScreen[1]);
+            svMain.scrollTo(eScreen[0], eScreen[1]);
             return getString(R.string.mileage_hint);
         }
 
         String driveModeTag = (String) tvDriveMode.getTag();
         // 如果没有选择驱动方式
-        if (TextUtils.isEmpty(driveModeTag)){
+        if (TextUtils.isEmpty(driveModeTag)) {
             // 默认点击驱动方式按钮
             linDriveMode.performClick();
             return getString(R.string.drive_mode_hint);
@@ -482,16 +516,16 @@ public class SellBaseInputActivity extends BaseTitleActivity {
 
         String engineBrandTag = (String) tvEngineBrand.getTag();
         // 如果没有选择发动机品牌
-        if (TextUtils.isEmpty(engineBrandTag)){
+        if (TextUtils.isEmpty(engineBrandTag)) {
             // 默认点击发动机品牌按钮
             linEngineBrand.performClick();
             return getString(R.string.engine_brand_hint);
         }
         // 如果没有输入马力
-        if (TextUtils.isEmpty(etHorsepower.getText().toString())){
+        if (TextUtils.isEmpty(etHorsepower.getText().toString())) {
             int[] eScreen = new int[2];
             etHorsepower.getLocationInWindow(eScreen);
-            svMain.scrollTo(eScreen[0],eScreen[1]);
+            svMain.scrollTo(eScreen[0], eScreen[1]);
             return getString(R.string.max_horsepower_hint);
         }
         return "";
@@ -511,29 +545,39 @@ public class SellBaseInputActivity extends BaseTitleActivity {
         // 发动机品牌
         params.put("engineBrand", tvEngineBrand.getTag().toString());
         // 	燃油类型
-        params.put("fuelType", tvFaulType.getTag() == null ? "":tvFaulType.getTag().toString());
+        params.put("fuelType", tvFaulType.getTag() == null ? "" : tvFaulType.getTag().toString());
         // 	排放标准
-        params.put("emissionStandard", tvEmission.getTag() == null ? "":tvEmission.getTag().toString());
+        params.put("emissionStandard", tvEmission.getTag() == null ? "" : tvEmission.getTag().toString());
         // 	型号(车系)
-        String brandTag = (String) tvBrand.getTag();
-        if (brandTag.contains(",")){
-            brandTag = brandTag.split(",")[1];
+        String vehicleBrandTag = (String) tvBrand.getTag();
+        if (vehicleBrandTag.contains(",")) {
+            String[] arr = vehicleBrandTag.split(",");
+            params.put("vehicleBrand", arr[0]);
+            params.put("vehicleSystem", arr[1]);
+        }else{
+            params.put("vehicleBrand", vehicleBrandTag);
+            params.put("vehicleSystem", "");
         }
-        params.put("model", brandTag);
         // 	颜色
-        params.put("colour", tvColor.getTag() == null ? "":tvColor.getTag().toString());
+        params.put("colour", tvColor.getTag() == null ? "" : tvColor.getTag().toString());
         // 	马力
         params.put("horsePower", etHorsepower.getText().toString());
-        // 	图片id，多个的场合以“，”隔开
+        // 	必传图片id，多个的场合以“，”隔开
         params.put("attachmentPic", attachmentPic);
+        // 	图片附件_车辆牌照：图片id
+        params.put("attachmentPicLicensePlates",
+                com.cqkj.publicframework.tool.CommonUtil.changeStringNotNull(attachmentPicLicensePlates));
+        // 	图片附件_驾驶室：图片id
+        params.put("attachmentPicCab",
+                com.cqkj.publicframework.tool.CommonUtil.changeStringNotNull(attachmentPicCab));
         // 	驱动方式
-        params.put("drivingMode", tvDriveMode.getTag() == null ? "":tvDriveMode.getTag().toString());
+        params.put("drivingMode", tvDriveMode.getTag() == null ? "" : tvDriveMode.getTag().toString());
         // 	车辆报价
         params.put("price", etPrice.getText().toString());
         // 	看车地点
-        params.put("carWatchingPlace", tvPlace.getTag() == null ? "":tvPlace.getTag().toString());
+        params.put("carWatchingPlace", tvPlace.getTag() == null ? "" : tvPlace.getTag().toString());
         // 	车源年份
-        params.put("vehicleYear", tvDate.getTag() == null ? "":tvDate.getTag().toString());
+        params.put("vehicleYear", tvDate.getText().toString().replace("-", ""));
 
         RequestManager.getRequestManager().post(RequestUrl.post_sell, params, false, this);
     }

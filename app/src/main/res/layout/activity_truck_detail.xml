@@ -162,7 +162,7 @@
                         android:id="@+id/ngv_base"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:cacheColorHint="@color/transparent"
+                        android:cacheColorHint="@color/white"
                         android:numColumns="3"
                         android:padding="@dimen/com_size_15" />
                 </LinearLayout>
@@ -173,7 +173,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/com_size_15"
                     android:background="@color/white"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:layout_width="match_parent"

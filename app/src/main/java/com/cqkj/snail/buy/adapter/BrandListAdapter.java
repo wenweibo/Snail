@@ -182,6 +182,8 @@ public class BrandListAdapter extends BaseExpandableListAdapter implements Secti
                     tv_title.setText(dictInfoEntity.getDictName());
                     //打开右侧菜单
                     slidingMenu.showSecondaryMenu();
+                }else{
+                    dictInfoInterface.onSelect(dictInfoEntity);
                 }
             }else{
                 dictInfoInterface.onSelect(dictInfoEntity);

@@ -327,8 +327,11 @@ public class CameraActivity extends Activity implements View.OnClickListener {
         @Override
         public void handleMessage(Message msg) {
             String path = (String) msg.obj;
-            // 设置当前拍摄图片的路径
-            truckPics.get(currentPosition).setImgPath(path);
+            // 设置当前拍摄图片的路
+            // 径
+            TruckPic truckPic = truckPics.get(currentPosition);
+            truckPic.setImgPath(path);
+            truckPic.setImgId("");
             // 加载车辆图片
 //            Glide.with(CameraActivity.this)
 //                    .asBitmap()

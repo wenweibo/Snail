@@ -92,7 +92,6 @@ public class CustomSinglePicker {
         tv_select.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                data_pv.getmCurrentSelected();
                 handler.handle(data_pv.getmCurrentSelected(), data_pv.getCurrentStr());
                 pickerDialog.dismiss();
             }

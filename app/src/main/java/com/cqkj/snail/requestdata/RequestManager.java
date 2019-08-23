@@ -1,5 +1,7 @@
 package com.cqkj.snail.requestdata;
 
+import android.telecom.Call;
+
 import com.cqkj.publicframework.beans.CallBackObject;
 import com.cqkj.publicframework.requestdata.CallBack;
 import com.cqkj.publicframework.tool.NetUtils;
@@ -15,14 +17,19 @@ import com.cqkj.snail.truck.entity.TruckEntity;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
+
+import win.smartown.android.library.certificateCamera.TruckPic;
 
 /**
  * 接口请求管理类
@@ -36,8 +43,8 @@ public class RequestManager extends com.cqkj.publicframework.requestdata.Request
 //    private String ipurl = "http://172.17.24.83:8080/";
 //    public static String fileipurl = "http://172.17.24.99:8080/jdyhgl/a.up";
     /***陶赠元*/
-    private String ipurl = "http://172.17.24.20:8080/";
-    public static String fileipurl = "http://172.17.24.99:8080/jdyhgl/a.up";
+    private String ipurl = "http://172.17.24.64:8080/";
+    public static String fileipurl = "http://172.17.24.64:8080/snail/";
 
     public static RequestManager getRequestManager() {
         if (requestManager == null) {
@@ -78,6 +85,9 @@ public class RequestManager extends com.cqkj.publicframework.requestdata.Request
     }
 
     public void postFile(int tag, List<String> paths, CallBack callBack) {
+//        HashMap<String, String> params = new HashMap<>();
+//        params.put("title", truckPic.getTitle());
+//        params.put("path", truckPic.getImgPath());
         String url = ipurl + RequestUrl.url[tag];
         super.postMultiFile(tag, url, paths, null, callBack);
     }

@@ -13,6 +13,8 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cqkj.publicframework.tool.CommonUtil;
 import com.cqkj.snail.R;
 import com.cqkj.snail.buy.entity.TruckPicEntity;
+import com.cqkj.snail.requestdata.RequestManager;
+import com.cqkj.snail.requestdata.RequestUrl;
 import com.cqkj.snail.truck.activity.TruckDetailActivity;
 import com.cqkj.snail.config.PublishStatus;
 import com.cqkj.snail.truck.entity.TruckEntity;
@@ -49,7 +51,7 @@ public class TruckListAdapter extends CommonAdapter {
         List<TruckPicEntity> attachmentPic = truckEntity.getAttachmentPic();
         String picPath = "";
         if (attachmentPic != null && !attachmentPic.isEmpty()) {
-            picPath = attachmentPic.get(0).getSavePath();
+            picPath = RequestManager.fileipurl + attachmentPic.get(0).getSaveName();
         }
         Glide.with(context)
                 .asBitmap()

@@ -234,7 +234,9 @@ public class BuyCarActivity extends BaseTitleActivity
         super.onSuccess(flag, obj);
         // 获取货车列表成功
         if (flag == RequestUrl.request_trucks) {
-            truckEntities.clear();
+            if (pageNo == 1) {
+                truckEntities.clear();
+            }
             // 设置上拉和下拉都为成功
             refreshView.refreshFinish(PullToRefreshLayout.SUCCEED);
             refreshView.loadmoreFinish(PullToRefreshLayout.SUCCEED);
@@ -416,10 +418,15 @@ public class BuyCarActivity extends BaseTitleActivity
                     // 品牌
                     // 品牌和车系字典码
                     String brandSystemdictCode = dictInfoEntity.getDictCode();
-                    if (!TextUtils.isEmpty(brandSystemdictCode) && brandSystemdictCode.contains(",")) {
-                        String[] bsCodeArr = brandSystemdictCode.split(",");
-                        vehicleBrand = bsCodeArr[0];
-                        vehicleSystem = bsCodeArr[1];
+                    if (!TextUtils.isEmpty(brandSystemdictCode)) {
+                        if (brandSystemdictCode.contains(",")) {
+                            String[] bsCodeArr = brandSystemdictCode.split(",");
+                            vehicleBrand = bsCodeArr[0];
+                            vehicleSystem = bsCodeArr[1];
+                        }else{
+                            vehicleBrand = brandSystemdictCode;
+                            vehicleSystem = "";
+                        }
                     }
                     break;
                 case DictInfo.PRICE:

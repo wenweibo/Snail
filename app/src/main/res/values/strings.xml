@@ -165,7 +165,7 @@
     <string name="login_success">登录成功</string>
     <string name="select_city">选择城市</string>
     <string name="buy_car_search_hint">车辆/价格/品牌</string>
-    <string name="price_max">价格最高</string>
+    <string name="price_max">排序</string>
     <string name="vechicle_type">车型</string>
     <string name="vehicle_brand">品牌</string>
     <string name="price">价格</string>
@@ -189,5 +189,6 @@
     <string name="submit_sell_truck">提交卖车</string>
     <string name="place_hint">请选择看车地点</string>
     <string name="submit_success">提交成功</string>
+    <string name="all_pic_uploaded">抱歉，所以照片都上传过了</string>
 
 </resources>

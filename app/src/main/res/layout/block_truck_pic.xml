@@ -19,9 +19,10 @@
 
             <ImageView
                 android:id="@+id/iv_add_pic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dip"
+                android:layout_height="80dip"
                 android:layout_margin="@dimen/com_size_15"
+                android:scaleType="centerCrop"
                 android:src="@mipmap/addimg_1x" />
             <LinearLayout
                 android:layout_width="match_parent"
@@ -31,7 +32,7 @@
                 <TextView
                     android:id="@+id/tv_pic_num"
                     style="@style/text_base"
-                    android:text="0/21"
+                    android:text="0/5"
                     android:textSize="@dimen/activity_title_size_25" />
                 <TextView
                     style="@style/text_remark"

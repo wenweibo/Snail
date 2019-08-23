@@ -176,13 +176,15 @@ public class RequestManager {
                 });
     }
 
-    protected void postFile2(String url, File _file, CallBack callBack, final HashMap params) {
-        url += "?fileName=" + _file.getName();
+    protected void postFile2(String url, final HashMap<String, String> params, CallBack callBack) {
+//        url += "?fileName=" + _file.getName();
         final String url2 = url;
-        RequestBody fileBody = RequestBody.create(MediaType.parse("video/mp4"), _file);
+        String path = params.get("path");
+        File file = new File(path);
+        RequestBody fileBody = RequestBody.create(MediaType.parse("video/mp4"), file);
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("fileName", _file.getName(), fileBody).build();
+                .addFormDataPart("file", file.getName(), fileBody).build();
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
@@ -212,12 +214,10 @@ public class RequestManager {
     }
 
     protected void postFile(String url, File _file, CallBack callBack, int type, int index) {
-        url += "?fileName=" + _file.getName();
-        Log.d("url", type + "----" + url + "," + _file.getAbsolutePath());
-        RequestBody fileBody = RequestBody.create(MediaType.parse("video/mp4"), _file);
+        RequestBody fileBody = RequestBody.create(MediaType.parse("image/png"), _file);
         RequestBody requestBody = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM)
-                .addFormDataPart("fileName", _file.getName(), fileBody).build();
+                .addFormDataPart("file", _file.getName(), fileBody).build();
         Request request = new Request.Builder()
                 .url(url)
                 .post(requestBody)
@@ -306,8 +306,6 @@ public class RequestManager {
                 if (file != null) {
                     builder.addFormDataPart("files", file.getName(),
                             RequestBody.create(MediaType.parse("image/png"), file));
-                    //添加其他参数
-                    //builder.addFormDataPart("id", id);
                 }
             }
             MultipartBody multipartBody = builder.build();

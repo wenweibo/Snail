@@ -111,7 +111,9 @@ public class PicPreViewActivity extends Activity implements View.OnClickListener
            finish();
        }else if (v.getId() == R.id.iv_delete){
            // 删除
-           truckPics.get(viewpager.getCurrentItem()).setImgPath("");
+           TruckPic truckPic = truckPics.get(viewpager.getCurrentItem());
+           truckPic.setImgPath("");
+           truckPic.setImgId("");
            myViewpagerAdapter.notifyDataSetChanged();
            setSelectView(viewpager.getCurrentItem());
        }

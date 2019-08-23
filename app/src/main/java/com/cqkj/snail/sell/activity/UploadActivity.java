@@ -51,9 +51,11 @@ public class UploadActivity extends BaseTitleActivity {
     Button btnUpload;
 
     private final String[] picNameArr = new String[]{"车辆铭牌", "左前45度", "车身正面照",
-            "车辆牌照", "右后45度", "驾驶室", "车辆前轮", "车辆后轮", "前围骨架", "玻璃及编号",
-            "发动机(正)", "发动机(左)", "发动机(右)", "发动机(下)", "变速箱(上)", "车身骨架",
-            "传动轴", "后驱动桥", "仪表台", "车辆登记证书", "行驶证", "上装左", "上装右", "上装后"};
+            "车辆牌照", "驾驶室"};
+//    private final String[] picNameArr = new String[]{"车辆铭牌", "左前45度", "车身正面照",
+//            "车辆牌照", "右后45度", "驾驶室", "车辆前轮", "车辆后轮", "前围骨架", "玻璃及编号",
+//            "发动机(正)", "发动机(左)", "发动机(右)", "发动机(下)", "变速箱(上)", "车身骨架",
+//            "传动轴", "后驱动桥", "仪表台", "车辆登记证书", "行驶证", "上装左", "上装右", "上装后"};
     // 必输数量
     private final int mustNum = 3;
     // 必输列表
@@ -65,6 +67,8 @@ public class UploadActivity extends BaseTitleActivity {
 
     // 当前操作的列表
     private ArrayList<TruckPic> currentTruckPics;
+    // 上传列表
+    private ArrayList<TruckPic> uploadTruckPics = new ArrayList<>();
     // 当前操作的适配器
     private TruckPicAdapter currentTruckPicAdapter;
     // 当前操作的列表下标
@@ -87,8 +91,15 @@ public class UploadActivity extends BaseTitleActivity {
     @Override
     protected void initData() {
         super.initData();
-        mustTruckPics = getTruckPics(1);
-        unmustTruckPics = getTruckPics(0);
+        mustTruckPics = getIntent().getExtras().getParcelableArrayList("mustTruckPics");
+        unmustTruckPics = getIntent().getExtras().getParcelableArrayList("unmustTruckPics");
+        if (mustTruckPics == null) {
+            mustTruckPics = getTruckPics(1);
+        }
+        if (unmustTruckPics == null) {
+            unmustTruckPics = getTruckPics(0);
+        }
+        setBtnStatus();
         mustTruckPicAdapter = new TruckPicAdapter(this, mustTruckPics, 0);
         ngvMust.setAdapter(mustTruckPicAdapter);
 
@@ -118,13 +129,21 @@ public class UploadActivity extends BaseTitleActivity {
         super.onClick(view);
         switch (view.getId()) {
             case R.id.btn_upload:
-                showDialog("");
+
+                // 清空上传列表
+                uploadTruckPics.clear();
                 // 批量上传照片
                 List<String> paths = new ArrayList<>();
                 // 添加必输列表
                 paths.addAll(structurePicPaths(mustTruckPics));
                 // 添加非必输列表
                 paths.addAll(structurePicPaths(unmustTruckPics));
+                // 如果所以照片都上传了，则不启动上传
+                if (paths.isEmpty()){
+                    ToastUtil.showShort(this, R.string.all_pic_uploaded);
+                    return;
+                }
+                showDialog("");
                 RequestManager.getRequestManager().postFile(RequestUrl.post_file, paths,
                         this);
                 break;
@@ -138,10 +157,17 @@ public class UploadActivity extends BaseTitleActivity {
             case RequestUrl.post_file:
                 String attachId = (String) obj.getObject();
                 if (!TextUtils.isEmpty(attachId)) {
+                    String[] idArr = attachId.split(",");
+                    for (int i = 0; i < uploadTruckPics.size(); i++) {
+                        uploadTruckPics.get(i).setImgId(idArr[i]);
+                    }
+
                     ToastUtil.showShort(this, R.string.upload_success);
                     Intent data = new Intent();
-                    data.putExtra("attachId",attachId);
-                    data.putExtra("firstPic",mustTruckPics.get(0).getImgPath());
+//                    data.putExtra("attachId", attachId);
+                    data.putExtra("firstPic", mustTruckPics.get(0).getImgPath());
+                    data.putParcelableArrayListExtra("mustTruckPics", mustTruckPics);
+                    data.putParcelableArrayListExtra("unmustTruckPics", unmustTruckPics);
                     setResult(ResultCode.UPLOAD_PIC, data);
                     finish();
                 } else {
@@ -231,9 +257,10 @@ public class UploadActivity extends BaseTitleActivity {
                         } else {
                             path = media.getPath();
                         }
-                        Log.i("图片-----》", media.getPath());
                     }
-                    currentTruckPics.get(currentPosition).setImgPath(path);
+                    TruckPic truckPic = currentTruckPics.get(currentPosition);
+                    truckPic.setImgPath(path);
+                    truckPic.setImgId("");
                     currentTruckPicAdapter.notifyDataSetChanged();
                     break;
             }
@@ -306,8 +333,12 @@ public class UploadActivity extends BaseTitleActivity {
         List<String> list = new ArrayList<>();
         if (pics != null) {
             for (TruckPic truckPic : pics) {
-                if (!TextUtils.isEmpty(truckPic.getImgPath())) {
+                // 如果有图片路径，且没有图片id，说明该图片没有上传，则需添加到上传列表中
+                if (!TextUtils.isEmpty(truckPic.getImgPath())
+                        && TextUtils.isEmpty(truckPic.getImgId())) {
                     list.add(truckPic.getImgPath());
+                    // 添加到上传列表中
+                    uploadTruckPics.add(truckPic);
                 }
             }
         }

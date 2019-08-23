@@ -21,7 +21,16 @@ public class TruckPic implements Parcelable {
     private int mustFlag;
     // 是否选中
     private int selected;
+    // 图片id，上传后使用
+    private String imgId;
 
+    public void setImgId(String imgId) {
+        this.imgId = imgId;
+    }
+
+    public String getImgId() {
+        return imgId;
+    }
 
     public TruckPic(){}
     protected TruckPic(Parcel in) {
@@ -30,6 +39,7 @@ public class TruckPic implements Parcelable {
         imgPath = in.readString();
         mustFlag = in.readInt();
         selected = in.readInt();
+        imgId = in.readString();
     }
 
     public static final Creator<TruckPic> CREATOR = new Creator<TruckPic>() {
@@ -96,5 +106,6 @@ public class TruckPic implements Parcelable {
         dest.writeString(imgPath);
         dest.writeInt(mustFlag);
         dest.writeInt(selected);
+        dest.writeString(imgId);
     }
 }

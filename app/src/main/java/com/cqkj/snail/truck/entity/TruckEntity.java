@@ -57,8 +57,12 @@ public class TruckEntity implements Serializable {
     private String drivingMode;
     // 驱动方式名称
     private String drivingModeContent;
-    // 图片
+    // 必传图片
     private List<TruckPicEntity> attachmentPic;
+    // 图片附件_车辆牌照
+    private List<TruckPicEntity> attachmentPicLicensePlates;
+    // 图片附件_驾驶室
+    private List<TruckPicEntity> attachmentPicCab;
     // 报价
     private String price;
     // 发布状态
@@ -71,6 +75,22 @@ public class TruckEntity implements Serializable {
     private String carWatchingPlaceContent;
     // 排序方式
     private String sortCondition;
+
+    public void setAttachmentPicLicensePlates(List<TruckPicEntity> attachmentPicLicensePlates) {
+        this.attachmentPicLicensePlates = attachmentPicLicensePlates;
+    }
+
+    public void setAttachmentPicCab(List<TruckPicEntity> attachmentPicCab) {
+        this.attachmentPicCab = attachmentPicCab;
+    }
+
+    public List<TruckPicEntity> getAttachmentPicLicensePlates() {
+        return attachmentPicLicensePlates;
+    }
+
+    public List<TruckPicEntity> getAttachmentPicCab() {
+        return attachmentPicCab;
+    }
 
     public void setVehicleTypeContent(String vehicleTypeContent) {
         this.vehicleTypeContent = vehicleTypeContent;
@@ -228,7 +248,7 @@ public class TruckEntity implements Serializable {
         this.drivingMode = drivingMode;
     }
 
-    public void setAttachmentPic( List<TruckPicEntity>  attachmentPic) {
+    public void setAttachmentPic(List<TruckPicEntity> attachmentPic) {
         this.attachmentPic = attachmentPic;
     }
 
@@ -300,7 +320,7 @@ public class TruckEntity implements Serializable {
         return drivingMode;
     }
 
-    public  List<TruckPicEntity>  getAttachmentPic() {
+    public List<TruckPicEntity> getAttachmentPic() {
         return attachmentPic;
     }
 
