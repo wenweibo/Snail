@@ -4,43 +4,41 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.bumptech.glide.Glide;
+import com.cqkj.publicframework.activity.BaseTitleActivity;
+import com.cqkj.publicframework.beans.CallBackObject;
 import com.cqkj.publicframework.tool.ToastUtil;
+import com.cqkj.publicframework.widget.NoScrollGridView;
+import com.cqkj.publicframework.widget.WListView;
 import com.cqkj.publicframework.widget.pull.PullToRefreshLayout;
 import com.cqkj.snail.AppApplication;
 import com.cqkj.snail.R;
+import com.cqkj.snail.buy.entity.DictInfoEntity;
+import com.cqkj.snail.config.ResultCode;
 import com.cqkj.snail.requestdata.RequestManager;
 import com.cqkj.snail.requestdata.RequestUrl;
+import com.cqkj.snail.system.callbackevent.DictInfoEvent;
 import com.cqkj.snail.system.callbackevent.LocationEvent;
 import com.cqkj.snail.system.entity.CityEntity;
 import com.cqkj.snail.tool.CommonRequest;
 import com.cqkj.snail.tool.CommonUtil;
-import com.cqkj.snail.tool.MyLocationListener;
 import com.cqkj.snail.truck.adapter.FirstMenuAdapter;
 import com.cqkj.snail.truck.adapter.TruckListAdapter;
-import com.cqkj.snail.config.PublishStatus;
 import com.cqkj.snail.truck.entity.MenuEntity;
 import com.cqkj.snail.truck.entity.TruckEntity;
-import com.cqkj.publicframework.activity.BaseTitleActivity;
-import com.cqkj.publicframework.beans.CallBackObject;
-import com.cqkj.publicframework.widget.NoScrollGridView;
-import com.cqkj.publicframework.widget.WListView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -57,7 +55,7 @@ import butterknife.BindView;
  * @author 闻维波 2019/07/26
  */
 public class FirstPagerActivity extends BaseTitleActivity implements OnBannerListener,
-        PullToRefreshLayout.OnRefreshListener {
+        PullToRefreshLayout.OnRefreshListener, FirstMenuAdapter.MenuSelect {
     // 刷新控件
     @BindView(R.id.refresh_view)
     PullToRefreshLayout refresh_view;
@@ -94,6 +92,9 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
     // 浏览记录按钮
     @BindView(R.id.lin_record)
     LinearLayout linRecord;
+    // 搜索按钮
+    @BindView(R.id.lin_search)
+    LinearLayout linSearch;
 
     // banner图片地址集合
     private ArrayList<String> listPath;
@@ -102,8 +103,16 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
 
     private final String[] menuItemArr1 = new String[]{"牵引车", "载货车", "挂车", "自卸车",
             "1-10万", "10-15万", "15-20万", "20-50万"};
+    private final String[] menuCodeArr1 = new String[]{"TRACTOR", "CARGO", "TRAILER", "DUMP",
+            "1-10", "10-15", "15-20", "20-50"};
+    private final String[] menuParentCodeArr1 = new String[]{"VEHICLE_TYPE", "VEHICLE_TYPE", "VEHICLE_TYPE", "VEHICLE_TYPE",
+            "PRICE", "PRICE", "PRICE", "PRICE"};
     private final String[] menuItemArr2 = new String[]{
             "东风", "中国重汽", "福田欧曼", "陕汽"};
+    private final String[] menuCodeArr2 = new String[]{
+            "DONGFENG", "CHINA_HEAVY_TRUCK", "FUKUDA_OMAN", "SHAANXI"};
+    private final String[] menuParentCodeArr2 = new String[]{
+            "VEHICLE_BRAND", "VEHICLE_BRAND", "VEHICLE_BRAND", "VEHICLE_BRAND"};
 
     private final int[] menuItemImgArr1 = new int[]{-1, -1, -1, -1,
             -1, -1, -1, -1};
@@ -152,7 +161,7 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         linNew.setOnClickListener(this);
         linRecord.setOnClickListener(this);
         tvLocation.setOnClickListener(this);
-
+        linSearch.setOnClickListener(this);
         refresh_view.setOnRefreshListener(this);
     }
 
@@ -160,8 +169,10 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
     protected void initData() {
         super.initData();
         // 设置首页筛选菜单适配器
-        ngvMenu.setAdapter(new FirstMenuAdapter(this, getMenuList(menuItemArr1, menuItemImgArr1)));
-        ngvMenu2.setAdapter(new FirstMenuAdapter(this, getMenuList(menuItemArr2, menuItemImgArr2)));
+        ngvMenu.setAdapter(new FirstMenuAdapter(this, getMenuList(menuItemArr1,
+                menuCodeArr1, menuParentCodeArr1, menuItemImgArr1), this));
+        ngvMenu2.setAdapter(new FirstMenuAdapter(this, getMenuList(menuItemArr2,
+                menuCodeArr2, menuParentCodeArr2, menuItemImgArr2), this));
 
         // 初始化车辆列表
         wlvTrucks.setScroll(true);
@@ -202,7 +213,7 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
     @Override
     public void onFailure(int flag, String message) {
         super.onFailure(flag, message);
-        refresh_view.refreshFinish(PullToRefreshLayout.SUCCEED);
+        refresh_view.refreshFinish(PullToRefreshLayout.FAIL);
         ToastUtil.showShort(this, message);
     }
 
@@ -212,9 +223,13 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         switch (view.getId()) {
             // 买车监听
             case R.id.lin_buy_car:
+                MainActivity mainActivity = (MainActivity) getParent();
+                mainActivity.jumpTo(1);
                 break;
             // 卖车监听
             case R.id.lin_sell_car:
+                MainActivity mainActivity2 = (MainActivity) getParent();
+                mainActivity2.jumpTo(2);
                 break;
             // 收车监听
             case R.id.lin_recycle_car:
@@ -241,6 +256,11 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
                     CommonRequest.getCitys(this);
                 }
                 break;
+            case R.id.lin_search:
+                // 搜索
+                Intent intent = new Intent(this, SearchActivity.class);
+                startActivityForResult(intent, 0);
+                break;
         }
     }
 
@@ -260,6 +280,20 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
                 CityEntity cityEntity = (CityEntity) data.getExtras().getSerializable("cityEntity");
                 AppApplication.selectCity = cityEntity;
                 tvLocation.setText(com.cqkj.publicframework.tool.CommonUtil.changeStringEllipsis(cityEntity.getName()));
+            }
+        } else if (resultCode == ResultCode.KEYWORD) {
+            // 搜索关键字返回
+            if (data != null) {
+                DictInfoEntity dictInfoEntity = (DictInfoEntity) data.getExtras().getSerializable("dictInfoEntity");
+                // 如果买车页面从未加载过
+                if (AppApplication.buyCarloadFlag == -1){
+                    AppApplication.keyword = dictInfoEntity.getDictName();
+                }
+                // 跳转到买车页面
+                MainActivity mainActivity = (MainActivity) getParent();
+                mainActivity.jumpTo(1);
+                // 发送刷新广播去“买车”页面，刷新
+                EventBus.getDefault().post(new DictInfoEvent(dictInfoEntity));
             }
         }
     }
@@ -324,6 +358,7 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
 
     /**
      * 下拉刷新监听
+     *
      * @param pullToRefreshLayout
      */
     @Override
@@ -333,6 +368,16 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
 
     @Override
     public void onLoadMore(PullToRefreshLayout pullToRefreshLayout) {
+    }
+
+    // 筛选菜单选择事件
+    @Override
+    public void onMenuSelect(int position, MenuEntity menuEntity) {
+        // 跳转到买车页面
+        MainActivity mainActivity = (MainActivity) getParent();
+        mainActivity.jumpTo(1);
+        // 发送刷新广播去“买车”页面，刷新
+        EventBus.getDefault().post(new DictInfoEvent(menuEntity.getDictInfoEntity()));
     }
 
     /**
@@ -350,7 +395,8 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
      *
      * @return List<MenuEntity>
      */
-    private List<MenuEntity> getMenuList(String[] menuItemArr, int[] menuItemImgArr) {
+    private List<MenuEntity> getMenuList(String[] menuItemArr, String[] menuCodeArr,
+                                         String[] menuParentCodeArr, int[] menuItemImgArr) {
         List<MenuEntity> menuEntities = new ArrayList<>();
         MenuEntity menuEntity = null;
         for (int i = 0; i < menuItemArr.length; i++) {
@@ -358,6 +404,11 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
             menuEntity = new MenuEntity();
             menuEntity.setId(i + "");
             menuEntity.setTitle(title);
+            DictInfoEntity dictInfoEntity = new DictInfoEntity();
+            dictInfoEntity.setDictCode(menuCodeArr[i]);
+            dictInfoEntity.setDictName(title);
+            dictInfoEntity.setParentId(menuParentCodeArr[i]);
+            menuEntity.setDictInfoEntity(dictInfoEntity);
 
             menuEntity.setImgRes(menuItemImgArr[i]);
             menuEntities.add(menuEntity);
@@ -365,12 +416,13 @@ public class FirstPagerActivity extends BaseTitleActivity implements OnBannerLis
         }
         return menuEntities;
     }
+
     /**
      * 获取车源列表
      */
     public void getTrucks() {
         HashMap<String, String> params = new HashMap<>();
-        params.put("pageSize","6");
+        params.put("pageSize", "6");
         params.put("pageNo", "1");
 //        params.put("carWatchingPlace",
 //                AppApplication.selectCity != null ? AppApplication.selectCity.getAdcode() :

@@ -164,7 +164,8 @@
     <string name="register_success">注册成功</string>
     <string name="login_success">登录成功</string>
     <string name="select_city">选择城市</string>
-    <string name="buy_car_search_hint">车辆/价格/品牌</string>
+    <string name="buy_car_search_hint">品牌/车系/价格(万)</string>
+    <string name="search">搜索</string>
     <string name="price_max">排序</string>
     <string name="vechicle_type">车型</string>
     <string name="vehicle_brand">品牌</string>
@@ -190,5 +191,10 @@
     <string name="place_hint">请选择看车地点</string>
     <string name="submit_success">提交成功</string>
     <string name="all_pic_uploaded">抱歉，所以照片都上传过了</string>
+    <string name="please_choose_at_least_one">请至少选择一个</string>
+    <string name="reset">重置</string>
+    <string name="search_history">历史搜索</string>
+    <string name="clear">清空</string>
+    <string name="search_hint">请输入搜索内容</string>
 
 </resources>

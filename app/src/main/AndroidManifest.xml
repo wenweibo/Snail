@@ -20,8 +20,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".system.activity.ProvinceCitySelectActivity"></activity>
-        <!-- 百度地图配置 -->
+        <activity android:name=".system.activity.SearchActivity"></activity>
+        <activity android:name=".system.activity.ProvinceCitySelectActivity" /> <!-- 百度地图配置 -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="ZToI2XssvjrIiyvAtLmMGegZ0oqb3ggl" />
@@ -74,7 +74,7 @@
         <activity
             android:name=".buy.activity.BrandSelectActivity"
             android:screenOrientation="portrait" />
-       <activity
+        <activity
             android:name=".sell.activity.CarWatchPlaceSelectActivity"
             android:screenOrientation="portrait" />
     </application>

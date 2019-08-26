@@ -43,8 +43,8 @@ public class RequestManager extends com.cqkj.publicframework.requestdata.Request
 //    private String ipurl = "http://172.17.24.83:8080/";
 //    public static String fileipurl = "http://172.17.24.99:8080/jdyhgl/a.up";
     /***陶赠元*/
-    private String ipurl = "http://172.17.24.64:8080/";
-    public static String fileipurl = "http://172.17.24.64:8080/snail/";
+    private String ipurl = "http://172.17.24.68:8080/";
+    public static String fileipurl = "http://172.17.24.68:8080/snail/";
 
     public static RequestManager getRequestManager() {
         if (requestManager == null) {

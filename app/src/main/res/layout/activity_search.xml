@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+    <!--标题栏-->
+    <RelativeLayout
+        android:id="@+id/lin_top"
+        android:layout_width="fill_parent"
+        android:layout_height="@dimen/title_hight"
+        android:background="@color/colorPrimary"
+        >
+        <!--回退键-->
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="@null"
+            android:paddingLeft="@dimen/grid_circle_btn"
+            android:paddingRight="@dimen/grid_circle_btn"
+            android:src="@mipmap/title_back" />
+
+        <TextView
+            android:id="@+id/tv_search"
+            style="@style/text_base"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:paddingLeft="@dimen/grid_circle_btn"
+            android:paddingRight="@dimen/grid_circle_btn"
+            android:text="@string/search"
+            android:textColor="@color/white"/>
+        <LinearLayout
+            android:id="@+id/lin_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/com_size_10"
+            android:background="@drawable/shape_white_corners_50"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_toRightOf="@id/iv_back"
+            android:layout_toLeftOf="@id/tv_search">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/com_size_10"
+                android:src="@mipmap/title_search"
+                android:layout_marginLeft="@dimen/com_size_10"/>
+
+            <EditText
+                android:id="@+id/et_search"
+                style="@style/edit_base"
+                android:hint="@string/buy_car_search_hint"
+                android:layout_width="match_parent"
+                android:gravity="left"
+                android:layout_marginRight="@dimen/com_size_10"
+                android:singleLine="true"
+                android:maxLength="15"
+                android:imeOptions="actionSearch"/>
+        </LinearLayout>
+
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/com_size_10">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView style="@style/text_remark" android:text="@string/search_history"
+                android:layout_weight="1"/>
+            <TextView android:id="@+id/tv_clear" style="@style/text_remark" android:text="@string/clear"/>
+        </LinearLayout>
+        <com.xuexiang.xui.widget.flowlayout.FlowTagLayout
+            android:id="@+id/ftl_history"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:ftl_check_mode="display" />
+    </LinearLayout>
+</LinearLayout>

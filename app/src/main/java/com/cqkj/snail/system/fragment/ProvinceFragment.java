@@ -13,6 +13,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.baidu.location.LocationClient;
+import com.cqkj.publicframework.tool.ToastUtil;
 import com.cqkj.publicframework.widget.contactar.SideBar;
 import com.cqkj.snail.AppApplication;
 import com.cqkj.snail.R;
@@ -113,13 +114,16 @@ public class ProvinceFragment extends Fragment implements CityExpandAdapter.City
                 for (CityEntity cityEntity : AppApplication.selectCitys) {
                     if (cityEntity.getAdcode().equals(AppApplication.locationCity.getParentId())) {
                         isSelectContansLocation = true;
+
                     }
                 }
                 if (isSelectContansLocation) {
                     // 则将定位城市背景设为已选
+                    AppApplication.locationCity.setSelectFlag(1);
                     tvLocation.setBackgroundResource(R.drawable.shape_red_stroke_shallow_red_solid);
                 } else {
                     // 否则，设为未选
+                    AppApplication.locationCity.setSelectFlag(0);
                     tvLocation.setBackgroundResource(R.drawable.shape_gray_stroke);
                 }
             } else {
@@ -156,14 +160,34 @@ public class ProvinceFragment extends Fragment implements CityExpandAdapter.City
 
     private void initListener() {
         btnSure.setOnClickListener(this);
+        tvLocation.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.btn_sure){
+        if (v.getId() == R.id.btn_sure) {
             // 确定按钮
-            selectCity(null);
+            sureSelect();
+        }else if (v.getId() == R.id.tv_location){
+            // 定位按钮
+            if (AppApplication.locationCity.getSelectFlag() == 0){
+                // 则将定位城市背景设为已选
+                tvLocation.setBackgroundResource(R.drawable.shape_red_stroke_shallow_red_solid);
+                AppApplication.locationCity.setSelectFlag(1);
+
+            }else{
+                // 否则，设为未选
+                AppApplication.locationCity.setSelectFlag(0);
+                tvLocation.setBackgroundResource(R.drawable.shape_gray_stroke);
+            }
+            for (CityEntity cityEntity:AppApplication.cityEntities) {
+                if (AppApplication.locationCity.getParentId().equals(cityEntity.getAdcode())){
+                    cityEntity.setSelectFlag(AppApplication.locationCity.getSelectFlag());
+                }
+            }
+            cityExpandAdapter.notifyDataSetChanged();
         }
+
     }
 
     private void loadData() {
@@ -171,6 +195,22 @@ public class ProvinceFragment extends Fragment implements CityExpandAdapter.City
 
     @Override
     public void selectCity(CityEntity cityEntity) {
+        // 如果当前操作的省份就是定位城市
+        if (cityEntity.getAdcode().equals(AppApplication.locationCity.getParentId())){
+            // 则根据选中情况设置定位城市选中状态
+            if (cityEntity.getSelectFlag() == 1) {
+                // 则将定位城市背景设为已选
+                AppApplication.locationCity.setSelectFlag(1);
+                tvLocation.setBackgroundResource(R.drawable.shape_red_stroke_shallow_red_solid);
+            } else {
+                // 否则，设为未选
+                AppApplication.locationCity.setSelectFlag(0);
+                tvLocation.setBackgroundResource(R.drawable.shape_gray_stroke);
+            }
+        }
+    }
+
+    private void sureSelect() {
         AppApplication.selectCitys = new ArrayList<>();
         // 遍历取出选中的省份
         for (CityEntity cityEntity1 : AppApplication.cityEntities) {
@@ -178,12 +218,35 @@ public class ProvinceFragment extends Fragment implements CityExpandAdapter.City
                 AppApplication.selectCitys.add(cityEntity1);
             }
         }
-        // 关闭当前页面
-        Intent intent = new Intent();
-        getActivity().setResult(CitySelectActivity.RESULT_CODE_SELECT_CITY, intent);
-        getActivity().finish();
-        EventBus.getDefault().post(new RefreshEvent(0));
+        // 如果有选择省份
+        if (!AppApplication.selectCitys.isEmpty()) {
+            // 关闭当前页面
+            Intent intent = new Intent();
+            getActivity().setResult(CitySelectActivity.RESULT_CODE_SELECT_CITY, intent);
+            getActivity().finish();
+            EventBus.getDefault().post(new RefreshEvent(0));
+        } else {
+            // 没有选择城市，则提示
+            ToastUtil.showShort(getContext(), R.string.please_choose_at_least_one);
+        }
     }
+
+    /**
+     * 清空已选
+     */
+    public void clearData() {
+        if (AppApplication.cityEntities != null) {
+            for (CityEntity cityEntity : AppApplication.cityEntities) {
+                cityEntity.setSelectFlag(0);
+            }
+            cityExpandAdapter.notifyDataSetChanged();
+        }
+        if (AppApplication.locationCity != null) {
+            AppApplication.locationCity.setSelectFlag(0);
+            tvLocation.setBackgroundResource(R.drawable.shape_gray_stroke);
+        }
+    }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(LocationEvent event) {
         //收到此广播，刷新位置信息

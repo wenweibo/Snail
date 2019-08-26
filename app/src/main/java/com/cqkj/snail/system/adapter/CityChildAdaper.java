@@ -43,10 +43,12 @@ public class CityChildAdaper extends CommonAdapter {
         ViewHolder viewHolder = new ViewHolder(convertView);
         CityEntity cityEntity = (CityEntity) getItem(position);
         viewHolder.tv_name.setText(cityEntity.getName());
-        if (cityEntity.getSelectFlag() == 1) {
-            viewHolder.tv_name.setBackgroundResource(R.drawable.shape_red_stroke_shallow_red_solid);
-        } else {
-            viewHolder.tv_name.setBackgroundResource(R.drawable.shape_gray_stroke);
+        if (isMultiple) {
+            if (cityEntity.getSelectFlag() == 1) {
+                viewHolder.tv_name.setBackgroundResource(R.drawable.shape_red_stroke_shallow_red_solid);
+            } else {
+                viewHolder.tv_name.setBackgroundResource(R.drawable.shape_gray_stroke);
+            }
         }
         convertView.setOnClickListener(new ItemClick(cityEntity));
         return convertView;
@@ -61,10 +63,10 @@ public class CityChildAdaper extends CommonAdapter {
 
         @Override
         public void onClick(View v) {
+
             // 城市单选
             if (!isMultiple) {
                 cityEntity.setSelectFlag(1);
-                citySelect.selectCity(cityEntity);
                 // 将其他的城市选中都设为0
                 for (List<CityEntity> cityEntities : parentList) {
                     for (CityEntity cityEntity1 : cityEntities) {
@@ -82,6 +84,7 @@ public class CityChildAdaper extends CommonAdapter {
                 }
                 notifyDataSetChanged();
             }
+            citySelect.selectCity(cityEntity);
         }
     }
 

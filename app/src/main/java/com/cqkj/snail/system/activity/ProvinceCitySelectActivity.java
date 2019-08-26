@@ -4,13 +4,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,26 +28,30 @@ import butterknife.BindView;
  */
 public class ProvinceCitySelectActivity extends BaseTitleActivity {
     @BindView(R.id.lin_top)
-    RelativeLayout lin_top;
+    RelativeLayout linTop;
     // 返回按钮
     @BindView(R.id.iv_back)
-    ImageView iv_back;
+    ImageView ivBack;
     // 重置按钮
-    @BindView(R.id.tv_right_menu)
-    TextView tv_right_menu;
+    @BindView(R.id.tv_reset)
+    TextView tvReset;
     // 省份和城市单选
     @BindView(R.id.tcv_province_city)
-    TabControlView tcv_province_city;
+    TabControlView tcvProvinceCity;
     // 省份和城市滑动控件
     @BindView(R.id.viewPager)
     ViewPager viewPager;
     // 碎片页面集合
     private List<Fragment> fragments = new ArrayList<Fragment>();
+    // 城市页面
+    private CityFragment cityFragment;
+    // 省份页面
+    private ProvinceFragment provinceFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        tcv_province_city.setSelection(0);
+        tcvProvinceCity.setSelection(0);
     }
 
     @Override
@@ -66,9 +66,9 @@ public class ProvinceCitySelectActivity extends BaseTitleActivity {
         StatusBarUtils.translucent(this, Color.WHITE);
         // 设置状态栏位黑色图标和字
         StatusBarUtils.setStatusBarLightMode(this);
-        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) lin_top.getLayoutParams();
+        LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams) linTop.getLayoutParams();
         lp.setMargins(0,StatusBarUtils.getStatusBarHeight(this),0,0);
-        lin_top.setLayoutParams(lp);
+        linTop.setLayoutParams(lp);
         title_main_layout.setVisibility(View.GONE);
     }
 
@@ -81,8 +81,10 @@ public class ProvinceCitySelectActivity extends BaseTitleActivity {
     @Override
     protected void initListener() {
         super.initListener();
+        ivBack.setOnClickListener(this);
+        tvReset.setOnClickListener(this);
         viewPager.setOnPageChangeListener(new MyOnPageChangeListener());
-        tcv_province_city.setOnTabSelectionChangedListener(new TabControlView.OnTabSelectionChangedListener() {
+        tcvProvinceCity.setOnTabSelectionChangedListener(new TabControlView.OnTabSelectionChangedListener() {
             @Override
             public void newSelection(String title, String value) {
             }
@@ -93,9 +95,30 @@ public class ProvinceCitySelectActivity extends BaseTitleActivity {
         });
     }
 
+    @Override
+    public void onClick(View view) {
+        super.onClick(view);
+        switch (view.getId()){
+            case R.id.iv_back:
+                // 返回
+                finish();
+                break;
+            case R.id.tv_reset:
+                // 重置
+                if (viewPager.getCurrentItem()==0){
+                    cityFragment.clearData();
+                }else{
+                    provinceFragment.clearData();
+                }
+                break;
+        }
+    }
+
     private void initFrag() {
-        fragments.add(CityFragment.newInstance());
-        fragments.add(ProvinceFragment.newInstance());
+        cityFragment = CityFragment.newInstance();
+        fragments.add(cityFragment);
+        provinceFragment = ProvinceFragment.newInstance();
+        fragments.add(provinceFragment);
         FragmentViewPagerAdapter adapter = new FragmentViewPagerAdapter(
                 this.getSupportFragmentManager(),viewPager, fragments);
     }
@@ -112,7 +135,7 @@ public class ProvinceCitySelectActivity extends BaseTitleActivity {
 
         @Override
         public void onPageSelected(int arg0) {
-            tcv_province_city.setSelection(arg0);
+            tcvProvinceCity.setSelection(arg0);
         }
     }
 

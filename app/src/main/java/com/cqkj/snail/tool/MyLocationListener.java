@@ -39,7 +39,7 @@ public class MyLocationListener extends BDAbstractLocationListener {
                         // 如果城市编码和定位到的城市编码一致
                         if (cityEntity1.getAdcode().equals(location.getCityCode())) {
                             // 则将城市选中设为1，以备后面列表中的默认选中效果
-                            cityEntity1.setSelectFlag(1);
+//                            cityEntity1.setSelectFlag(1);
                             // 定位到的城市为当前城市
                             AppApplication.locationCity = cityEntity1;
                             AppApplication.locationCity.setParentName(location.getProvince());

@@ -26,14 +26,14 @@
             android:src="@mipmap/title_back_gray" />
 
         <TextView
-            android:id="@+id/tv_right_menu"
+            android:id="@+id/tv_reset"
             style="@style/text_base"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:paddingLeft="@dimen/grid_circle_btn"
             android:paddingRight="@dimen/grid_circle_btn"
-            android:text="重置" />
+            android:text="@string/reset" />
 
         <com.cqkj.publicframework.widget.TabControlView
             android:id="@+id/tcv_province_city"

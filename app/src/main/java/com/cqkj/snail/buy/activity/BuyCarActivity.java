@@ -22,7 +22,10 @@ import com.cqkj.snail.requestdata.RequestManager;
 import com.cqkj.snail.requestdata.RequestUrl;
 import com.cqkj.snail.sell.adapter.DictInfoAdapter;
 import com.cqkj.snail.system.activity.CitySelectActivity;
+import com.cqkj.snail.system.activity.MainActivity;
 import com.cqkj.snail.system.activity.ProvinceCitySelectActivity;
+import com.cqkj.snail.system.activity.SearchActivity;
+import com.cqkj.snail.system.callbackevent.DictInfoEvent;
 import com.cqkj.snail.system.callbackevent.LocationEvent;
 import com.cqkj.snail.system.callbackevent.RefreshEvent;
 import com.cqkj.snail.system.entity.CityEntity;
@@ -33,6 +36,7 @@ import com.cqkj.snail.truck.entity.TruckEntity;
 import com.cqkj.snail.weight.TopPop;
 import com.xuexiang.xui.widget.flowlayout.FlowTagLayout;
 
+import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
@@ -61,6 +65,9 @@ public class BuyCarActivity extends BaseTitleActivity
     // 定位文本
     @BindView(R.id.tv_location)
     TextView tvLocation;
+    // 搜索按钮
+    @BindView(R.id.lin_search)
+    LinearLayout linSearch;
     // 选中标签控件
     @BindView(R.id.ftl_condition)
     FlowTagLayout ftlCondition;
@@ -104,6 +111,9 @@ public class BuyCarActivity extends BaseTitleActivity
     private String priceCondition = "";
     // 排序条件
     private String sortCondition = "";
+    // 搜索关键字
+    private String keyWord = "";
+
 
     @Override
     protected void onDestroy() {
@@ -139,13 +149,14 @@ public class BuyCarActivity extends BaseTitleActivity
         linPrice.setOnClickListener(this);
         linNoDataRefresh.setOnClickListener(this);
         tvLocation.setOnClickListener(this);
+        linSearch.setOnClickListener(this);
     }
 
     @Override
     protected void initData() {
         super.initData();
         // 初始化流标签适配器
-        conditionAdapter = new ConditionAdapter(this, this);
+        conditionAdapter = new ConditionAdapter(this, this, true);
         ftlCondition.setAdapter(conditionAdapter);
         // 获取货车列表
 //        truckEntities = getTruckEntites(0);
@@ -168,8 +179,12 @@ public class BuyCarActivity extends BaseTitleActivity
 
     @Override
     public void onClick(View view) {
-
-        if (view.getId() == R.id.tv_location) {
+        int id = view.getId();
+        if (id == R.id.lin_search) {
+            // 搜索按钮
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivityForResult(intent, 0);
+        } else if (id == R.id.tv_location) {
             // 城市
             // 如果有城市数据，则跳转至城市选择页面
             if (AppApplication.cityEntities != null && !AppApplication.cityEntities.isEmpty()) {
@@ -180,7 +195,7 @@ public class BuyCarActivity extends BaseTitleActivity
                 showDialog("");
                 CommonRequest.getCitys(this);
             }
-        } else if (view.getId() == R.id.lin_brand) {
+        } else if (id == R.id.lin_brand) {
             // 点击品牌选择
             // 如果没有品牌信息,则去重新拉取
             if (DictInfo.vehicleBrands == null || DictInfo.vehicleBrands.isEmpty()) {
@@ -192,14 +207,14 @@ public class BuyCarActivity extends BaseTitleActivity
                 intent.putExtra("openSecond", true);
                 startActivityForResult(intent, 0);
             }
-        } else if (view.getId() == R.id.lin_no_data_refresh) {
+        } else if (id == R.id.lin_no_data_refresh) {
             // 刷新按钮
             showDialog("");
             myRefresh();
         } else {
             List<DictInfoEntity> dictInfoEntities = null;
             String dictCode = null;
-            switch (view.getId()) {
+            switch (id) {
                 case R.id.lin_sort:
                     // 排序
                     dictInfoEntities = DictInfo.sortKinds;
@@ -234,6 +249,8 @@ public class BuyCarActivity extends BaseTitleActivity
         super.onSuccess(flag, obj);
         // 获取货车列表成功
         if (flag == RequestUrl.request_trucks) {
+            // 每次加载数据都要增加一次加载标记
+            AppApplication.buyCarloadFlag++;
             if (pageNo == 1) {
                 truckEntities.clear();
             }
@@ -302,8 +319,8 @@ public class BuyCarActivity extends BaseTitleActivity
         super.onFailure(flag, message);
         if (flag == RequestUrl.request_trucks) {
             if (refreshView != null) {
-                refreshView.refreshFinish(PullToRefreshLayout.SUCCEED);
-                refreshView.loadmoreFinish(PullToRefreshLayout.SUCCEED);
+                refreshView.refreshFinish(PullToRefreshLayout.FAIL);
+                refreshView.loadmoreFinish(PullToRefreshLayout.FAIL);
             }
             if (truckEntities.isEmpty()) {
                 setMain(View.GONE);
@@ -377,6 +394,12 @@ public class BuyCarActivity extends BaseTitleActivity
             } else {
                 tvLocation.setText("全国");
             }
+        } else if (resultCode == ResultCode.KEYWORD) {
+            // 搜索关键字返回
+            if (data != null) {
+                DictInfoEntity dictInfoEntity = (DictInfoEntity) data.getExtras().getSerializable("dictInfoEntity");
+                reSetTag(dictInfoEntity);
+            }
         }
     }
 
@@ -396,6 +419,8 @@ public class BuyCarActivity extends BaseTitleActivity
         priceCondition = "";
         // 排序条件
         sortCondition = "";
+        // 搜索关键字
+        keyWord = "";
 
     }
 
@@ -405,34 +430,41 @@ public class BuyCarActivity extends BaseTitleActivity
     private void changeParams() {
         List<DictInfoEntity> items = conditionAdapter.getItems();
         for (DictInfoEntity dictInfoEntity : items) {
-            switch (dictInfoEntity.getParentId()) {
-                case DictInfo.SORT_KIND:
-                    // 排序条件
-                    sortCondition = dictInfoEntity.getDictCode();
-                    break;
-                case DictInfo.VEHICLE_TYPE:
-                    // 车型
-                    vehicleType = dictInfoEntity.getDictCode();
-                    break;
-                case DictInfo.VEHICLE_BRAND:
-                    // 品牌
-                    // 品牌和车系字典码
-                    String brandSystemdictCode = dictInfoEntity.getDictCode();
-                    if (!TextUtils.isEmpty(brandSystemdictCode)) {
-                        if (brandSystemdictCode.contains(",")) {
-                            String[] bsCodeArr = brandSystemdictCode.split(",");
-                            vehicleBrand = bsCodeArr[0];
-                            vehicleSystem = bsCodeArr[1];
-                        }else{
-                            vehicleBrand = brandSystemdictCode;
-                            vehicleSystem = "";
+            String parentId = dictInfoEntity.getParentId();
+            // 如果有父id，则是正规的筛选条件
+            if (!TextUtils.isEmpty(parentId)) {
+                switch (parentId) {
+                    case DictInfo.SORT_KIND:
+                        // 排序条件
+                        sortCondition = dictInfoEntity.getDictCode();
+                        break;
+                    case DictInfo.VEHICLE_TYPE:
+                        // 车型
+                        vehicleType = dictInfoEntity.getDictCode();
+                        break;
+                    case DictInfo.VEHICLE_BRAND:
+                        // 品牌
+                        // 品牌和车系字典码
+                        String brandSystemdictCode = dictInfoEntity.getDictCode();
+                        if (!TextUtils.isEmpty(brandSystemdictCode)) {
+                            if (brandSystemdictCode.contains(",")) {
+                                String[] bsCodeArr = brandSystemdictCode.split(",");
+                                vehicleBrand = bsCodeArr[0];
+                                vehicleSystem = bsCodeArr[1];
+                            } else {
+                                vehicleBrand = brandSystemdictCode;
+                                vehicleSystem = "";
+                            }
                         }
-                    }
-                    break;
-                case DictInfo.PRICE:
-                    // 价格
-                    priceCondition = dictInfoEntity.getDictCode();
-                    break;
+                        break;
+                    case DictInfo.PRICE:
+                        // 价格
+                        priceCondition = dictInfoEntity.getDictCode();
+                        break;
+                }
+            } else {
+                // 否则就是关键字搜索
+                keyWord = dictInfoEntity.getDictName();
             }
         }
     }
@@ -457,6 +489,8 @@ public class BuyCarActivity extends BaseTitleActivity
         params.put("carWatchingPlace", carWatchingPlace);
         params.put("priceCondition", priceCondition);
         params.put("sortCondition", sortCondition);
+        params.put("keyWord", AppApplication.buyCarloadFlag == -1 ?
+                keyWord = AppApplication.keyword : keyWord);
         RequestManager.getRequestManager().post(RequestUrl.request_trucks, params, false, this);
     }
 
@@ -474,9 +508,32 @@ public class BuyCarActivity extends BaseTitleActivity
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEvent(RefreshEvent event) {
-        //收到此广播，刷新位置信息
+        //收到此广播，刷新
         if (event.getFlag() == 0) {
             myLoadData();
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(DictInfoEvent event) {
+        //收到此广播，重新设置筛选条件，并加载数据
+        reSetTag(event.getDictInfoEntity());
+    }
+
+    /**
+     * 重添标签并搜索
+     *
+     * @param dictInfoEntity
+     */
+    private void reSetTag(DictInfoEntity dictInfoEntity) {
+        // 清空所以筛选条件
+        conditionAdapter.clearData();
+        // 清空查询条件
+        clearParams();
+        conditionAdapter.addData(dictInfoEntity);
+        // 修改参数
+        changeParams();
+        // 加载数据
+        myLoadData();
     }
 }

@@ -14,21 +14,14 @@
         android:gravity="center"
         android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/splash_bg1" />
+       <TextView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="池泉二手车"
+           android:textColor="@color/white"
+           android:textSize="30sp"
+           android:textStyle="bold"
+           />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="22.2dp"
-            android:background="@mipmap/splash_bg2" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="@mipmap/splash_bg3" />
     </LinearLayout>
 </RelativeLayout>

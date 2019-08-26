@@ -67,7 +67,6 @@ public class MainActivity extends ActivityGroup {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         initUI();
-
     }
 
 
@@ -277,5 +276,13 @@ public class MainActivity extends ActivityGroup {
             }
         }
         return super.dispatchKeyEvent(event);
+    }
+
+    public void jumpTo(int position){
+        if (position == 1){
+            tab2.performClick();
+        }else if (position == 2){
+            tab3.performClick();
+        }
     }
 }

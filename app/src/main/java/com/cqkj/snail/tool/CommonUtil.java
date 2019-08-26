@@ -19,6 +19,7 @@ import com.cqkj.publicframework.requestdata.CallBack;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -32,34 +33,51 @@ public class CommonUtil {
 
     /**
      * 将字典集合转换为字符串集合
+     *
      * @param dictInfoEntities
      * @return
      */
     public static List<String> ChangeDictsToList(List<DictInfoEntity> dictInfoEntities) {
         List<String> list = new ArrayList<>();
-        if (dictInfoEntities != null){
-            for (DictInfoEntity dictInfoEntity:dictInfoEntities) {
+        if (dictInfoEntities != null) {
+            for (DictInfoEntity dictInfoEntity : dictInfoEntities) {
                 list.add(dictInfoEntity.getDictName());
             }
         }
-            return list;
+        return list;
     }
 
     /**
      * 解析城市数据
      */
     public static Map<String, Object> initCitys() {
-
         List<CityEntity> cityEntities = new ArrayList<>();
         // 获取缓存好的省份列表，并遍历将省份中的市级信息存入本页面源数据中
         if (AppApplication.cityEntities != null) {
             for (CityEntity cityEntity : AppApplication.cityEntities) {
                 List<CityEntity> children = cityEntity.getChildren();
                 if (children != null && !children.isEmpty()) {
-                    cityEntities.addAll(children);
+                    try {
+                        cityEntities.addAll(com.cqkj.publicframework.tool.CommonUtil.deepCopy(children));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ClassNotFoundException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
+        // 将已选的城市标记为已选
+        if (AppApplication.selectCitys != null) {
+            for (CityEntity cityEntity : AppApplication.selectCitys) {
+                for (CityEntity cityEntity1 : cityEntities) {
+                    if (cityEntity.getAdcode().equals(cityEntity1.getAdcode())){
+                        cityEntity1.setSelectFlag(cityEntity.getSelectFlag());
+                    }
+                }
+            }
+        }
+
         List<List<CityEntity>> lists = sortAndGroupCitys(cityEntities);
         Map<String, Object> map = new HashMap<>();
         map.put("cityEntities", cityEntities);

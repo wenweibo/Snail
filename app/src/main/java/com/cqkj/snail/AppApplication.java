@@ -21,6 +21,10 @@ public class AppApplication extends Application {
     public static List<CityEntity> selectCitys;
     // 当前定位的城市
     public static CityEntity locationCity;
+    // 搜索关键字
+    public static String keyword;
+    // 买车页面加载标记，-1：从未加载，其他：已加载过
+    public static int buyCarloadFlag = -1;
     @Override
     public void onCreate() {
         super.onCreate();

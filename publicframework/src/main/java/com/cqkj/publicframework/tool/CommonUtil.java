@@ -27,7 +27,12 @@ import com.cqkj.publicframework.tool.RecordVoice.VoiceUtils;
 import com.cqkj.publicframework.widget.SpinerPopWindow;
 import com.cqkj.publicframework.widget.data_pick.CustomDatePicker;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -36,6 +41,25 @@ import java.util.Locale;
 import java.util.Random;
 
 public class CommonUtil {
+    /**
+     * 集合深度复制
+     * @param src
+     * @param <T>
+     * @return
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public static <T> List<T> deepCopy(List<T> src) throws IOException, ClassNotFoundException {
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(byteOut);
+        out.writeObject(src);
+
+        ByteArrayInputStream byteIn = new ByteArrayInputStream(byteOut.toByteArray());
+        ObjectInputStream in = new ObjectInputStream(byteIn);
+        @SuppressWarnings("unchecked")
+        List<T> dest = (List<T>) in.readObject();
+        return dest;
+    }
 
     /**
      * 设置列表是否显示

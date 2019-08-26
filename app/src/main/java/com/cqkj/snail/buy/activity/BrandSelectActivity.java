@@ -33,7 +33,10 @@ public class BrandSelectActivity extends BaseTitleActivity implements DictInfoAd
     // 品牌列表适配器
     private BrandListAdapter brandListAdapter;
 
-
+    // 新的侧边字母
+    private String[] a = {"↑", "a", "b", "c", "d", "e", "f", "g", "h", "i",
+            "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+            "w", "x", "y", "z"};
     @Override
     protected int getLayoutId() {
         return R.layout.activity_city_select;
@@ -45,7 +48,7 @@ public class BrandSelectActivity extends BaseTitleActivity implements DictInfoAd
         title_text.setText(R.string.brand_select);
         back.setVisibility(View.VISIBLE);
         title_do.setVisibility(View.GONE);
-
+        sideBar.setTextList(a);
     }
 
     @Override
@@ -74,7 +77,7 @@ public class BrandSelectActivity extends BaseTitleActivity implements DictInfoAd
                     //该字母首次出现的位置
                     int position = brandListAdapter.getPositionForSection(s.charAt(0));
                     if (position != -1) {
-                        elvBrand.setSelection(position);
+                        elvBrand.setSelectedGroup(position);
                     }
                 }
             }

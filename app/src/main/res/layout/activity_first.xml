@@ -84,7 +84,7 @@
                     android:orientation="horizontal">
 
                     <LinearLayout
-                        android:id="@+id/lin_sell_car"
+                        android:id="@+id/lin_buy_car"
                         style="@style/lin_base.btn_lin">
 
                         <ImageView
@@ -98,7 +98,7 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/lin_buy_car"
+                        android:id="@+id/lin_sell_car"
                         style="@style/lin_base.btn_lin">
 
                         <ImageView

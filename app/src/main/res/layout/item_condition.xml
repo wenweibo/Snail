@@ -5,7 +5,6 @@
     android:id="@+id/lin_condition"
   >
     <LinearLayout
-
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -15,13 +14,12 @@
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:paddingTop="5dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:background="@drawable/shape_white_corners_50"
         >
         <TextView
             android:id="@+id/tv_title"
             style="@style/text_remark_12"
-            android:layout_marginRight="@dimen/com_size_10"
             android:text="混泥土搅拌"
             android:textColor="@color/layout_title_color" />
 
@@ -29,7 +27,9 @@
             android:id="@+id/iv_delete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/title_search_delete" />
+            android:src="@mipmap/title_search_delete"
+            android:layout_marginLeft="@dimen/com_size_10"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </LinearLayout>

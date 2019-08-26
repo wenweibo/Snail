@@ -16,4 +16,8 @@ public class ResultCode {
      * 上传照片
      */
     public static final int UPLOAD_PIC = 1002;
+   /**
+     * 关键字回调码
+     */
+    public static final int KEYWORD = 1003;
 }

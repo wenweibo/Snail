@@ -108,13 +108,13 @@ public class CitySelectActivity extends BaseTitleActivity implements CityExpandA
             // 则显示定位城市名称
             tvLocation.setText(AppApplication.locationCity.getName());
             // 如果已选的城市就是当前定位城市
-            if (AppApplication.selectCity != null
-                    && AppApplication.locationCity.getAdcode().equals(AppApplication.selectCity.getAdcode())) {
-                // 则将定位城市背景设为已选
-                tvLocation.setBackgroundResource(R.drawable.shape_red_stroke_shallow_red_solid);
-            } else {
-                tvLocation.setBackgroundResource(R.drawable.shape_gray_stroke);
-            }
+//            if (AppApplication.selectCity != null
+//                    && AppApplication.locationCity.getAdcode().equals(AppApplication.selectCity.getAdcode())) {
+//                // 则将定位城市背景设为已选
+//                tvLocation.setBackgroundResource(R.drawable.shape_red_stroke_shallow_red_solid);
+//            } else {
+//                tvLocation.setBackgroundResource(R.drawable.shape_gray_stroke);
+//            }
         } else {
             // 否则显示定位中...
             tvLocation.setText(R.string.locationing);

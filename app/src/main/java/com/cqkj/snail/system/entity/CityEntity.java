@@ -13,7 +13,7 @@ import java.util.List;
  * @author 闻维波
  * @since 2019/08/09 16:58
  */
-public class CityEntity implements Serializable, Comparable<CityEntity> {
+public class CityEntity implements Serializable, Comparable<CityEntity>, Cloneable {
     // 城市id
     private String id;
     // 上一级id
@@ -110,4 +110,5 @@ public class CityEntity implements Serializable, Comparable<CityEntity> {
     public int compareTo(@NonNull CityEntity o) {
         return this.getLetters().charAt(0) - o.getLetters().charAt(0);
     }
+
 }
